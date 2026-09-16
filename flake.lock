@@ -34,6 +34,35 @@
         "type": "github"
       }
     },
+    "appherder": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789578900,
+        "narHash": "sha256-FCo13jn4tFIeJL5hM9xc8hIBFd1cymC6v0t4vU/4wvg=",
+        "owner": "alyraffauf",
+        "repo": "appherder",
+        "rev": "142a3b8efb27c720334b7c5e51d66e1a4b8824bd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alyraffauf",
+        "repo": "appherder",
+        "type": "github"
+      }
+    },
     "astrocommunity": {
       "flake": false,
       "locked": {
@@ -1925,6 +1954,7 @@
     },
     "root": {
       "inputs": {
+        "appherder": "appherder",
         "blzrd": "blzrd",
         "comin": "comin",
         "determinate": "determinate",

@@ -17,6 +17,7 @@
 
         imports = [
           self.homeModules.aly
+          self.homeModules.appherder
           self.homeModules.ghostty
           self.homeModules.zed-editor
           self.homeModules.vscode

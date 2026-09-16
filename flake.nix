@@ -13,6 +13,14 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
+    appherder = {
+      url = "github:alyraffauf/appherder";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     comin = {
       url = "github:nlewo/comin";
       inputs.nixpkgs.follows = "nixpkgs";
