@@ -505,11 +505,11 @@
         "whichKeyNvim": "whichKeyNvim"
       },
       "locked": {
-        "lastModified": 1789623477,
-        "narHash": "sha256-fzVIyn8PsbeoSiTgRdgz8wT1CPMuPn5lxgMrKhRvxms=",
+        "lastModified": 1789857143,
+        "narHash": "sha256-i3NQOanVDaEMYrez6wnS8AiTbwsuwBWGsRORrZymFQQ=",
         "owner": "alyraffauf",
         "repo": "eevee",
-        "rev": "a0d66376100fedb7e8711c7658b15f016569687f",
+        "rev": "37b5b18920644646f9f0dbe19f2bd63854b08118",
         "type": "github"
       },
       "original": {
@@ -2020,11 +2020,11 @@
     "schemastore": {
       "flake": false,
       "locked": {
-        "lastModified": 1789596097,
-        "narHash": "sha256-AKGx8ubYHhDireMwOcimvr7zpM1sjytkaRHtguAfVLo=",
+        "lastModified": 1789776268,
+        "narHash": "sha256-20K0yssZ36m0WJl7CQEpnCI1y3L9SCc06CVL5E12uK0=",
         "owner": "b0o",
         "repo": "schemastore.nvim",
-        "rev": "ab094b7f788231fe9b68deac78c3d512302c58a6",
+        "rev": "460358f4de896230269a76c23ab558069f6e1e43",
         "type": "github"
       },
       "original": {
