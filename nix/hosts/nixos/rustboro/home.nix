@@ -19,6 +19,7 @@
           self.homeModules.aly
           self.homeModules.appherder
           self.homeModules.ghostty
+          self.homeModules.himalaya
           self.homeModules.vesktop
           self.homeModules.zed-editor
           self.homeModules.vscode

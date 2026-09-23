@@ -39,6 +39,7 @@
         imports = [
           self.homeModules.aly
           self.homeModules.ghostty
+          self.homeModules.himalaya
           self.homeModules.syncthing
           self.homeModules.vesktop
           self.homeModules.zed-editor

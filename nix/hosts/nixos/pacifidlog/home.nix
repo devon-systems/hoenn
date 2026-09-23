@@ -20,6 +20,7 @@
           self.homeModules.appherder
           self.homeModules.ghostty
           self.homeModules.hermesAgent
+          self.homeModules.himalaya
           self.homeModules.opencodeDesktop
           self.homeModules.vesktop
           self.homeModules.vscode
