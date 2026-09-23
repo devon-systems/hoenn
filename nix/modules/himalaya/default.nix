@@ -28,6 +28,14 @@
         enable = true;
 
         settings = {
+          mailbox.alias = {
+            archive = "Archive";
+            drafts = "Drafts";
+            inbox = "INBOX";
+            sent = "Sent";
+            trash = "Trash";
+          };
+
           imap = {
             server = "imaps://imap.fastmail.com:993";
 
