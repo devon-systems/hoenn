@@ -16,6 +16,7 @@ my production services, see [sinnoh](https://github.com/alyraffauf/sinnoh).
 | [`mauville`](nix/hosts/nixos/mauville/README.md)     | NixOS          | `nixosConfigurations.mauville`   |
 | [`pacifidlog`](nix/hosts/nixos/pacifidlog/README.md) | NixOS          | `nixosConfigurations.pacifidlog` |
 | [`petalburg`](nix/hosts/nixos/petalburg/README.md)   | NixOS          | `nixosConfigurations.petalburg`  |
+| [`verdanturf`](nix/hosts/nixos/verdanturf/README.md) | NixOS (Asahi)  | `nixosConfigurations.verdanturf` |
 | [`rustboro`](nix/hosts/nixos/rustboro/README.md)     | NixOS          | `nixosConfigurations.rustboro`   |
 | [`sootopolis`](nix/hosts/nixos/sootopolis/README.md) | NixOS          | `nixosConfigurations.sootopolis` |
 | [`fortree`](nix/hosts/darwin/fortree/README.md)      | nix-darwin     | `darwinConfigurations.fortree`   |

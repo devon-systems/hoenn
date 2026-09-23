@@ -21,6 +21,11 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     comin = {
       url = "github:nlewo/comin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -132,6 +137,12 @@
     sharedPackageSets = {
       aarch64-darwin = import nixpkgs {
         system = "aarch64-darwin";
+        config.allowUnfree = true;
+        overlays = [inputs.self.overlays.default];
+      };
+
+      aarch64-linux = import nixpkgs {
+        system = "aarch64-linux";
         config.allowUnfree = true;
         overlays = [inputs.self.overlays.default];
       };
