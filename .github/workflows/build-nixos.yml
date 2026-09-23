@@ -13,6 +13,7 @@ jobs:
       matrix:
         host:
           - fallarbor
+          - lilycove
           - mauville
           - pacifidlog
           - petalburg

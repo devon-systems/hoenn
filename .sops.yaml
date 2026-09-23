@@ -5,6 +5,7 @@ keys:
   # === user keys (aly@<host>) ===
   - &user_aly_fortree age1tgm3rcc2glqjxl5al2r780aweywv5tc2u065fzqlntwjzws4kckqepz7nl
   - &user_aly_goldenrod age1e5a0aaueyk34klry2qk094zrwfsvga0uft93mwweye30xhqhvfzs3jgqku
+  - &user_aly_lilycove age1tdgfvwl4qdptyvgxju3rwz9uh45hz422txzcgsrwm4f4f96x558skzxklr
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
   - &user_aly_pacifidlog age1j9jju3whwj72udhge7v4c77gk6v6w2cq8zjngzyppwtptfsz499qyywu9a
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
@@ -13,6 +14,7 @@ keys:
   # === host keys (root@<host>) ===
   - &host_fallarbor age1v4x5alkmvxsx5jsrwpecx0tne0ch2rwfkk0rq5w8x578j2pf5urssg5gx2
   - &host_fortree age1nl6m6gpea4kxr53c35y2tp0dd26nz8jurd7058nf0fmf2wqzxu0qsdg2fk
+  - &host_lilycove age1l5t62uzsj05pzftv9wg6s346csxyq202vxmmyyx8gwy8zu2nrfrs7v2a4z
   - &host_mauville age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
   - &host_pacifidlog age1m4w05c5afudrw94c3yd0mmgx79y5rxwn2lv8ag4w9m34wk4sxeeq7jufw9
   - &host_petalburg age1g20str5ef8922ggeqxqj46x2zfws04w2529mzl5776kd8jl4y56s5yx83w
@@ -25,6 +27,7 @@ creation_rules:
       - age:
           - *user_aly_fortree
           - *user_aly_goldenrod
+          - *user_aly_lilycove
           - *user_aly_mauville
           - *user_aly_pacifidlog
           - *user_aly_petalburg
@@ -32,6 +35,7 @@ creation_rules:
           - *user_aly_sootopolis
           - *host_fallarbor
           - *host_fortree
+          - *host_lilycove
           - *host_mauville
           - *host_pacifidlog
           - *host_petalburg
