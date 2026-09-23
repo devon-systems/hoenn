@@ -24,5 +24,8 @@ _: {
     };
 
     networking.networkmanager.wifi.backend = "iwd";
+
+    # The Helium flake's aarch64 package has a stale source hash.
+    programs.helium.enable = lib.mkForce false;
   };
 }
