@@ -24,7 +24,29 @@
       primary = true;
       realName = "Aly Raffauf";
 
-      himalaya.enable = true;
+      himalaya = {
+        enable = true;
+
+        settings = {
+          imap = {
+            server = "imaps://imap.fastmail.com:993";
+
+            sasl.plain = {
+              username = "alyraffauf@fastmail.com";
+              password.command = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.fastmail.path}";
+            };
+          };
+
+          smtp = {
+            server = "smtps://smtp.fastmail.com:465";
+
+            sasl.plain = {
+              username = "alyraffauf@fastmail.com";
+              password.command = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.fastmail.path}";
+            };
+          };
+        };
+      };
     };
   };
 }
