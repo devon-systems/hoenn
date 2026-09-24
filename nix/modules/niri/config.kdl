@@ -52,6 +52,12 @@ output "Samsung Display Corp. 0x41AA Unknown" {
     variable-refresh-rate
 }
 
+output "Samsung Display Corp. ATNA40CT06-0  Unknown" {
+    mode "1920x1200@60.003"
+    scale 1.5
+    transform "normal"
+}
+
 // https://niri-wm.github.io/niri/Configuration:-Key-Bindings
 binds {
     // Mod is Super on TTY, Alt when running as a winit window.
