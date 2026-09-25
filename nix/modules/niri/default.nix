@@ -8,6 +8,7 @@ _: let
       pkgs.adwaita-icon-theme
       pkgs.ddcutil
       pkgs.file-roller
+      pkgs.foliate
       pkgs.ghostty
       pkgs.gnome-disk-utility
       pkgs.gnome-text-editor
