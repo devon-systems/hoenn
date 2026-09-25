@@ -39,7 +39,7 @@ jobs:
           .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
   build-verdanturf:
     name: Build verdanturf
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     steps:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@ceedf095f4ec1a097402bc6bd80831f2e1a6fde6 # v2.0.0
