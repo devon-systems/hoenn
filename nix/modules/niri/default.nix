@@ -14,6 +14,7 @@ _: let
       pkgs.loupe
       pkgs.morewaita-icon-theme
       pkgs.nautilus
+      pkgs.papers
       pkgs.vicinae
       pkgs.xwayland-satellite
     ];
