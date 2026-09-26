@@ -28,12 +28,26 @@ in {
     darwinModules.wireguardHoenn = {
       config,
       lib,
-      pkgs,
       self,
       ...
     }: let
       privateKey = config.sops.secrets.wireguard-hoenn-private.path;
     in {
+      # Backport nix-darwin#1738 without changing the pinned nix-darwin input.
+      disabledModules = ["services/wg-quick.nix"];
+      imports = [
+        (builtins.toFile "wg-quick.nix" (lib.replaceStrings
+          [
+            "      serviceConfig = {"
+            "        ProgramArguments =\n          [ \"\${pkgs.wireguard-tools}/bin/wg-quick\" \"up\" \"\${name}\" ];\n"
+          ]
+          [
+            "      command = \"\${pkgs.wireguard-tools}/bin/wg-quick up \${name}\";\n      serviceConfig = {"
+            ""
+          ]
+          (builtins.readFile "${self.inputs.nix-darwin}/modules/services/wg-quick.nix")))
+      ];
+
       environment.etc."resolver/hoenn".text = "nameserver ${resolver}";
 
       sops.secrets.wireguard-hoenn-private = {
@@ -52,13 +66,6 @@ in {
 
         peers = [peer];
       };
-
-      # Backport nix-darwin#1738 so launchd waits for the Nix store to mount.
-      launchd.daemons.wg-quick-hoenn.serviceConfig.ProgramArguments = lib.mkForce [
-        "/bin/sh"
-        "-c"
-        "/bin/wait4path /nix/store && exec ${pkgs.wireguard-tools}/bin/wg-quick up hoenn"
-      ];
     };
 
     nixosModules.wireguardHoenn = {
