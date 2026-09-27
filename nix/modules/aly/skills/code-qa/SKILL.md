@@ -2,6 +2,7 @@
 name: code-qa
 description: Review handwritten source code against the quality-code standards. Use only when the user explicitly invokes $code-qa. Do not infer use from an ordinary request to review, inspect, or explain code.
 disable-model-invocation: true
+user-invocable: true
 ---
 
 # Review code by impact
