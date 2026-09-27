@@ -1328,6 +1328,26 @@
         "type": "github"
       }
     },
+    "mcp-servers-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790497551,
+        "narHash": "sha256-MN+SdbvRaWhuf3kAUczDGc86Ks/CNvQlhdwrQwntelU=",
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "rev": "403d15677fa350234cedec26106e9ce7e151f77d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "type": "github"
+      }
+    },
     "miniIcons": {
       "flake": false,
       "locked": {
@@ -2166,6 +2186,7 @@
         "import-tree": "import-tree_2",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
+        "mcp-servers-nix": "mcp-servers-nix",
         "nix-darwin": "nix-darwin",
         "nix-flatpak": "nix-flatpak",
         "nix-system-graphics": "nix-system-graphics",

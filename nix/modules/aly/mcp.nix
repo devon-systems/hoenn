@@ -9,10 +9,10 @@
 
       servers = {
         chrome-devtools = {
-          command = lib.getExe' pkgs.nodejs "npx";
+          command = lib.getExe inputs.mcp-servers-nix.packages.${pkgs.stdenv.hostPlatform.system}.chrome-devtools-mcp;
           args = [
-            "-y"
-            "chrome-devtools-mcp@latest"
+            "--executable-path"
+            (lib.getExe pkgs.google-chrome)
             "--isolated"
           ];
         };
