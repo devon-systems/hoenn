@@ -73,6 +73,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -117,12 +119,14 @@
     accept-flake-config = true;
 
     extra-substituters = [
+      "https://cache.numtide.com"
       "https://install.determinate.systems"
       "https://alyraffauf.cachix.org"
       "https://nix-community.cachix.org"
     ];
 
     extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
       "alyraffauf.cachix.org-1:GQVrRGfjTtkPGS8M6y7Ik0z4zLt77O0N25ynv2gWzDM="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
