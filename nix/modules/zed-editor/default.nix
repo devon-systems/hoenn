@@ -2,6 +2,7 @@ _: {
   flake.homeModules.zed-editor = {
     programs.zed-editor = {
       enable = true;
+      enableMcpIntegration = true;
       installRemoteServer = true;
       mutableUserDebug = true;
       mutableUserKeymaps = true;

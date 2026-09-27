@@ -11,6 +11,7 @@ _: {
       mutableExtensionsDir = true;
 
       profiles.default = {
+        enableMcpIntegration = true;
         mutableUserSettings = true;
         enableUpdateCheck = false;
 
