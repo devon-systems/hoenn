@@ -6,7 +6,11 @@
   }: {
     programs.mcp = {
       enable = true;
-      servers.tg.command = lib.getExe inputs.tg.packages.${pkgs.stdenv.hostPlatform.system}.tgmcp;
+
+      servers = {
+        nixos.command = lib.getExe pkgs.mcp-nixos;
+        tg.command = lib.getExe inputs.tg.packages.${pkgs.stdenv.hostPlatform.system}.tgmcp;
+      };
     };
   };
 }
