@@ -74,6 +74,10 @@
     };
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+    crush-fork = {
+      url = "github:alyraffauf/crush/fix/symlinked-skill-permissions";
+      flake = false;
+    };
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";
