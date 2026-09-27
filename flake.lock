@@ -2047,15 +2047,15 @@
     "pyproject-build-systems_2": {
       "inputs": {
         "nixpkgs": [
-          "tgmcp",
+          "tg",
           "nixpkgs"
         ],
         "pyproject-nix": [
-          "tgmcp",
+          "tg",
           "pyproject-nix"
         ],
         "uv2nix": [
-          "tgmcp",
+          "tg",
           "uv2nix"
         ]
       },
@@ -2097,7 +2097,7 @@
     "pyproject-nix_2": {
       "inputs": {
         "nixpkgs": [
-          "tgmcp",
+          "tg",
           "nixpkgs"
         ]
       },
@@ -2156,7 +2156,6 @@
         "sops-nix": "sops-nix",
         "system-manager": "system-manager",
         "tg": "tg",
-        "tgmcp": "tgmcp",
         "treefmt-nix": "treefmt-nix_5",
         "zen-browser": "zen-browser"
       }
@@ -2326,52 +2325,23 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "treefmt-nix": "treefmt-nix_4"
-      },
-      "locked": {
-        "lastModified": 1790263624,
-        "narHash": "sha256-sk7j9BjTgvHMaTNUnEAHohmS6OMt8hMbXO4Gs2qUwlk=",
-        "ref": "refs/heads/master",
-        "rev": "30616dbe5f1a3cc693b8fe3e507805edb5269ebb",
-        "revCount": 163,
-        "type": "git",
-        "url": "https://tangled.org/aly.codes/tg"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://tangled.org/aly.codes/tg"
-      }
-    },
-    "tgmcp": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
         "pyproject-build-systems": "pyproject-build-systems_2",
         "pyproject-nix": "pyproject-nix_2",
-        "tg": [
-          "tg"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ],
+        "treefmt-nix": "treefmt-nix_4",
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1790479569,
-        "narHash": "sha256-FkQHV5EbHU+ERlhWakfSrYI9UnDNZYgFKo0gUgmFAwk=",
-        "ref": "refs/heads/main",
-        "rev": "3884295b1ef24eddbef6c797b4681ff596f10c07",
-        "revCount": 10,
+        "lastModified": 1790482324,
+        "narHash": "sha256-7YudidQiHaEUYaiFw6/fq/YmYXUdPE1+EeCpRUoAVfQ=",
+        "ref": "refs/heads/master",
+        "rev": "4140a4d6d9bda3dc74858b43e6c430c7c9acf43d",
+        "revCount": 166,
         "type": "git",
-        "url": "https://tangled.org/aly.codes/tgmcp"
+        "url": "https://tangled.org/aly.codes/tg"
       },
       "original": {
         "type": "git",
-        "url": "https://tangled.org/aly.codes/tgmcp"
+        "url": "https://tangled.org/aly.codes/tg"
       }
     },
     "todoCommentsNvim": {
@@ -2582,11 +2552,11 @@
     "uv2nix_2": {
       "inputs": {
         "nixpkgs": [
-          "tgmcp",
+          "tg",
           "nixpkgs"
         ],
         "pyproject-nix": [
-          "tgmcp",
+          "tg",
           "pyproject-nix"
         ]
       },
