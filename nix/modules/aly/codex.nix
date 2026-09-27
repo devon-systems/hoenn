@@ -3,7 +3,7 @@
     programs.codex = {
       enable = true;
       enableMcpIntegration = true;
-      package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
+      # package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
     };
   };
 }
