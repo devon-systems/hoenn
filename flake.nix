@@ -109,6 +109,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    tgmcp = {
+      url = "git+https://tangled.org/aly.codes/tgmcp";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.tg.follows = "tg";
+    };
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -2,6 +2,7 @@
   flake.homeModules.aly = {pkgs, ...}: {
     programs.opencode = {
       enable = true;
+      enableMcpIntegration = true;
       package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
 
       settings = {
