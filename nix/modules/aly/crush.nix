@@ -9,6 +9,7 @@
     xdg.configFile."crush/crushrc".text = ''
       option attribution-trailer-style none
       option attribution-generated-with false
+      option ui compact true
     '';
   };
 }

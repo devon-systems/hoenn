@@ -1,5 +1,5 @@
-{inputs, ...}: {
-  flake.homeModules.aly = {pkgs, ...}: {
+_: {
+  flake.homeModules.aly = _: {
     programs.codex = {
       enable = true;
       enableMcpIntegration = true;
