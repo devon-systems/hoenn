@@ -113,6 +113,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    switchyard.url = "github:alyraffauf/switchyard";
+
     tg = {
       url = "git+https://tangled.org/aly.codes/tg";
       inputs.nixpkgs.follows = "nixpkgs";
