@@ -16,12 +16,6 @@
             "--isolated"
           ];
         };
-
-        github = {
-          command = lib.getExe pkgs.github-mcp-server;
-          args = ["stdio"];
-        };
-
         nixos.command = lib.getExe pkgs.mcp-nixos;
         tg.command = lib.getExe inputs.tg.packages.${pkgs.stdenv.hostPlatform.system}.tgmcp;
       };
