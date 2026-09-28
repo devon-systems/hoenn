@@ -24,6 +24,7 @@
           self.homeModules.zed-editor
           self.homeModules.vscode
           self.homeModules.opencodeDesktop
+          self.homeModules.switchyard
         ];
       };
     };
