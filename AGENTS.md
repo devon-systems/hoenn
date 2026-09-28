@@ -26,6 +26,10 @@ bun scripts/generate-sway-keybindings.ts
 Run both commands with `--check` to verify the committed references. Edit the
 compositor configs, not the generated Markdown files.
 
+## Commit messages
+
+Use scoped Conventional Commits: `fix(<scope>): <description>` for fixes and `feat(<scope>): <description>` for new features. Choose a program, module, or path as the scope. For example, `fix(niri): correct workspace keybinding` or `feat(nix/modules/desktop): add screen sharing support`.
+
 ## Deploy deliberately
 
 `mauville` and `petalburg` are the registered `blzrd` nodes, declared in their `nix/hosts/nixos/<host>/default.nix` files. Run `blzrd switch <host>` to activate one, or `blzrd boot <host>` to set its next boot. Do not use a bare `blzrd switch` unless you mean to target every registered node. Never deploy only to test a configuration.
