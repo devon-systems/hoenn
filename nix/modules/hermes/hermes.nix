@@ -28,19 +28,23 @@
         environmentFiles = [config.sops.secrets.hermes.path];
         gateway.enable = true;
 
-        mcpServers = lib.mapAttrs (name: server:
-          lib.intersectAttrs {
-            command = null;
-            args = null;
-            env = null;
-            url = null;
-            headers = null;
-            enabled = null;
-          } (lib.hm.mcp.transformMcpServer {
-            inherit server;
-            extraTransforms = [(lib.hm.mcp.wrapEnvFilesCommand {inherit pkgs name;})];
-          }))
-        config.programs.mcp.servers;
+        mcpServers =
+          lib.recursiveUpdate (lib.mapAttrs (name: server:
+            lib.intersectAttrs {
+              command = null;
+              args = null;
+              env = null;
+              url = null;
+              headers = null;
+              enabled = null;
+            } (lib.hm.mcp.transformMcpServer {
+              inherit server;
+              extraTransforms = [(lib.hm.mcp.wrapEnvFilesCommand {inherit pkgs name;})];
+            }))
+          config.programs.mcp.servers) {
+            # Hermes filters display variables from the MCP subprocess environment.
+            chrome-devtools.env.WAYLAND_DISPLAY = "\${WAYLAND_DISPLAY}";
+          };
 
         backend = {
           mode = "dashboard";
