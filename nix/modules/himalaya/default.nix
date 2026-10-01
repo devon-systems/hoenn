@@ -20,40 +20,22 @@
     accounts.email.accounts.fastmail = {
       address = "alyraffauf@fastmail.com";
       flavor = "fastmail.com";
+      folders = {
+        drafts = "Drafts";
+        inbox = "INBOX";
+        sent = "Sent";
+        trash = "Trash";
+      };
+      imap.authentication = "plain";
       passwordCommand = ["${pkgs.coreutils}/bin/cat" config.sops.secrets.fastmail.path];
       primary = true;
       realName = "Aly Raffauf";
+      smtp.authentication = "plain";
 
       himalaya = {
         enable = true;
 
-        settings = {
-          mailbox.alias = {
-            archive = "Archive";
-            drafts = "Drafts";
-            inbox = "INBOX";
-            sent = "Sent";
-            trash = "Trash";
-          };
-
-          imap = {
-            server = "imaps://imap.fastmail.com:993";
-
-            sasl.plain = {
-              username = "alyraffauf@fastmail.com";
-              password.command = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.fastmail.path}";
-            };
-          };
-
-          smtp = {
-            server = "smtps://smtp.fastmail.com:465";
-
-            sasl.plain = {
-              username = "alyraffauf@fastmail.com";
-              password.command = "${pkgs.coreutils}/bin/cat ${config.sops.secrets.fastmail.path}";
-            };
-          };
-        };
+        settings.mailbox.alias.archive = "Archive";
       };
     };
   };
