@@ -8,7 +8,7 @@
       useGlobalPkgs = true;
       useUserPackages = true;
 
-      users.aly = {
+      users.aly = {config, ...}: {
         home = {
           homeDirectory = "/home/aly";
           stateVersion = "26.05";
@@ -27,6 +27,16 @@
           self.homeModules.vscode
           self.homeModules.zed-editor
         ];
+
+        sops.secrets.petalburgHermes = {
+          key = "env";
+          sopsFile = self + "/secrets/petalburg-hermes.yaml";
+        };
+
+        services.hermes-agent = {
+          environmentFiles = [config.sops.secrets.petalburgHermes.path];
+          settings.dashboard.public_url = "https://petalburg.narwhal-snapper.ts.net";
+        };
       };
     };
   };
