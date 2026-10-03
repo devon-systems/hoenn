@@ -44,7 +44,7 @@
     };
 
     home-manager = {
-      url = "github:alyraffauf/home-manager/codex-mutable-settings";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

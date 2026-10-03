@@ -1141,16 +1141,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1790959821,
-        "narHash": "sha256-NPgfrGp6NQTyuZQkzTJPLyZqQqClEgxCO6K1egSMlB4=",
-        "owner": "alyraffauf",
+        "lastModified": 1790989254,
+        "narHash": "sha256-ZN+riaeFuE+DZ5zfqJiXlM12jLwZzeIXiNkU1YeHMXI=",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d29999e8fcb28489367ce72cd2a1c5657e5d26ac",
+        "rev": "acd21c5a3420a9d5fd0ed06299b10828267ef9ba",
         "type": "github"
       },
       "original": {
-        "owner": "alyraffauf",
-        "ref": "codex-mutable-settings",
+        "owner": "nix-community",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
