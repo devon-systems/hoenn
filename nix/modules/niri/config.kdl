@@ -241,6 +241,13 @@ layout {
 
 // https://niri-wm.github.io/niri/Configuration:-Window-Rules
 window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty$"#
+    background-effect {
+        blur true
+    }
+}
+
+window-rule {
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
 }

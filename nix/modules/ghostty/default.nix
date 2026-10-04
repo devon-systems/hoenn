@@ -23,8 +23,6 @@ _: {
           keybind = ["ctrl+shift+backquote=toggle_tab_overview"];
           window-show-tab-bar = "never";
           window-decoration = false;
-        }
-        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
           background-blur = true;
           background-opacity = 0.8;
         };
