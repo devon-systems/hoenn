@@ -6,7 +6,21 @@
       pkgs,
       self,
       ...
-    }: {
+    }: let
+      profilePath = lib.concatStringsSep ":" [
+        "/etc/profiles/per-user/${config.home.username}/bin"
+        "${config.home.homeDirectory}/.nix-profile/bin"
+        "/run/current-system/sw/bin"
+        "${config.home.homeDirectory}/.local/bin"
+      ];
+      servicePath = lib.makeBinPath ([
+          config.programs.hermes-agent.package
+          pkgs.bash
+          pkgs.coreutils
+          pkgs.git
+        ]
+        ++ config.services.hermes-agent.extraPackages);
+    in {
       imports = [
         inputs.hermes-agent.homeManagerModules.default
         inputs.sops-nix.homeManagerModules.sops
@@ -22,6 +36,12 @@
       };
 
       programs.hermes-agent.enable = true;
+
+      # Extend the packaged runtime PATH without sourcing interactive shell files.
+      systemd.user.services = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+        hermes-agent.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
+        hermes-backend.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
+      };
 
       services.hermes-agent = {
         enable = true;
@@ -72,8 +92,24 @@
       };
     };
 
-    nixosModules.hermesWebui = {pkgs, ...}: {
+    nixosModules.hermesWebui = {
+      config,
+      lib,
+      pkgs,
+      ...
+    }: {
       imports = [inputs.hermes-webui.nixosModules.default];
+
+      systemd.services.hermes-webui = {
+        serviceConfig.WorkingDirectory = "/home/aly";
+        environment.PATH = lib.mkForce (lib.concatStringsSep ":" [
+          (lib.makeBinPath config.systemd.services.hermes-webui.path)
+          "/etc/profiles/per-user/aly/bin"
+          "/home/aly/.nix-profile/bin"
+          "/run/current-system/sw/bin"
+          "/home/aly/.local/bin"
+        ]);
+      };
 
       services.hermes-webui = {
         enable = true;
