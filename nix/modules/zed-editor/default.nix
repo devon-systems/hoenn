@@ -113,7 +113,7 @@ _: {
             if pkgs.stdenv.hostPlatform.isDarwin
             then "blurred"
             else "transparent";
-          "background" = "#383c52cc";
+          "background" = "#383c5200";
           "surface.background" = "#292c3ccc";
           "elevated_surface.background" = "#292c3ccc";
           "editor.background" = "#303446cc";
