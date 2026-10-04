@@ -243,6 +243,7 @@ layout {
 window-rule {
     match app-id=r#"^com\.mitchellh\.ghostty$"#
     match app-id=r#"^dev\.zed\.Zed$"#
+    match app-id="^zen$"
     background-effect {
         blur true
     }
