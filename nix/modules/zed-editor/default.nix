@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.zed-editor = {
+  flake.homeModules.zed-editor = {pkgs, ...}: {
     programs.zed-editor = {
       enable = true;
       enableMcpIntegration = true;
@@ -106,6 +106,27 @@ _: {
           dark = "Catppuccin Frappé - No Italics";
           light = "One Light";
           mode = "dark";
+        };
+
+        theme_overrides."Catppuccin Frappé - No Italics" = {
+          "background.appearance" =
+            if pkgs.stdenv.hostPlatform.isDarwin
+            then "blurred"
+            else "transparent";
+          "background" = "#383c52cc";
+          "surface.background" = "#292c3ccc";
+          "elevated_surface.background" = "#292c3ccc";
+          "editor.background" = "#303446cc";
+          "editor.gutter.background" = "#303446cc";
+          "terminal.background" = "#303446cc";
+          "panel.background" = "#292c3ccc";
+          "status_bar.background" = "#232634cc";
+          "title_bar.background" = "#232634cc";
+          "title_bar.inactive_background" = "#2a2e3ecc";
+          "toolbar.background" = "#303446cc";
+          "tab_bar.background" = "#232634cc";
+          "tab.active_background" = "#303446cc";
+          "tab.inactive_background" = "#1d202bcc";
         };
 
         title_bar = {

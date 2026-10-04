@@ -242,6 +242,7 @@ layout {
 // https://niri-wm.github.io/niri/Configuration:-Window-Rules
 window-rule {
     match app-id=r#"^com\.mitchellh\.ghostty$"#
+    match app-id=r#"^dev\.zed\.Zed$"#
     background-effect {
         blur true
     }
