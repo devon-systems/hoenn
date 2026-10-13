@@ -175,11 +175,12 @@ flux-bootstrap AGE_KEY_FILE SSH_KEY_FILE:
         ssh://*) ;;
         *) echo "Flux bootstrap requires an SSH origin URL." >&2; exit 1 ;;
     esac
-    version=$(sed -n 's/^# Flux Version: //p' k8s/flux-system/gotk-components.yaml)
-    test -n "$version"
-    kubectl --context "{{cluster}}" create namespace flux-system --dry-run=client -o yaml | kubectl --context "{{cluster}}" apply -f -
+    kubectl --context "{{cluster}}" apply --server-side --field-manager=flux -f k8s/flux-system/gotk-components.yaml
+    kubectl --context "{{cluster}}" wait --for=condition=Established --timeout=60s crd/gitrepositories.source.toolkit.fluxcd.io crd/kustomizations.kustomize.toolkit.fluxcd.io crd/helmreleases.helm.toolkit.fluxcd.io
     kubectl --context "{{cluster}}" -n flux-system create secret generic sops-age --from-file=age.agekey="$temporary/age.agekey" --dry-run=client -o yaml | kubectl --context "{{cluster}}" apply -f -
-    flux --context "{{cluster}}" bootstrap git --url="$remote" --branch=master --path=k8s/flux-system --version="$version" --private-key-file="$2"
+    flux --context "{{cluster}}" create secret git flux-system --url="$remote" --private-key-file="$2" --export | kubectl --context "{{cluster}}" apply -f -
+    kubectl --context "{{cluster}}" apply -f k8s/flux-system/gotk-sync.yaml
+    flux --context "{{cluster}}" reconcile kustomization flux-system --with-source
 
 ############################################################################
 #

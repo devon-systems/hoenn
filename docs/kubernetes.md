@@ -47,11 +47,11 @@ just flux-status
 just reconcile
 ```
 
-The bootstrap recipe installs the `sops-age` secret and runs `flux bootstrap git`
-with the checked-in controller version. It pushes bootstrap manifests to
-`master` and installs Flux. The SSH identity is stored in the cluster's
-`flux-system` Git credential secret. Use a repository-scoped deploy key with
-write access when available.
+The bootstrap recipe installs the checked-in Flux controller manifests, creates
+the `sops-age` and Git credential secrets, and applies the checked-in sync
+resources. Commit and push the configuration before running it. The SSH
+identity is stored in the cluster's `flux-system` Git credential secret. Use
+a repository-scoped deploy key when available.
 
 `secrets/flux-age.yaml` holds the encrypted Flux age identity.
 `keys/flux_k8s.pub` holds its public recipient. `just sops-rekey` includes that
