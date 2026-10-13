@@ -3,7 +3,8 @@
 Declarative configuration for my personal machines. Hoenn uses a flake-parts
 Nix flake to compose NixOS, nix-darwin, Home Manager, and system-manager configurations,
 with shared modules for packages, desktop environments, networking, secrets,
-and automatic upgrades.
+and automatic upgrades. Mauville also runs a k3s cluster for household services,
+with Flux reconciliation and internal transit over Hoenn WireGuard.
 
 For my personal homelab, see [johto](https://github.com/alyraffauf/johto). For
 my production services, see [sinnoh](https://github.com/alyraffauf/sinnoh).
@@ -37,6 +38,8 @@ nix/
 keys/  Public SSH keys used as age recipients
 secrets/  SOPS-encrypted configuration
 scripts/  Repository maintenance utilities
+k8s/  Flux-managed household services and encrypted application secrets
+docs/  Cluster setup and operations
 .github/workflows/  Flake checks and configuration builds
 ```
 
@@ -55,6 +58,9 @@ nix flake check
 ```
 
 Run `just` to list maintenance commands.
+
+See [Hoenn cluster setup](docs/kubernetes.md) for Flux bootstrap, Tailscale
+service exposure, and the Kubernetes workflows shared with Johto and Sinnoh.
 
 ## Deployment
 

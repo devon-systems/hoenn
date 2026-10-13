@@ -7,9 +7,14 @@ _: {
     devShells.default = pkgs.mkShell {
       packages = [
         inputs'.blzrd.packages.blzrd
-        pkgs.git
+        pkgs.age
         pkgs.bun
+        pkgs.fluxcd
+        pkgs.git
         pkgs.just
+        pkgs.kubectl
+        pkgs.kubernetes-helm
+        pkgs.kustomize
         pkgs.nh
         pkgs.nixd
         pkgs.sops

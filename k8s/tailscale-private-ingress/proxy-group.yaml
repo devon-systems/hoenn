@@ -1,0 +1,37 @@
+apiVersion: tailscale.com/v1alpha1
+kind: ProxyClass
+metadata:
+  name: private-ingress
+spec:
+  staticEndpoints:
+    nodePort:
+      ports:
+        - port: 31667
+          endPort: 31680
+      selector:
+        kubernetes.io/hostname: mauville
+  statefulSet:
+    pod:
+      nodeSelector:
+        kubernetes.io/hostname: mauville
+      tailscaleContainer:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 96Mi
+          limits:
+            memory: 192Mi
+        env:
+          - name: TS_EXPERIMENTAL_SERVICE_AUTO_ADVERTISEMENT
+            value: "true"
+---
+apiVersion: tailscale.com/v1alpha1
+kind: ProxyGroup
+metadata:
+  name: private-ingress
+spec:
+  proxyClass: private-ingress
+  replicas: 1
+  type: ingress
+  tags:
+    - tag:hoenn-service

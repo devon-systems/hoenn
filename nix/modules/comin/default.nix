@@ -5,7 +5,7 @@
     remotes = [
       {
         name = "origin";
-        url = "https://github.com/alyraffauf/hoenn.git";
+        url = "https://github.com/devon-systems/hoenn.git";
         branches.main.name = "master";
         poller.period = 600;
       }

@@ -4,6 +4,10 @@ Hoenn configures personal machines. It contains NixOS, nix-darwin, Home Manager,
 
 `flake.nix` imports the Nix files under `nix/`. `keys/` holds public recipients. `secrets/` holds SOPS-encrypted files. `scripts/` holds maintenance tools.
 
+Mauville runs the Hoenn k3s server. Internal cluster transit uses Hoenn
+WireGuard. `k8s/` contains Flux-managed household services. Keep Kubernetes
+secrets in `k8s/secrets/`. Follow `docs/kubernetes.md` for bootstrap and operations.
+
 ## Check a change
 
 Run `nix fmt` and `nix flake check` before you commit. Build each output affected by the change.
@@ -26,6 +30,12 @@ bun scripts/generate-sway-keybindings.ts
 Run both commands with `--check` to verify the committed references. Edit the
 compositor configs, not the generated Markdown files.
 
+When changing Kubernetes resources, update the corresponding Kustomize or Flux
+resource. Do not reformat `k8s/flux-system/gotk-components.yaml`. Run
+`just check-k8s` to render Flux targets and local Helm releases and validate their
+schemas. The check needs network access and excludes encrypted SOPS documents
+and generated CRD definitions.
+
 ## Commit messages
 
 Use scoped Conventional Commits: `fix(<scope>): <description>` for fixes and `feat(<scope>): <description>` for new features. Choose a program, module, or path as the scope. For example, `fix(niri): correct workspace keybinding` or `feat(nix/modules/desktop): add screen sharing support`.
@@ -33,6 +43,11 @@ Use scoped Conventional Commits: `fix(<scope>): <description>` for fixes and `fe
 ## Deploy deliberately
 
 `mauville` and `petalburg` are the registered `blzrd` nodes, declared in their `nix/hosts/nixos/<host>/default.nix` files. Run `blzrd switch <host>` to activate one, or `blzrd boot <host>` to set its next boot. Do not use a bare `blzrd switch` unless you mean to target every registered node. Never deploy only to test a configuration.
+
+Flux deploys Kubernetes changes from `master`. Use `just flux-bootstrap` for
+initial installation. Do not apply repository manifests with `kubectl` during
+normal operation. `just reconcile` and `just flux-status` target this repository's
+cluster context explicitly.
 
 ## Keep secrets out of Git
 

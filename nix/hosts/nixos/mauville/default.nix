@@ -17,6 +17,7 @@
         self.nixosModules.default
         self.nixosModules.google-chrome
         self.nixosModules.homebrew
+        self.nixosModules.k3s
         self.nixosModules.mauville
         self.nixosModules.nixos
         self.nixosModules.sway

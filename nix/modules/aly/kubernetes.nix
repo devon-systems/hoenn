@@ -40,6 +40,7 @@
             paths = [
               config.sops.secrets.kube-sinnoh.path
               config.sops.secrets.kube-johto.path
+              "${config.home.homeDirectory}/.kube"
             ];
           }
         ];

@@ -38,7 +38,7 @@ in {
   config.flake = {
     nixosModules.autoUpgrade = {config, ...}: {
       system.autoUpgrade =
-        (autoUpgrade "github:alyraffauf/hoenn#${config.networking.hostName}")
+        (autoUpgrade "github:devon-systems/hoenn#${config.networking.hostName}")
         // {
           allowReboot = false;
           operation = "boot";
@@ -63,7 +63,7 @@ in {
           /bin/sleep "$random_delay"
 
           for attempt in $(/usr/bin/jot 1 ${toString maxAttempts}); do
-            if ${config.system.build.darwin-rebuild}/bin/darwin-rebuild switch --accept-flake-config --flake ${lib.escapeShellArg "github:alyraffauf/hoenn#${config.networking.hostName}"} --refresh; then
+            if ${config.system.build.darwin-rebuild}/bin/darwin-rebuild switch --accept-flake-config --flake ${lib.escapeShellArg "github:devon-systems/hoenn#${config.networking.hostName}"} --refresh; then
               exit 0
             fi
 
@@ -89,7 +89,7 @@ in {
     };
 
     systemModules.autoUpgrade = {
-      system.autoUpgrade = autoUpgrade "github:alyraffauf/hoenn#systemConfigs.sootopolis";
+      system.autoUpgrade = autoUpgrade "github:devon-systems/hoenn#systemConfigs.sootopolis";
       systemd.services = upgradeService "system-manager-upgrade";
     };
   };

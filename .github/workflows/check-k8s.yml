@@ -1,0 +1,22 @@
+name: check-k8s
+"on":
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch: {}
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+permissions:
+  contents: read
+env:
+  NIX_CONFIG: "access-tokens = github.com=${{ github.token }}"
+jobs:
+  check-k8s:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - name: Render and validate Kubernetes resources
+        run: nix run .#check-k8s
