@@ -11,6 +11,11 @@
       age.sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
 
       secrets = {
+        kube-hoenn = {
+          key = "";
+          sopsFile = self + "/secrets/kube-hoenn.yaml";
+        };
+
         kube-sinnoh = {
           key = "";
           sopsFile = self + "/secrets/kube-sinnoh.yaml";
@@ -38,6 +43,7 @@
             kubeconfigName = "*";
             showPrefix = false;
             paths = [
+              config.sops.secrets.kube-hoenn.path
               config.sops.secrets.kube-sinnoh.path
               config.sops.secrets.kube-johto.path
               "${config.home.homeDirectory}/.kube"
