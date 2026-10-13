@@ -6,3 +6,4 @@ resources:
   - secrets.yaml
   - tailscale.yaml
   - tailscale-private-ingress.yaml
+  - homebridge.yaml

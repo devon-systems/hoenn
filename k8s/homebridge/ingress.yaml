@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homebridge
+  namespace: homebridge
+  annotations:
+    tailscale.com/proxy-group: private-ingress
+spec:
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - homebridge
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homebridge
+                port:
+                  name: http

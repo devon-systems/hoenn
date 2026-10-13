@@ -91,6 +91,20 @@ Application LAN discovery is configured separately from cluster transit.
 
 ## Add workloads and nodes
 
+Homebridge runs on Mauville at
+<https://homebridge.narwhal-snapper.ts.net>. Complete the first-run wizard there
+to create your administrator account, then install and configure your plugins.
+Pair the bridge in Apple Home using the QR code shown in Homebridge.
+
+Homebridge uses host networking and Ciao on Mauville's `wlo1` LAN interface for
+HomeKit discovery. The LAN firewall allows TCP `51826` for the main bridge and
+`52100` through `52150` for external accessories. Set any child bridge's port
+within that range. The web UI is exposed through the Tailscale ingress proxy.
+
+Configuration, pairing state, and plugins persist on `homebridge-data` and are
+included in Mauville's local-path volume backups. The init container creates
+the initial configuration only when none exists, so UI changes survive restarts.
+
 Put application manifests under `k8s/<app>/` and add their Flux Kustomization to
 `k8s/flux-system/kustomization.yaml`. Use dependencies for prerequisites and
 `prune: true` and `wait: true` for application reconciliation.

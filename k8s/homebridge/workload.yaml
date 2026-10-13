@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: homebridge-data
+  namespace: homebridge
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homebridge
+  namespace: homebridge
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: homebridge
+  template:
+    metadata:
+      labels:
+        app: homebridge
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      # HomeKit discovery must reach Mauville's home LAN.
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      nodeSelector:
+        kubernetes.io/hostname: mauville
+      initContainers:
+        - name: initialize-config
+          image: homebridge/homebridge:2026-09-25@sha256:22cdfca31934661ef9aaaa2e3fa74daa84a803fbf4c4a6c38c6bc1460b9f0596
+          command:
+            - node
+            - -e
+            - |
+              const fs = require('node:fs');
+              const crypto = require('node:crypto');
+              const path = '/homebridge/config.json';
+              if (fs.existsSync(path)) process.exit(0);
+              const username = ['0E', ...crypto.randomBytes(5)]
+                .map(value => typeof value === 'string' ? value : value.toString(16).padStart(2, '0'))
+                .join(':').toUpperCase();
+              const pin = [crypto.randomInt(100, 999), crypto.randomInt(10, 99), crypto.randomInt(100, 999)].join('-');
+              const config = {
+                bridge: {name: 'Homebridge Mauville', username, port: 51826, pin, advertiser: 'ciao', bind: ['wlo1']},
+                ports: {start: 52100, end: 52150},
+                accessories: [],
+                platforms: [{name: 'Config', port: 8581, platform: 'config'}],
+              };
+              fs.writeFileSync(path, JSON.stringify(config, null, 2) + '\n', {mode: 0o600, flag: 'wx'});
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          volumeMounts:
+            - name: data
+              mountPath: /homebridge
+      containers:
+        - name: homebridge
+          image: homebridge/homebridge:2026-09-25@sha256:22cdfca31934661ef9aaaa2e3fa74daa84a803fbf4c4a6c38c6bc1460b9f0596
+          env:
+            - name: TZ
+              value: America/New_York
+            # Ciao handles mDNS without a second Avahi daemon on the host.
+            - name: ENABLE_AVAHI
+              value: "0"
+          ports:
+            - name: http
+              containerPort: 8581
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 120
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: data
+              mountPath: /homebridge
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: homebridge-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homebridge
+  namespace: homebridge
+spec:
+  type: ClusterIP
+  selector:
+    app: homebridge
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
