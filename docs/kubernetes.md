@@ -38,8 +38,9 @@ Create a repository-scoped SSH identity if you do not already have one:
 ssh-keygen -t ed25519 -N '' -C hoenn-flux -f ~/.ssh/hoenn-flux
 ```
 
-Register `~/.ssh/hoenn-flux.pub` as a deploy key with write access on
-`devon-systems/hoenn`. Then bootstrap Flux:
+Register `~/.ssh/hoenn-flux.pub` as a deploy key on `devon-systems/hoenn`.
+Read access is sufficient because the recipe installs checked-in manifests
+without writing to Git. Then bootstrap Flux:
 
 ```sh
 just flux-bootstrap secrets/flux-age.yaml ~/.ssh/hoenn-flux
@@ -85,8 +86,8 @@ its credentials and the tailnet policy are ready.
 
 The private-ingress ProxyGroup follows Johto's configuration with one replica
 on Mauville. It uses automatic endpoint discovery because Mauville has no
-Kubernetes ExternalIP. Give Hoenn services distinct tailnet hostnames, such as
-`hoenn-homebridge`, so they do not advertise Johto's service names.
+Kubernetes ExternalIP. Give each service a tailnet hostname that is unique
+across the clusters. Homebridge uses `homebridge`.
 Application LAN discovery is configured separately from cluster transit.
 
 Mauville accepts a Tailscale subnet route for `192.168.1.0/24`, which overlaps
@@ -95,7 +96,7 @@ priority to use the main routing table for that subnet. This keeps the ingress
 proxy's direct UDP connections on the LAN. The rule applies only to pod traffic
 to the home LAN; internal cluster traffic continues to use Hoenn WireGuard.
 
-## Add workloads and nodes
+## Homebridge
 
 Homebridge runs on Mauville at
 <https://homebridge.narwhal-snapper.ts.net>. Complete the first-run wizard there
@@ -111,6 +112,14 @@ Configuration, pairing state, and plugins persist on `homebridge-data` and are
 included in Mauville's local-path volume backups. The init container creates
 the initial configuration only when none exists, so UI changes survive restarts.
 
+The Nest thermostat uses the `homebridge-nest-accfactory` plugin and its child
+bridge. For a migrated Nest account, configure the plugin's Google connection
+with the IssueToken request URL and the full Cookie request header from a
+Google sign-in. Keep those credentials in the Homebridge UI configuration.
+Pair the plugin's child bridge in Apple Home as well as the main bridge.
+
+## Add workloads and nodes
+
 Put application manifests under `k8s/<app>/` and add their Flux Kustomization to
 `k8s/flux-system/kustomization.yaml`. Use dependencies for prerequisites and
 `prune: true` and `wait: true` for application reconciliation.
@@ -121,7 +130,40 @@ For a new agent, import `nixosModules.k3s` and `nixosModules.wireguardHoenn`, se
 address. Add its host key as a SOPS recipient and run `just sops-rekey` before
 deployment. Use the same encrypted cluster token as Mauville.
 
+## Backups and recovery
+
 Mauville backs up etcd snapshots and local-path application volumes to B2 with
-Restic. Database workloads need application-consistent backups in addition to
-file backups. The encrypted cluster token must remain available for recovery.
+Restic daily. Each backup retains seven daily, four weekly, and twelve monthly
+snapshots. Homebridge's volume includes its configuration, Google credentials,
+pairing state, and installed plugins. Treat these backups as secret data.
+
+Database workloads need application-consistent backups in addition to file
+backups. The encrypted cluster token must remain available for recovery.
 Follow the shared [k3s recovery guide](../../infra/docs/k3s-control-plane-recovery.md).
+
+## Automatic updates
+
+`renovate.json` uses the same policy as Sinnoh. Renovate tracks Nix inputs,
+GitHub Actions, Kubernetes container images, and Flux dependencies. Images and
+GitHub Actions use digest pins. OCI Helm charts use chart versions.
+
+Routine minor, patch, digest, and pin updates can merge automatically after
+GitHub's required checks pass. Major updates require manual review. Flake lock
+maintenance also merges automatically and is scheduled before 04:00 in the
+`America/New_York` timezone. Renovate's
+[Dependency Dashboard](https://github.com/devon-systems/hoenn/issues/469)
+lists pending updates.
+
+After an update merges to `master`, Comin checks for host changes every ten
+minutes on hosts that enable it and activates the new configuration. Flux
+checks Git every minute and reconciles the affected Kubernetes resources.
+Use `just reconcile` to request an immediate reconciliation.
+
+The scheduled host upgrade jobs also use the committed flake lock. On NixOS,
+the daily job runs from 02:00 with up to 45 minutes of delay, sets the next boot
+configuration, and does not reboot. Comin handles activation on hosts that
+enable it.
+
+Renovate updates dependencies declared in Git. Plugins installed through the
+Homebridge UI live on its persistent volume and need updates through the UI.
+Image tags that Renovate cannot order need manual tag updates in the manifests.

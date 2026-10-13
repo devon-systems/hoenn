@@ -2,11 +2,11 @@
 
 Hoenn configures personal machines. It contains NixOS, nix-darwin, Home Manager, and system-manager configurations. Keep host-specific state in `nix/hosts/<platform>/<host>/`. Put shared feature modules in `nix/modules/<feature>/`. Platform defaults live in `nix/modules/nixos/`, `nix/modules/darwin/`, and `nix/modules/system-manager/`. Cross-platform defaults live in `nix/modules/default/`.
 
-`flake.nix` imports the Nix files under `nix/`. `keys/` holds public recipients. `secrets/` holds SOPS-encrypted files. `scripts/` holds maintenance tools.
+`flake.nix` imports the Nix files under `nix/`. `scripts/` holds maintenance tools. Keep host secrets in `secrets/`, Kubernetes secrets in `k8s/secrets/`, and public SOPS recipients in `keys/`.
 
 Mauville runs the Hoenn k3s server. Internal cluster transit uses Hoenn
-WireGuard. `k8s/` contains Flux-managed household services. Keep Kubernetes
-secrets in `k8s/secrets/`. Follow `docs/kubernetes.md` for bootstrap and operations.
+WireGuard. `k8s/` contains Flux-managed household services. Follow
+`docs/kubernetes.md` for bootstrap, operations, and automatic updates.
 
 ## Check a change
 
@@ -30,11 +30,15 @@ bun scripts/generate-sway-keybindings.ts
 Run both commands with `--check` to verify the committed references. Edit the
 compositor configs, not the generated Markdown files.
 
-When changing Kubernetes resources, update the corresponding Kustomize or Flux
-resource. Do not reformat `k8s/flux-system/gotk-components.yaml`. Run
-`just check-k8s` to render Flux targets and local Helm releases and validate their
-schemas. The check needs network access and excludes encrypted SOPS documents
-and generated CRD definitions.
+When you change a Kubernetes resource, update its `kustomization.yaml` or Flux
+resource in the same change. Do not reformat
+`k8s/flux-system/gotk-components.yaml`.
+
+Run `just check-k8s` after Kubernetes changes. It renders Flux targets and local
+Helm releases with their configured values. The check needs network access to
+fetch schemas. It excludes encrypted SOPS documents and generated CRD
+definitions. Other resources fail if their schema is missing. It validates
+remote Helm release declarations but does not render their charts.
 
 ## Commit messages
 
@@ -46,11 +50,19 @@ Use scoped Conventional Commits: `fix(<scope>): <description>` for fixes and `fe
 
 Flux deploys Kubernetes changes from `master`. Use `just flux-bootstrap` for
 initial installation. Do not apply repository manifests with `kubectl` during
-normal operation. `just reconcile` and `just flux-status` target this repository's
-cluster context explicitly.
+normal operation. Use `kubectl` to apply manifests only during bootstrap or
+cluster recovery. `just reconcile` and `just flux-status` target the `hoenn`
+context explicitly.
+
+`renovate.json` follows Sinnoh's update policy. Keep shared dependency rules
+generic. Host reconciliation uses Comin where enabled, and Flux reconciles
+Kubernetes workloads.
 
 ## Keep secrets out of Git
 
 Do not commit decrypted secrets or private keys. Use `just sops-edit <file>.yaml` to edit a secret. When `keys/` changes, run `just sops-rekey`, review `.sops.yaml` and every encrypted file, then commit them together.
 
 Use `just sops-bootstrap` once to derive your local age key from your SSH key.
+For host secrets, use `just sops-edit tailscale.yaml`. For Kubernetes secrets,
+pass the full path, such as
+`just sops-edit k8s/secrets/tailscale-operator-values.sops.yaml`.
