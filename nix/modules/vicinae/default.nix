@@ -10,7 +10,7 @@ _: {
       enableFirefoxIntegration = true;
       mutableSettings = true;
       extensions = [
-         self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae-pdsls
+        self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae-pdsls
       ];
 
       settings = {
