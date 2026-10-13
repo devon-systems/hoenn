@@ -21,6 +21,7 @@
           self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.vesktop
+          self.homeModules.vicinae
           self.homeModules.zed-editor
           self.homeModules.vscode
           self.homeModules.opencodeDesktop
