@@ -1,13 +1,25 @@
 # hoenn
 
-Declarative configuration for my personal machines. Hoenn uses a flake-parts
-Nix flake to compose NixOS, nix-darwin, Home Manager, and system-manager configurations,
-with shared modules for packages, desktop environments, networking, secrets,
-and automatic upgrades. Mauville also runs a k3s cluster for household services,
-with Flux reconciliation and internal transit over Hoenn WireGuard.
+Declarative configuration for my personal machines and household services.
+Hoenn combines NixOS, nix-darwin, Home Manager, system-manager, k3s, Flux, and
+SOPS to manage hosts, applications, networking, and backups.
 
-For my personal homelab, see [johto](https://github.com/alyraffauf/johto). For
-my production services, see [sinnoh](https://github.com/alyraffauf/sinnoh).
+For my personal homelab, see [johto](https://github.com/devon-systems/johto).
+For my production services, see [sinnoh](https://github.com/devon-systems/sinnoh).
+
+## Architecture
+
+| Host                                             | Cluster role                                    |
+| ------------------------------------------------ | ----------------------------------------------- |
+| [`mauville`](nix/hosts/nixos/mauville/README.md) | k3s server, household services, and data backup |
+
+Internal cluster traffic uses the `hoenn` WireGuard interface. Homebridge uses
+Mauville's home LAN for HomeKit discovery. The Tailscale operator exposes its
+web UI on the same tailnet as Johto, with separate Hoenn operator credentials.
+
+Flux watches the `master` branch and reconciles the application, networking,
+and secret resources composed by `k8s/flux-system/`. Comin reconciles host
+configurations from the same branch on hosts that enable it.
 
 ## Configurations
 
@@ -31,21 +43,25 @@ Tailscale modules connect hosts to the networks they need.
 
 ```text
 nix/
-├── hosts/  Per-host composition and hardware state
-├── modules/  feature modules for NixOS, nix-darwin, Home Manager, and system-manager
-├── devShells.nix  Development tools
-└── treefmt.nix  Formatting and linting configuration
-keys/  Public SSH keys used as age recipients
-secrets/  SOPS-encrypted configuration
-scripts/  Repository maintenance utilities
-k8s/  Flux-managed household services and encrypted application secrets
-docs/  Cluster setup and operations
-.github/workflows/  Flake checks and configuration builds
+├── hosts/<platform>/  Per-host configuration and hardware state
+├── modules/           Shared feature modules and platform defaults
+├── devShells.nix       Development tools
+└── treefmt.nix         Formatting and linting configuration
+k8s/                   Flux, Kustomize, Helm, and application manifests
+secrets/               SOPS-encrypted host secrets
+keys/                  Public SOPS recipients
+docs/                  Cluster setup and operations
+scripts/               Repository maintenance utilities
+.github/workflows/     Flake checks and configuration builds
 ```
 
 `flake.nix` recursively imports the modules under `nix/`. Each Nix file there
 declares or extends a flake output, so new modules do not need to be added to a
 central import list.
+
+Kubernetes applications are grouped by service under `k8s/`.
+`k8s/flux-system/` defines their reconciliation order. Kubernetes secrets live
+in `k8s/secrets/`.
 
 ## Work locally
 
@@ -59,8 +75,16 @@ nix flake check
 
 Run `just` to list maintenance commands.
 
-See [Hoenn cluster setup](docs/kubernetes.md) for Flux bootstrap, Tailscale
-service exposure, and the Kubernetes workflows shared with Johto and Sinnoh.
+The Kubernetes recipes match Sinnoh and Johto. Use `just check-k8s` for manifest
+validation, `just reconcile` to reconcile the Flux root, `just reconcile <name>`
+for a workload, and `just flux-status` to inspect reconciliation. These Flux
+commands explicitly target the `hoenn` context.
+`just kubeconfig <host> <api-address>` fetches a named administrator kubeconfig.
+`just flux-bootstrap <age-key-file> <git-ssh-key-file>` installs SOPS decryption
+and bootstraps the checked-in Flux version.
+
+See [Hoenn cluster setup](docs/kubernetes.md) for bootstrap, Homebridge, backups,
+and Tailscale service exposure.
 
 ## Deployment
 
@@ -74,6 +98,12 @@ blzrd switch mauville
 the boot default without activating it. Without a host name, `blzrd switch`
 deploys every registered node.
 
+Comin deploys host changes from `master` on hosts that enable it. Flux deploys
+Kubernetes workloads from `master`. Renovate uses Sinnoh's dependency update
+policy and automatically merges routine updates after required checks pass.
+See [automatic updates](docs/kubernetes.md#automatic-updates) for the deployment
+flow and the limits of Git-managed updates.
+
 ## Secrets
 
 SOPS encrypts secrets for the recipients in `.sops.yaml`. Public keys live in
@@ -82,6 +112,10 @@ SOPS encrypts secrets for the recipients in `.sops.yaml`. Public keys live in
 ```sh
 just sops-edit tailscale.yaml
 ```
+
+For Kubernetes secrets, pass the full path, such as
+`just sops-edit k8s/secrets/tailscale-operator-values.sops.yaml`.
+Use `just sops-bootstrap` once to derive your local age key from your SSH key.
 
 See the [Niri keyboard reference](nix/modules/niri/README.md) for the
 configured desktop shortcuts.
