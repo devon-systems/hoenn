@@ -18,6 +18,23 @@ _: {
         cmd_duration.disabled = true;
         conda.symbol = " ";
         crystal.symbol = " ";
+        custom.reboot = {
+          when = ''
+            test -d /run/booted-system || exit 1
+            for component in kernel kernel-modules initrd; do
+              booted=$(readlink -f "/run/booted-system/$component")
+              current=$(readlink -f "/run/current-system/$component")
+              if [ "$booted" != "$current" ]; then
+                exit 0
+              fi
+            done
+            exit 1
+          '';
+          shell = ["sh"];
+          symbol = "↻ reboot";
+          style = "bold red";
+          format = "[$symbol]($style) ";
+        };
         dart.symbol = " ";
 
         directory = {
