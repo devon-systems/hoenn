@@ -89,6 +89,12 @@ Kubernetes ExternalIP. Give Hoenn services distinct tailnet hostnames, such as
 `hoenn-homebridge`, so they do not advertise Johto's service names.
 Application LAN discovery is configured separately from cluster transit.
 
+Mauville accepts a Tailscale subnet route for `192.168.1.0/24`, which overlaps
+its home LAN. The `k3s-lan-routing` service gives pod traffic arriving on `cni0`
+priority to use the main routing table for that subnet. This keeps the ingress
+proxy's direct UDP connections on the LAN. The rule applies only to pod traffic
+to the home LAN; internal cluster traffic continues to use Hoenn WireGuard.
+
 ## Add workloads and nodes
 
 Homebridge runs on Mauville at
