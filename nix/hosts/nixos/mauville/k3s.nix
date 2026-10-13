@@ -48,11 +48,7 @@ _: {
       };
     };
 
-    networking.firewall.allowedUDPPortRanges = [
-      {
-        from = 31667;
-        to = 31680;
-      }
-    ];
+    # Keep volume backups valid before the first local-path PVC is created.
+    systemd.tmpfiles.rules = ["d /var/lib/rancher/k3s/storage 0755 root root -"];
   };
 }

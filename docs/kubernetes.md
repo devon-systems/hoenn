@@ -84,7 +84,8 @@ The operator depends on the secrets reconciliation and joins the tailnet once
 its credentials and the tailnet policy are ready.
 
 The private-ingress ProxyGroup follows Johto's configuration with one replica
-on Mauville. Give Hoenn services distinct tailnet hostnames, such as
+on Mauville. It uses automatic endpoint discovery because Mauville has no
+Kubernetes ExternalIP. Give Hoenn services distinct tailnet hostnames, such as
 `hoenn-homebridge`, so they do not advertise Johto's service names.
 Application LAN discovery is configured separately from cluster transit.
 
