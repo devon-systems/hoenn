@@ -64,6 +64,8 @@
           config.programs.mcp.servers) {
             # Hermes filters display variables from the MCP subprocess environment.
             chrome-devtools.env.WAYLAND_DISPLAY = "\${WAYLAND_DISPLAY}";
+            github.auth = "oauth";
+            todoist.auth = "oauth";
           };
 
         backend = {
@@ -74,12 +76,7 @@
         settings = {
           browser.cloud_provider = "browserbase";
           display.interface = "tui";
-          mcp_servers.todoist = {
-            url = "https://ai.todoist.net/mcp";
-            auth = "oauth";
-            trust = "full";
-            enabled = true;
-          };
+          mcp_servers.todoist.trust = "full";
           model = {
             default = "gpt-6.1-sol";
             provider = "openai-codex";
