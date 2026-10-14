@@ -74,6 +74,12 @@
         settings = {
           browser.cloud_provider = "browserbase";
           display.interface = "tui";
+          mcp_servers.todoist = {
+            url = "https://ai.todoist.net/mcp";
+            auth = "oauth";
+            trust = "full";
+            enabled = true;
+          };
           model = {
             default = "gpt-6.1-sol";
             provider = "openai-codex";
