@@ -74,6 +74,10 @@
         settings = {
           browser.cloud_provider = "browserbase";
           display.interface = "tui";
+          model = {
+            default = "gpt-6.1-sol";
+            provider = "openai-codex";
+          };
           stt = {
             enabled = true;
             local.model = "base";
