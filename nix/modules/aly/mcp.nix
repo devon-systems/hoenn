@@ -16,7 +16,7 @@
             "--isolated"
           ];
         };
-        github.url = "https://api.githubcopilot.com/mcp/";
+
         nixos.command = lib.getExe pkgs.mcp-nixos;
         tg.command = lib.getExe inputs.tg.packages.${pkgs.stdenv.hostPlatform.system}.tgmcp;
         todoist.url = "https://ai.todoist.net/mcp";

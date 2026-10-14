@@ -64,7 +64,7 @@
           config.programs.mcp.servers) {
             # Hermes filters display variables from the MCP subprocess environment.
             chrome-devtools.env.WAYLAND_DISPLAY = "\${WAYLAND_DISPLAY}";
-            github.auth = "oauth";
+
             todoist.auth = "oauth";
           };
 
