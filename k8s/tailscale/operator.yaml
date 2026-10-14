@@ -19,7 +19,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: tailscale
-      version: 1.102.4
+      version: 1.104.1
   install:
     createNamespace: true
   interval: 30m
