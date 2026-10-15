@@ -7,6 +7,39 @@
       self,
       ...
     }: let
+      hermesPackage = config.services.hermes-agent.package;
+      honchoPlugin = pkgs.fetchFromGitHub {
+        name = "hermes-plugin-honcho";
+        owner = "plastic-labs";
+        repo = "honcho";
+        rev = "e2d2aba182862deeb846e5cd4a30a41bce0ed82a";
+        rootDir = "hermes-plugin-honcho";
+        hash = "sha256-Lg17/7BPmqS2znsCAM/h2X8wrqYrIhNto+8eok5AgQA=";
+      };
+      honchoSdk = hermesPackage.python.pkgs.buildPythonPackage {
+        pname = "honcho-ai";
+        version = "2.2.0";
+        format = "wheel";
+
+        src = pkgs.fetchPypi {
+          pname = "honcho_ai";
+          version = "2.2.0";
+          format = "wheel";
+          python = "py3";
+          dist = "py3";
+          hash = "sha256-MvCYpMi8/kKI8JlN2rC8UqaNyHBp0PLOLIdY7ioXYfI=";
+        };
+
+        # Use Hermes's httpx and pydantic without propagating duplicate packages.
+        buildInputs = [hermesPackage.hermesVenv];
+        pythonImportsCheck = ["honcho"];
+
+        meta = {
+          description = "Python SDK for Honcho conversational memory";
+          homepage = "https://github.com/plastic-labs/honcho";
+          license = lib.licenses.asl20;
+        };
+      };
       profilePath = lib.concatStringsSep ":" [
         "/etc/profiles/per-user/${config.home.username}/bin"
         "${config.home.homeDirectory}/.nix-profile/bin"
@@ -37,6 +70,12 @@
 
       programs.hermes-agent.enable = true;
 
+      # The memory-provider loader requires the directory name to match the provider.
+      home.file.honcho-plugin = {
+        target = "${config.services.hermes-agent.hermesHome}/plugins/honcho";
+        source = honchoPlugin;
+      };
+
       # Extend the packaged runtime PATH without sourcing interactive shell files.
       systemd.user.services = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         hermes-agent.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
@@ -46,6 +85,7 @@
       services.hermes-agent = {
         enable = true;
         environmentFiles = [config.sops.secrets.hermes.path];
+        extraPythonPackages = [honchoSdk];
         gateway.enable = true;
 
         mcpServers =
@@ -77,10 +117,12 @@
           browser.cloud_provider = "browserbase";
           display.interface = "tui";
           mcp_servers.todoist.trust = "full";
+          memory.provider = "honcho";
           model = {
             default = "gpt-6.1-sol";
             provider = "openai-codex";
           };
+          plugins.enabled = ["honcho"];
           stt = {
             enabled = true;
             local.model = "base";
@@ -102,7 +144,6 @@
     nixosModules.hermesWebui = {
       config,
       lib,
-      pkgs,
       ...
     }: {
       imports = [inputs.hermes-webui.nixosModules.default];
@@ -125,8 +166,7 @@
         stateDir = "/home/aly/.hermes/webui";
         user = "aly";
 
-        agent.package =
-          inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        agent.package = config.home-manager.users.aly.programs.hermes-agent.package;
       };
     };
   };
