@@ -7,7 +7,7 @@
       self,
       ...
     }: let
-      hermesPackage = config.services.hermes-agent.package;
+      hermesPackage = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
       honchoPlugin = pkgs.fetchFromGitHub {
         name = "hermes-plugin-honcho";
         owner = "plastic-labs";
@@ -85,8 +85,19 @@
       services.hermes-agent = {
         enable = true;
         environmentFiles = [config.sops.secrets.hermes.path];
-        extraPythonPackages = [honchoSdk];
         gateway.enable = true;
+        package =
+          (hermesPackage.override {
+            extraPythonPackages = [honchoSdk];
+          }).overrideAttrs (old: {
+            # The packaged Python tree omits the TUI's gateway bootstrap script.
+            postInstall =
+              (old.postInstall or "")
+              + ''
+                wrapProgram "$out/bin/hermes" \
+                  --set HERMES_PYTHON_SRC_ROOT ${inputs.hermes-agent}
+              '';
+          });
 
         mcpServers =
           lib.recursiveUpdate (lib.mapAttrs (name: server:
