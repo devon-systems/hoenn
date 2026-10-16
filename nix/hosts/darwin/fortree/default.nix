@@ -21,6 +21,7 @@
         self.darwinModules.tailscale
         self.darwinModules.wireguardHoenn
         self.darwinModules.zen
+        self.darwinModules.zed-editor
       ];
 
       specialArgs = {inherit self;};
