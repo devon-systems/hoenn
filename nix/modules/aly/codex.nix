@@ -7,7 +7,7 @@
 
       settings = {
         approval_policy = "never";
-        sandbox_mode = "danger-full-access";
+        default_permissions = ":danger-full-access";
       };
 
       package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
