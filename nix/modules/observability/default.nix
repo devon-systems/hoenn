@@ -35,6 +35,10 @@ in {
       environment.etc."alloy/config.alloy".text = alloyConfig {
         hostName = config.networking.hostName;
         isLinux = true;
+        cominPort =
+          if config.services.comin.enable
+          then config.services.comin.exporter.port
+          else null;
         server =
           if config.networking.hostName == "mauville"
           then "127.0.0.1"
@@ -50,6 +54,10 @@ in {
       configuration = pkgs.writeText "config.alloy" (alloyConfig {
         hostName = config.networking.hostName;
         isLinux = false;
+        cominPort =
+          if config.services.comin.enable
+          then config.services.comin.exporter.port
+          else null;
       });
     in {
       launchd.daemons.alloy = {

@@ -3,7 +3,7 @@
 Mauville runs Prometheus on port `3020` and Loki on port `3030` as NixOS
 services, following Johto's Goldenrod setup. Canalave's existing Grafana has
 `Hoenn Prometheus` and `Hoenn Loki` data sources. The **Hoenn** folder contains
-desktop, drive-health, and data-protection dashboards. The Grafana
+desktop, drive-health, data-protection, and Comin dashboards. The Grafana
 configuration lives in Sinnoh.
 
 ## Collection
@@ -59,7 +59,8 @@ files through its textfile collector, using the existing node metrics pipeline.
 
 Linux Alloy reads system and user journals, with `host`, `unit`, `user_unit`,
 and `level` labels. Journal retention on each machine limits available history.
-Verdanturf tails `/var/log/system.log` and `/var/log/nix-darwin-upgrade.log`.
+Verdanturf tails `/var/log/system.log`, `/var/log/nix-darwin-upgrade.log`, and
+`/var/log/comin.log`.
 It does not collect the macOS unified log or arbitrary application log files.
 Alloy keeps journal cursors, file positions, and its metrics write-ahead log
 under `/var/lib/alloy`. Metrics can buffer during network outages for up to
@@ -69,6 +70,29 @@ NixOS and macOS agents connect through `mauville.hoenn` over Hoenn WireGuard.
 Mauville's own agent uses loopback. The system-manager configuration does not
 manage networking, so its agent requires an existing Tailscale connection and
 uses `mauville.narwhal-snapper.ts.net`. Canalave uses that Tailscale name too.
+
+## Comin deployments
+
+Alloy scrapes Comin's built-in exporter on `127.0.0.1:4243` on each NixOS host
+and Verdanturf. Samples carry `job="comin"`, `cluster="hoenn"`, `host`,
+`instance`, and `os` labels and use the existing remote-write pipeline.
+The system-manager output does not run Comin and does not scrape it.
+
+The **Hoenn Comin** dashboard shows exporter reachability, fetch activity,
+failure flags, deployment suspension, Linux reboot requirements, and the
+latest reported deployment commit and outcome. Failure flags reset when
+Comin restarts. A failed deployment row identifies an attempted deployment,
+not the active system revision.
+
+Linux Comin journal entries and Verdanturf's Comin file logs have
+`service="comin"`. Select this label in Loki to view deployment logs.
+The label applies to newly collected logs; older Linux entries remain
+searchable with `unit="comin.service"`.
+
+Johto and Sinnoh use the same local scrape pattern every 30 seconds and
+forward metrics to Goldenrod and Canalave respectively. Each region has its
+own Comin dashboard in its existing Grafana folder. Johto's Cherrygrove
+does not run Comin and is excluded.
 
 ## Storage and access
 

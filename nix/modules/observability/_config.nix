@@ -1,6 +1,7 @@
 {
   hostName,
   isLinux,
+  cominPort ? null,
   server ? "mauville.hoenn",
 }: let
   os =
@@ -70,6 +71,24 @@ in
     }
   ''
   + (
+    if cominPort != null
+    then ''
+      prometheus.scrape "comin" {
+        targets = [{
+          __address__ = "127.0.0.1:${toString cominPort}",
+          instance    = "${hostName}",
+          host        = "${hostName}",
+          cluster     = "hoenn",
+          os          = "${os}",
+        }]
+        job_name        = "comin"
+        scrape_interval = "60s"
+        forward_to      = [prometheus.remote_write.mauville.receiver]
+      }
+    ''
+    else ""
+  )
+  + (
     if isLinux
     then ''
       prometheus.scrape "smartctl" {
@@ -92,6 +111,12 @@ in
           target_label  = "unit"
         }
         rule {
+          source_labels = ["__journal__systemd_unit"]
+          regex         = "comin[.]service"
+          target_label  = "service"
+          replacement   = "comin"
+        }
+        rule {
           source_labels = ["__journal__systemd_user_unit"]
           target_label  = "user_unit"
         }
@@ -112,17 +137,38 @@ in
         }
       }
     ''
-    else ''
-      local.file_match "system" {
-        path_targets = [
-          {__path__ = "/var/log/system.log", job = "system-log", host = "${hostName}", os = "darwin"},
-          {__path__ = "/var/log/nix-darwin-upgrade.log", job = "system-log", host = "${hostName}", os = "darwin"},
-        ]
-      }
+    else
+      ''
+        local.file_match "system" {
+          path_targets = [
+            {__path__ = "/var/log/system.log", job = "system-log", host = "${hostName}", os = "darwin"},
+            {__path__ = "/var/log/nix-darwin-upgrade.log", job = "system-log", host = "${hostName}", os = "darwin"},
+          ]
+        }
 
-      loki.source.file "system" {
-        targets    = local.file_match.system.targets
-        forward_to = [loki.write.mauville.receiver]
-      }
-    ''
+        loki.source.file "system" {
+          targets    = local.file_match.system.targets
+          forward_to = [loki.write.mauville.receiver]
+        }
+      ''
+      + (
+        if cominPort != null
+        then ''
+          local.file_match "comin" {
+            path_targets = [{
+              __path__ = "/var/log/comin.log",
+              job      = "comin",
+              service  = "comin",
+              host     = "${hostName}",
+              os       = "darwin",
+            }]
+          }
+
+          loki.source.file "comin" {
+            targets    = local.file_match.comin.targets
+            forward_to = [loki.write.mauville.receiver]
+          }
+        ''
+        else ""
+      )
   )
