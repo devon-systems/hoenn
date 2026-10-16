@@ -18,6 +18,7 @@
       self.nixosModules.fallarbor
       self.nixosModules.google-chrome
       self.nixosModules.nixos
+      self.nixosModules.observability
       self.nixosModules.thermald
       self.nixosModules.wireguardHoenn
     ];

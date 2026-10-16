@@ -86,6 +86,11 @@ and bootstraps the checked-in Flux version.
 See [Hoenn cluster setup](docs/kubernetes.md) for bootstrap, Homebridge, backups,
 and Tailscale service exposure.
 
+Mauville also stores metrics and logs from the Hoenn desktops in Prometheus
+and Loki. Canalave's Grafana has the Hoenn data sources and desktop dashboard.
+See [Hoenn desktop telemetry](docs/observability.md) for collection, retention,
+and deployment details.
+
 ## Deployment
 
 `blzrd` deploys `mauville` and `petalburg`. For example:

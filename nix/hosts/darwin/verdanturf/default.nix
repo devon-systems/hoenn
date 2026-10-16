@@ -17,6 +17,7 @@
         self.darwinModules.comin
         self.darwinModules.default
         self.darwinModules.darwin
+        self.darwinModules.observability
         self.darwinModules.aly
         self.darwinModules.tailscale
         self.darwinModules.wireguardHoenn

@@ -18,6 +18,7 @@
       self.nixosModules.homebrew
       self.nixosModules.niri
       self.nixosModules.nixos
+      self.nixosModules.observability
       self.nixosModules.rustboro
       self.nixosModules.tailscale
       self.nixosModules.thermald

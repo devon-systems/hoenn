@@ -19,6 +19,7 @@
         self.nixosModules.hermesWebui
         self.nixosModules.niri
         self.nixosModules.nixos
+        self.nixosModules.observability
         self.nixosModules.petalburg
         self.nixosModules.tailscale
         self.nixosModules.wireguardHoenn

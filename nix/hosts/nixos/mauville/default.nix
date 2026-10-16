@@ -20,6 +20,7 @@
         self.nixosModules.k3s
         self.nixosModules.mauville
         self.nixosModules.nixos
+        self.nixosModules.observability
         self.nixosModules.sway
         self.nixosModules.tailscale
         self.nixosModules.wireguardHoenn

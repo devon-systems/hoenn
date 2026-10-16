@@ -10,6 +10,10 @@ _: {
   in {
     users.users.aly.linger = true;
 
+    systemd.tmpfiles.rules = [
+      "d /var/lib/hoenn-metrics/backups-user-aly 0755 aly ${config.users.users.aly.group} -"
+    ];
+
     sops.secrets = {
       restic-password = {
         sopsFile = self + "/secrets/restic.yaml";
@@ -58,6 +62,8 @@ _: {
         '';
       };
     in {
+      imports = [self.homeModules.backupMetrics];
+
       services.restic = {
         enable = true;
         backups = {

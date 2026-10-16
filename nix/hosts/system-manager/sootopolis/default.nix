@@ -13,6 +13,7 @@
     modules = [
       self.systemModules.autoUpgrade
       self.systemModules.systemManager
+      self.systemModules.observability
       self.systemModules.sootopolis
     ];
   };
