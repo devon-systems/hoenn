@@ -25,7 +25,7 @@ in {
     }: {
       imports = [inputs.comin.darwinModules.comin];
 
-      # Fortree uses Determinate Nix, so nix-darwin's config.nix.package is unavailable.
+      # Determinate Nix leaves nix-darwin's config.nix.package unavailable.
       launchd.daemons.comin.serviceConfig.EnvironmentVariables = lib.mkForce {
         PATH = "/nix/var/nix/profiles/default/bin:${lib.makeBinPath [
           pkgs.git

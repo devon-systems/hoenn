@@ -4,7 +4,7 @@ concurrency:
 env:
   NIX_CONFIG: "access-tokens = github.com=${{ github.token }}"
 jobs:
-  build-fortree:
+  build-verdanturf:
     runs-on: macos-latest
     steps:
     - name: Checkout
@@ -18,8 +18,8 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: alyraffauf
-    - name: Build fortree
-      run: nix build --accept-flake-config --print-out-paths .#darwinConfigurations.fortree.config.system.build.toplevel
+    - name: Build verdanturf
+      run: nix build --accept-flake-config --print-out-paths .#darwinConfigurations.verdanturf.config.system.build.toplevel
 name: build-darwin
 'on':
   pull_request:

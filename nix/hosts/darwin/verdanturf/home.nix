@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.darwinModules.fortree = {
+  flake.darwinModules.verdanturf = {
     config,
     self,
     ...
@@ -11,13 +11,13 @@
 
     sops.secrets = {
       syncthing-cert = {
-        sopsFile = self + "/secrets/syncthing-fortree.yaml";
+        sopsFile = self + "/secrets/syncthing-verdanturf.yaml";
         key = "cert";
         owner = "aly";
       };
 
       syncthing-key = {
-        sopsFile = self + "/secrets/syncthing-fortree.yaml";
+        sopsFile = self + "/secrets/syncthing-verdanturf.yaml";
         key = "key";
         owner = "aly";
       };

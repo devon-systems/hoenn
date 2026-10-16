@@ -4,15 +4,15 @@
   inputs,
   ...
 }: {
-  options.flake.darwinModules.fortree = lib.mkOption {
+  options.flake.darwinModules.verdanturf = lib.mkOption {
     type = lib.types.deferredModule;
     default = {};
   };
 
   config.flake = {
-    darwinConfigurations.fortree = inputs.nix-darwin.lib.darwinSystem {
+    darwinConfigurations.verdanturf = inputs.nix-darwin.lib.darwinSystem {
       modules = [
-        self.darwinModules.fortree
+        self.darwinModules.verdanturf
         inputs.sops-nix.darwinModules.sops
         self.darwinModules.comin
         self.darwinModules.default

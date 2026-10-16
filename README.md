@@ -23,17 +23,17 @@ configurations from the same branch on hosts that enable it.
 
 ## Configurations
 
-| Host                                                 | Platform       | Flake output                     |
-| ---------------------------------------------------- | -------------- | -------------------------------- |
-| [`fallarbor`](nix/hosts/nixos/fallarbor/README.md)   | NixOS          | `nixosConfigurations.fallarbor`  |
-| [`lilycove`](nix/hosts/nixos/lilycove/README.md)     | NixOS          | `nixosConfigurations.lilycove`   |
-| [`mauville`](nix/hosts/nixos/mauville/README.md)     | NixOS          | `nixosConfigurations.mauville`   |
-| [`pacifidlog`](nix/hosts/nixos/pacifidlog/README.md) | NixOS          | `nixosConfigurations.pacifidlog` |
-| [`petalburg`](nix/hosts/nixos/petalburg/README.md)   | NixOS          | `nixosConfigurations.petalburg`  |
-| [`rustboro`](nix/hosts/nixos/rustboro/README.md)     | NixOS          | `nixosConfigurations.rustboro`   |
-| [`sootopolis`](nix/hosts/nixos/sootopolis/README.md) | NixOS          | `nixosConfigurations.sootopolis` |
-| [`fortree`](nix/hosts/darwin/fortree/README.md)      | nix-darwin     | `darwinConfigurations.fortree`   |
-| `sootopolis`                                         | system-manager | `systemConfigs.sootopolis`       |
+| Host                                                  | Platform       | Flake output                      |
+| ----------------------------------------------------- | -------------- | --------------------------------- |
+| [`fallarbor`](nix/hosts/nixos/fallarbor/README.md)    | NixOS          | `nixosConfigurations.fallarbor`   |
+| [`lilycove`](nix/hosts/nixos/lilycove/README.md)      | NixOS          | `nixosConfigurations.lilycove`    |
+| [`mauville`](nix/hosts/nixos/mauville/README.md)      | NixOS          | `nixosConfigurations.mauville`    |
+| [`pacifidlog`](nix/hosts/nixos/pacifidlog/README.md)  | NixOS          | `nixosConfigurations.pacifidlog`  |
+| [`petalburg`](nix/hosts/nixos/petalburg/README.md)    | NixOS          | `nixosConfigurations.petalburg`   |
+| [`rustboro`](nix/hosts/nixos/rustboro/README.md)      | NixOS          | `nixosConfigurations.rustboro`    |
+| [`sootopolis`](nix/hosts/nixos/sootopolis/README.md)  | NixOS          | `nixosConfigurations.sootopolis`  |
+| [`verdanturf`](nix/hosts/darwin/verdanturf/README.md) | nix-darwin     | `darwinConfigurations.verdanturf` |
+| `sootopolis`                                          | system-manager | `systemConfigs.sootopolis`        |
 
 NixOS hardware discovery is captured with nixos-facter, disk layouts are
 declared with Disko, and SOPS manages encrypted secrets. Shared WireGuard and

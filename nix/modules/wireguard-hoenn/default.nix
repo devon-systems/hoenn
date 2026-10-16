@@ -13,6 +13,7 @@
     mauville = "10.254.1.2";
     rustboro = "10.254.1.3";
     sootopolis = "10.254.1.4";
+    verdanturf = "10.254.1.5";
     fallarbor = "10.254.1.6";
     pacifidlog = "10.254.1.7";
     petalburg = "10.254.1.8";
@@ -52,11 +53,11 @@ in {
 
       sops.secrets.wireguard-hoenn-private = {
         sopsFile = self + "/secrets/wireguard-hoenn.yaml";
-        key = "fortree";
+        key = config.networking.hostName;
       };
 
       networking.wg-quick.interfaces.hoenn = {
-        address = ["10.254.1.5/24"];
+        address = ["${nodeAddresses.${config.networking.hostName}}/24"];
         privateKeyFile = privateKey;
         preUp = ''
           while [ ! -r ${privateKey} ]; do

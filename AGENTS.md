@@ -14,11 +14,14 @@ Run `nix fmt` and `nix flake check` before you commit. Build each output affecte
 
 ```sh
 nix build .#nixosConfigurations.<host>.config.system.build.toplevel
-nix build .#darwinConfigurations.fortree.config.system.build.toplevel
+nix build .#darwinConfigurations.verdanturf.config.system.build.toplevel
 nix build .#systemConfigs.sootopolis
 ```
 
-If a NixOS host's `facter.json` changes, run `nix run github:alyraffauf/infra#generate-host-readmes`. Do not edit text between generated-section markers in a host README.
+If a host's `facter.json` or `system-profiler.json` changes, run
+`nix run github:alyraffauf/infra#generate-host-readmes`. Capture Darwin hardware
+over SSH with `nix run github:alyraffauf/infra#generate-host-readmes -- --capture-darwin <host>`.
+Do not edit text between generated-section markers in a host README.
 
 After changing compositor keybindings, regenerate the keyboard references:
 

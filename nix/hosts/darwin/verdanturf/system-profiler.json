@@ -1,0 +1,34 @@
+{
+  "SPHardwareDataType": [
+    {
+      "machine_name": "MacBook Neo",
+      "machine_model": "Mac17,5",
+      "chip_type": "Apple A18 Pro",
+      "number_processors": "proc 6:2:4:0",
+      "physical_memory": "8 GB",
+      "boot_rom_version": "18000.120.36"
+    }
+  ],
+  "SPDisplaysDataType": [
+    {
+      "sppci_model": "Apple A18 Pro",
+      "sppci_cores": "5",
+      "spdisplays_ndrvs": [
+        {
+          "_name": "Color LCD",
+          "spdisplays_pixelresolution": "spdisplays_2408x1506Retina"
+        }
+      ]
+    }
+  ],
+  "SPNVMeDataType": [
+    {
+      "_items": [
+        {
+          "device_model": "APPLE SSD AP0512Z",
+          "size_in_bytes": 500277792768
+        }
+      ]
+    }
+  ]
+}

@@ -99,7 +99,7 @@ _: {
           type = folderType {
             path = "~/Sync";
             id = "default";
-            devices = ["fortree" "lilycove" "mauville" "pacifidlog" "petalburg" "rustboro" "sootopolis"];
+            devices = ["lilycove" "mauville" "pacifidlog" "petalburg" "rustboro" "sootopolis" "verdanturf"];
 
             versioning = {
               type = "trashcan";

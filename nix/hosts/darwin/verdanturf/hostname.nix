@@ -1,7 +1,7 @@
 _: {
-  flake.darwinModules.fortree = {
+  flake.darwinModules.verdanturf = {
     networking = let
-      hostName = "fortree";
+      hostName = "verdanturf";
     in {
       inherit hostName;
       computerName = hostName;
