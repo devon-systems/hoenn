@@ -1,7 +1,12 @@
 _: {
-  flake.homeModules.zed-editor = {pkgs, ...}: {
+  flake.homeModules.zed-editor = {
+    lib,
+    pkgs,
+    ...
+  }: {
     programs.zed-editor = {
       enable = true;
+      package = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin null;
       enableMcpIntegration = true;
       installRemoteServer = true;
       mutableUserDebug = true;
