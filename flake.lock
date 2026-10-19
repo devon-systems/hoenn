@@ -555,11 +555,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1792370364,
-        "narHash": "sha256-PwoNx4BMi1NrinEzUe65NnWBSvZrOLR63hSpyFdF8iE=",
+        "lastModified": 1792377827,
+        "narHash": "sha256-ELpd4DLC/isc2WM3NTiFBJkUPGR4B9rQsXbtVOJacUU=",
         "owner": "devon-systems",
         "repo": "dvnpkgs",
-        "rev": "e49ca72c0b1536ffeac7833e65c4e8358b7c19ca",
+        "rev": "14fc136a65983b8079a0668d23d0fdd8ad4ba731",
         "type": "github"
       },
       "original": {

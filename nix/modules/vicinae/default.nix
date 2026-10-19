@@ -9,7 +9,7 @@
       enableFirefoxIntegration = true;
       mutableSettings = true;
       extensions = [
-        inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.vicinae-pdsls
+        inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.vicinae-extensions-pdsls
       ];
 
       settings = {
