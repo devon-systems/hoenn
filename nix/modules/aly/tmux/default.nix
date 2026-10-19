@@ -1,12 +1,8 @@
-{inputs, ...}: let
-  tmuxPackage = pkgs: inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.tmux;
-
-  programs = {pkgs, ...}: {
+{inputs, ...}: {
+  flake.homeModules.aly = {pkgs, ...}: {
     programs.tmux = {
       enable = true;
-      package = tmuxPackage pkgs;
+      package = inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.tmux;
     };
   };
-in {
-  flake.homeModules.aly = programs;
 }

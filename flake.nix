@@ -32,6 +32,7 @@
     };
 
     determinate.url = "github:DeterminateSystems/determinate";
+    dvnpkgs.url = "github:devon-systems/dvnpkgs";
 
     disko = {
       url = "github:nix-community/disko";
@@ -69,10 +70,6 @@
     };
 
     llm-agents.url = "github:numtide/llm-agents.nix";
-    crush-fork = {
-      url = "github:alyraffauf/crush/fix/symlinked-skill-permissions";
-      flake = false;
-    };
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";
@@ -91,11 +88,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     sops-nix = {
@@ -109,11 +101,6 @@
     };
 
     switchyard.url = "github:alyraffauf/switchyard";
-
-    tg = {
-      url = "git+https://tangled.org/aly.codes/tg";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";

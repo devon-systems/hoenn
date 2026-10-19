@@ -2,7 +2,7 @@
   flake = {
     nixosModules.zen = {pkgs, ...}: {
       environment.systemPackages = [
-        (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser.override {
+        (inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser.override {
           wrapFirefox = browser: options:
             pkgs.wrapFirefox browser (options
               // {

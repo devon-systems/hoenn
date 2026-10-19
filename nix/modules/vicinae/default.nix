@@ -1,8 +1,7 @@
-_: {
+{inputs, ...}: {
   flake.homeModules.vicinae = {
     lib,
     pkgs,
-    self,
     ...
   }: {
     programs.vicinae = {
@@ -10,7 +9,7 @@ _: {
       enableFirefoxIntegration = true;
       mutableSettings = true;
       extensions = [
-        self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae-pdsls
+        inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.vicinae-pdsls
       ];
 
       settings = {
