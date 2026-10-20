@@ -40,6 +40,7 @@
           self.homeModules.aly
           self.homeModules.chatgpt
           self.homeModules.claude-desktop
+          self.homeModules.t3code
           self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.syncthing

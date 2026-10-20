@@ -20,6 +20,7 @@
           self.homeModules.appherder
           self.homeModules.chatgpt
           self.homeModules.claude-desktop
+          self.homeModules.t3code
           self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.zed-editor
