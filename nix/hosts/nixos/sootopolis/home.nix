@@ -19,6 +19,7 @@
           self.homeModules.aly
           self.homeModules.appherder
           self.homeModules.chatgpt
+          self.homeModules.claude-desktop
           self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.vesktop
