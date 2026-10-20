@@ -1,0 +1,112 @@
+--- a/internal/executor/utils.go
++++ b/internal/executor/utils.go
+@@ -226,16 +226,18 @@
+ }
+ 
+ func cominUnitFileHashDarwin() string {
+-	logrus.Infof("nix: generating the comin service plist file sha256: 'launchctl print system/com.github.nlewo.comin'")
+-	cmd := exec.Command("/bin/launchctl", "print", "system/com.github.nlewo.comin")
+-	var stdout bytes.Buffer
+-	cmd.Stdout = &stdout
+-	cmd.Stderr = os.Stderr
+-	if err := cmd.Run(); err != nil {
+-		logrus.Infof("nix: command 'launchctl print system/com.github.nlewo.comin' fails with '%s'", err)
++	// Use the last fully activated system, including when an earlier attempt
++	// installed a plist but failed before updating /run/current-system.
++	return cominPlistHash("/run/current-system/Library/LaunchDaemons/com.github.nlewo.comin.plist")
++}
++
++func cominPlistHash(filename string) string {
++	contents, err := os.ReadFile(filename)
++	if err != nil {
++		logrus.Errorf("nix: cannot read the comin service plist: %s", err)
+ 		return ""
+ 	}
+-	sum := sha256.Sum256(stdout.Bytes())
++	sum := sha256.Sum256(contents)
+ 	hash := fmt.Sprintf("%x", sum)
+ 	logrus.Infof("nix: the comin service plist sha256 is '%s'", hash)
+ 	return hash
+@@ -283,7 +285,9 @@
+ 	}
+ 
+ 	logrus.Infof("nix: activating system environment: '%s'", activateExe)
+-	cmd := exec.Command(activateExe)
++	// The patched Darwin launchd module installs Comin's plist without
++	// unloading this process or its activation child when this flag is set.
++	cmd := exec.Command(activateExe, "--comin")
+ 	cmd.Stdout = stdout
+ 	cmd.Stderr = stderr
+ 	if err := cmd.Run(); err != nil {
+--- a/internal/manager/manager.go
++++ b/internal/manager/manager.go
+@@ -9,6 +9,8 @@
+ 	"context"
+ 	"fmt"
+ 	"os"
++	"os/exec"
++	"runtime"
+ 	"time"
+ 
+ 	"github.com/nlewo/comin/internal/broker"
+@@ -288,6 +290,23 @@
+ 			if dpl.RestartComin.GetValue() {
+ 				// TODO: stop contexts
+ 				logrus.Infof("manager: comin needs to be restarted")
++				if runtime.GOOS == "darwin" {
++					// DeploymentFinished has already persisted the result. A separate
++					// launchd job can now unload us and load the replacement plist.
++					label := fmt.Sprintf("com.github.nlewo.comin.reload.%d", os.Getpid())
++					script := fmt.Sprintf(`set -e
++/bin/launchctl bootout --wait system/com.github.nlewo.comin
++/bin/launchctl bootstrap system /Library/LaunchDaemons/com.github.nlewo.comin.plist
++/bin/launchctl remove %s
++`, label)
++					cmd := exec.Command("/bin/launchctl", "submit", "-l", label,
++						"-o", "/var/log/comin.log", "-e", "/var/log/comin.log",
++						"--", "/bin/sh", "-c", script)
++					if output, err := cmd.CombinedOutput(); err != nil {
++						logrus.Errorf("manager: cannot submit the comin reload job: %s: %s", err, output)
++					}
++					continue
++				}
+ 				logrus.Infof("manager: exiting comin to let the service manager restart it")
+ 				os.Exit(0)
+ 			}
+--- /dev/null
++++ b/internal/executor/darwin_plist_test.go
+@@ -0,0 +1,34 @@
++package executor
++
++import (
++	"os"
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func TestCominPlistHash(t *testing.T) {
++	filename := t.TempDir() + "/comin.plist"
++	assert.Empty(t, cominPlistHash(filename))
++	assert.NoError(t, os.WriteFile(filename, []byte("old configuration"), 0600))
++	previous := cominPlistHash(filename)
++	assert.NotEmpty(t, previous)
++	assert.Equal(t, previous, cominPlistHash(filename))
++	assert.NoError(t, os.WriteFile(filename, []byte("new configuration"), 0600))
++	assert.NotEqual(t, previous, cominPlistHash(filename))
++}
++
++func TestDarwinActivationPreservesComin(t *testing.T) {
++	directory := t.TempDir()
++	assert.NoError(t, os.WriteFile(directory+"/activate-user", []byte("#!/bin/sh\nexit 0\n"), 0700))
++	assert.NoError(t, os.WriteFile(directory+"/activate", []byte("#!/bin/sh\nprintf '%s' \"$1\" > \"$0.args\"\n"), 0700))
++	output, err := os.Create(directory + "/output")
++	if !assert.NoError(t, err) {
++		return
++	}
++	defer output.Close()
++	assert.NoError(t, switchToConfigurationDarwin("switch", directory, false, output, output))
++	arguments, err := os.ReadFile(directory + "/activate.args")
++	assert.NoError(t, err)
++	assert.Equal(t, "--comin", string(arguments))
++}
