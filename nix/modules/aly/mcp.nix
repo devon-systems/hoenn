@@ -17,6 +17,7 @@
           ];
         };
 
+        linear.url = "https://mcp.linear.app/mcp";
         nixos.command = lib.getExe pkgs.mcp-nixos;
         tg.command = lib.getExe inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.tgmcp;
         todoist.url = "https://ai.todoist.net/mcp";
