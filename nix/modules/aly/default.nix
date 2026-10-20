@@ -1,7 +1,5 @@
 _: {
-  flake.homeModules.aly = {self, ...}: {
-    imports = [self.homeModules.chatgpt];
-
+  flake.homeModules.aly = {
     programs.home-manager.enable = true;
   };
 }
