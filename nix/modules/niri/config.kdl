@@ -255,6 +255,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id="(?i)^google-chrome(-.*)?$"
+    open-focused false
+}
+
+window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
