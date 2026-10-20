@@ -18,6 +18,7 @@
         imports = [
           self.homeModules.aly
           self.homeModules.appherder
+          self.homeModules.chatgpt
           self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.zed-editor

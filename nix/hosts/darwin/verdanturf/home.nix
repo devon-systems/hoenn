@@ -38,6 +38,7 @@
 
         imports = [
           self.homeModules.aly
+          self.homeModules.chatgpt
           self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.syncthing
