@@ -12,7 +12,6 @@ keys:
   - &user_aly_sootopolis age16fm9jk3msta76lp7t0m5a5hn8l4gc752unl09azjkk33z3ghxg7sd52yrj
   - &user_aly_verdanturf age1zl4dad3jwhff9f8smv9l2g78g2fpa7huye9354y9vvhrw03vs47skqhue3
   # === host keys (root@<host>) ===
-  - &host_fallarbor age1v4x5alkmvxsx5jsrwpecx0tne0ch2rwfkk0rq5w8x578j2pf5urssg5gx2
   - &host_lilycove age1l5t62uzsj05pzftv9wg6s346csxyq202vxmmyyx8gwy8zu2nrfrs7v2a4z
   - &host_mauville age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
   - &host_pacifidlog age1m4w05c5afudrw94c3yd0mmgx79y5rxwn2lv8ag4w9m34wk4sxeeq7jufw9
@@ -34,7 +33,6 @@ creation_rules:
           - *user_aly_rustboro
           - *user_aly_sootopolis
           - *user_aly_verdanturf
-          - *host_fallarbor
           - *host_lilycove
           - *host_mauville
           - *host_pacifidlog
@@ -53,7 +51,6 @@ creation_rules:
           - *user_aly_rustboro
           - *user_aly_sootopolis
           - *user_aly_verdanturf
-          - *host_fallarbor
           - *host_lilycove
           - *host_mauville
           - *host_pacifidlog

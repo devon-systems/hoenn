@@ -14,7 +14,6 @@
     rustboro = "10.254.1.3";
     sootopolis = "10.254.1.4";
     verdanturf = "10.254.1.5";
-    fallarbor = "10.254.1.6";
     pacifidlog = "10.254.1.7";
     petalburg = "10.254.1.8";
     lilycove = "10.254.1.9";

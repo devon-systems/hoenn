@@ -25,7 +25,6 @@ configurations from the same branch on hosts that enable it.
 
 | Host                                                  | Platform       | Flake output                      |
 | ----------------------------------------------------- | -------------- | --------------------------------- |
-| [`fallarbor`](nix/hosts/nixos/fallarbor/README.md)    | NixOS          | `nixosConfigurations.fallarbor`   |
 | [`lilycove`](nix/hosts/nixos/lilycove/README.md)      | NixOS          | `nixosConfigurations.lilycove`    |
 | [`mauville`](nix/hosts/nixos/mauville/README.md)      | NixOS          | `nixosConfigurations.mauville`    |
 | [`pacifidlog`](nix/hosts/nixos/pacifidlog/README.md)  | NixOS          | `nixosConfigurations.pacifidlog`  |
