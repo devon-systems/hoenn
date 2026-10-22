@@ -9,7 +9,7 @@ spec:
   interval: 10m
   retryInterval: 1m
   path: ./k8s/homebridge
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
