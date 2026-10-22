@@ -116,13 +116,13 @@ _: {
             path = "~/ROMs";
             id = "emudeck";
             devices = [
-              "aynthor" 
+              "aynthor"
               "rpclassic"
-              "mauville" 
+              "mauville"
               "pacifidlog"
               "petalburg"
             ];
-            
+
             ignorePatterns = ["androidapps" "emulators"];
           };
 
