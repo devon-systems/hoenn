@@ -115,7 +115,14 @@ _: {
           type = folderType {
             path = "~/ROMs";
             id = "emudeck";
-            devices = ["aynthor" "mauville" "pacifidlog" "petalburg"];
+            devices = [
+              "aynthor" 
+              "rpclassic"
+              "mauville" 
+              "pacifidlog"
+              "petalburg"
+            ];
+            
             ignorePatterns = ["androidapps" "emulators"];
           };
 
