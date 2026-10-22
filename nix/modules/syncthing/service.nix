@@ -46,6 +46,8 @@ _: {
             (enabledFolder cfg.folders.roms)
           ];
         };
+
+        tray.enable = true;
       };
     };
   };
