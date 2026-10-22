@@ -8,6 +8,9 @@ Mauville runs the Hoenn k3s server. Internal cluster transit uses Hoenn
 WireGuard. `k8s/` contains Flux-managed household services. Follow
 `docs/kubernetes.md` for bootstrap, operations, and automatic updates.
 
+Follow [the Kubernetes resource conventions](k8s/README.md) for Flux ownership,
+dependencies, and validation.
+
 ## Check a change
 
 Run `nix fmt` and `nix flake check` before you commit. Build each output affected by the change.

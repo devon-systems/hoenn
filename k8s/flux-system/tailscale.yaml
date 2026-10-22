@@ -7,6 +7,7 @@ spec:
   dependsOn:
     - name: secrets
   interval: 10m
+  retryInterval: 1m
   path: ./k8s/tailscale
   prune: true
   sourceRef:

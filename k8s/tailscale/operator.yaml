@@ -21,7 +21,7 @@ spec:
         name: tailscale
       version: 1.104.2
   install:
-    createNamespace: true
+    createNamespace: false
   interval: 30m
   releaseName: tailscale-operator
   targetNamespace: tailscale

@@ -1,5 +1,9 @@
 _: {
-  perSystem = {pkgs, ...}: {
+  perSystem = {
+    lib,
+    pkgs,
+    ...
+  }: {
     packages.check-k8s = pkgs.writeShellApplication {
       name = "check-k8s";
       runtimeInputs = [
@@ -9,7 +13,7 @@ _: {
         pkgs.kubeconform
       ];
       text = ''
-        exec python3 ${../scripts/check-k8s.py} "$@"
+        exec python3 ${../scripts/check-k8s.py} --kubernetes-version ${lib.versions.majorMinor pkgs.k3s.version}.0 "$@"
       '';
     };
   };
