@@ -1,6 +1,7 @@
 _: {
   flake.nixosModules.wireguardHoennLan = {
     config,
+    lib,
     pkgs,
     ...
   }: let
@@ -9,7 +10,7 @@ _: {
     networking.firewall.allowedUDPPorts = [interface.listenPort];
 
     networking.wireguard.interfaces.hoenn = {
-      listenPort = 51821;
+      listenPort = lib.mkDefault 51821;
       fwMark = "51821";
 
       # Keep WireGuard UDP on connected networks ahead of Tailscale subnet routes.

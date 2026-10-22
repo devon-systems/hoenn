@@ -2,6 +2,9 @@ _: {
   flake.nixosModules.petalburg = {self, ...}: {
     imports = [self.nixosModules.wireguardHoennLan];
 
+    # Use a distinct UDP port from Mauville behind the shared NAT.
+    networking.wireguard.interfaces.hoenn.listenPort = 51822;
+
     networking.wireguard.interfaces.hoenn.peers = [
       {
         name = "mauville";
