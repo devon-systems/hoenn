@@ -2,6 +2,7 @@ _: {
   flake.homeModules.syncthing = {
     config,
     lib,
+    pkgs,
     ...
   }: let
     inherit (lib) mkIf mkMerge;
@@ -47,7 +48,7 @@ _: {
           ];
         };
 
-        tray.enable = true;
+        tray.enable = pkgs.stdenv.hostPlatform.isLinux;
       };
     };
   };
