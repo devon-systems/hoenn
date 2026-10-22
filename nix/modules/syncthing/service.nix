@@ -2,7 +2,6 @@ _: {
   flake.homeModules.syncthing = {
     config,
     lib,
-    pkgs,
     ...
   }: let
     inherit (lib) mkIf mkMerge;
@@ -47,8 +46,6 @@ _: {
             (enabledFolder cfg.folders.roms)
           ];
         };
-
-        tray.enable = pkgs.stdenv.hostPlatform.isLinux;
       };
     };
   };
