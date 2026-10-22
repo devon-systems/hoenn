@@ -358,7 +358,10 @@ def check_security(targets):
                 if context.get("allowPrivilegeEscalation") is not False:
                     deviations.add("privilege-escalation")
                 capabilities = context.get("capabilities", {})
-                if not {"NET_RAW", "ALL"}.intersection(capabilities.get("drop", [])):
+                if "NET_RAW" in capabilities.get("add", []) or not {
+                    "NET_RAW",
+                    "ALL",
+                }.intersection(capabilities.get("drop", [])):
                     deviations.add("net-raw")
                 if capabilities.get("add"):
                     deviations.add("added-capabilities")
