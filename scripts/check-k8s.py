@@ -307,6 +307,90 @@ def check_prerequisites(targets, ancestors, namespaces, secrets):
                     )
 
 
+def check_security(targets):
+    """Require explicit pod defaults or a setting-specific exception reason."""
+    prefix = "security.aly.codes/exception-"
+    rules = {
+        "api-token",
+        "service-links",
+        "seccomp",
+        "privilege-escalation",
+        "net-raw",
+        "host-network",
+        "host-pid",
+        "host-ipc",
+        "host-port",
+        "privileged",
+        "host-path",
+        "added-capabilities",
+    }
+    for owner, target in targets.items():
+        if owner == "flux-system":
+            continue
+        for document in target["documents"]:
+            if "sops" in document or not (template := pod_template(document)):
+                continue
+            spec = template["spec"]
+            deviations = set()
+            if spec.get("automountServiceAccountToken") is not False:
+                deviations.add("api-token")
+            if spec.get("enableServiceLinks") is not False:
+                deviations.add("service-links")
+            for field, rule in [
+                ("hostNetwork", "host-network"),
+                ("hostPID", "host-pid"),
+                ("hostIPC", "host-ipc"),
+            ]:
+                if spec.get(field):
+                    deviations.add(rule)
+            if any("hostPath" in volume for volume in spec.get("volumes", [])):
+                deviations.add("host-path")
+            for container in spec.get("containers", []) + spec.get(
+                "initContainers", []
+            ):
+                context = container.get("securityContext", {})
+                seccomp = context.get(
+                    "seccompProfile",
+                    spec.get("securityContext", {}).get("seccompProfile", {}),
+                )
+                if seccomp.get("type") != "RuntimeDefault":
+                    deviations.add("seccomp")
+                if context.get("allowPrivilegeEscalation") is not False:
+                    deviations.add("privilege-escalation")
+                capabilities = context.get("capabilities", {})
+                if not {"NET_RAW", "ALL"}.intersection(capabilities.get("drop", [])):
+                    deviations.add("net-raw")
+                if capabilities.get("add"):
+                    deviations.add("added-capabilities")
+                if context.get("privileged"):
+                    deviations.add("privileged")
+                if any(port.get("hostPort") for port in container.get("ports", [])):
+                    deviations.add("host-port")
+            exceptions = {
+                key.removeprefix(prefix): reason
+                for key, reason in template.get("metadata", {})
+                .get("annotations", {})
+                .items()
+                if key.startswith(prefix)
+            }
+            name = f"{owner}: {resource_name(document)}"
+            for rule, reason in exceptions.items():
+                if (
+                    rule not in rules
+                    or not isinstance(reason, str)
+                    or not reason.strip()
+                ):
+                    raise ValueError(f"{name}: invalid exception {rule}")
+            if unused := exceptions.keys() - deviations:
+                raise ValueError(
+                    f"{name}: unused exceptions {', '.join(sorted(unused))}"
+                )
+            if missing := deviations - exceptions.keys():
+                raise ValueError(
+                    f"{name}: unexplained security exceptions {', '.join(sorted(missing))}"
+                )
+
+
 def validate_schemas(targets, temporary, version):
     """Validate visible documents with pinned CRD schemas and strict failures."""
     documents = [
@@ -356,6 +440,7 @@ def main():
         render_charts(root, targets, temporary, args.kubernetes_version)
         namespaces, secrets = check_ownership(targets)
         check_prerequisites(targets, ancestors, namespaces, secrets)
+        check_security(targets)
         validate_schemas(targets, temporary, args.kubernetes_version)
 
 
