@@ -63,6 +63,22 @@ in
       }
     }
 
+    loki.process "redact" {
+      forward_to = [loki.write.mauville.receiver]
+      stage.replace {
+        expression = `(?i)\b(?:x-plex-token|plexonlinetoken|access_token|refresh_token|api[_-]?key|password|client_secret|authorization)["' ]*(?:[:=]|%3[dDaA])\s*"((?:\\.|[^"\\])*)"`
+        replace = "[REDACTED]"
+      }
+      stage.replace {
+        expression = `(?i)\b(?:x-plex-token|plexonlinetoken|access_token|refresh_token|api[_-]?key|password|client_secret|authorization)["' ]*(?:[:=]|%3[dDaA])\s*'((?:\\.|[^'\\])*)'`
+        replace = "[REDACTED]"
+      }
+      stage.replace {
+        expression = `(?i)\b(?:x-plex-token|plexonlinetoken|access_token|refresh_token|api[_-]?key|password|client_secret|authorization)["' ]*(?:[:=]|%3[dDaA])\s*(?:bearer\s+|basic\s+)?([^&\s"'<>]+)`
+        replace = "[REDACTED]"
+      }
+    }
+
     loki.write "mauville" {
       endpoint {
         url                 = "http://${server}:3030/loki/api/v1/push"
@@ -127,7 +143,7 @@ in
       }
 
       loki.source.journal "desktop" {
-        forward_to    = [loki.write.mauville.receiver]
+        forward_to    = [loki.process.redact.receiver]
         relabel_rules = loki.relabel.journal.rules
         max_age       = "24h"
         labels        = {
@@ -148,7 +164,7 @@ in
 
         loki.source.file "system" {
           targets    = local.file_match.system.targets
-          forward_to = [loki.write.mauville.receiver]
+          forward_to = [loki.process.redact.receiver]
         }
       ''
       + (
@@ -166,7 +182,7 @@ in
 
           loki.source.file "comin" {
             targets    = local.file_match.comin.targets
-            forward_to = [loki.write.mauville.receiver]
+            forward_to = [loki.process.redact.receiver]
           }
         ''
         else ""
