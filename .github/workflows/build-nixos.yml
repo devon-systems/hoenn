@@ -34,7 +34,7 @@ jobs:
           name: alyraffauf
       - name: Build NixOS host
         run: >-
-          nix build --accept-flake-config --option http2 false --print-out-paths
+          nix build --accept-flake-config --print-out-paths
           .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 name: build-nixos
 'on':
