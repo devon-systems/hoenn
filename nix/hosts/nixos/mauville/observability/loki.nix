@@ -24,7 +24,7 @@ _: {
           retention_enabled = true;
           delete_request_store = "filesystem";
         };
-        limits_config.retention_period = "14d";
+        limits_config.retention_period = "30d";
         schema_config.configs = [
           {
             from = "2024-01-01";

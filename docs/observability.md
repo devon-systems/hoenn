@@ -96,10 +96,9 @@ does not run Comin and is excluded.
 
 ## Storage and access
 
-Prometheus keeps metrics under `/var/lib/prometheus2` for up to 30 days or
-10 GB, whichever limit it reaches first. Its WAL and current head block can
-use additional disk space. Loki stores logs under `/var/lib/loki` with
-14-day retention and periodic compaction. Loki has no disk-size cap.
+Prometheus keeps metrics under `/var/lib/prometheus2` for 30 days.
+Loki stores logs under `/var/lib/loki` with 30-day retention and periodic
+compaction. Neither service has a disk-size cap.
 Neither data directory has a telemetry backup configured.
 
 The host firewall permits access through the existing trusted `hoenn` and

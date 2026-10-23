@@ -4,10 +4,7 @@ _: {
       enable = true;
       port = 3020;
       retentionTime = "30d";
-      extraFlags = [
-        "--web.enable-remote-write-receiver"
-        "--storage.tsdb.retention.size=10GB"
-      ];
+      extraFlags = ["--web.enable-remote-write-receiver"];
       globalConfig = {
         scrape_interval = "60s";
         evaluation_interval = "60s";
