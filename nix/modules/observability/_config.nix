@@ -55,11 +55,21 @@ in
       external_labels = {cluster = "hoenn"}
       endpoint {
         url = "http://${server}:3020/api/v1/write"
+        remote_timeout = "30s"
         queue_config {
+          capacity = 10000
+          min_shards = 1
           max_shards = 2
+          max_samples_per_send = 2000
+          batch_send_deadline = "5s"
+          min_backoff = "30ms"
+          max_backoff = "5s"
+          retry_on_http_429 = true
         }
       }
       wal {
+        truncate_frequency = "2h"
+        min_keepalive_time = "5m"
         max_keepalive_time = "24h"
       }
     }
@@ -111,8 +121,12 @@ in
 
     loki.write "mauville" {
       endpoint {
-        url                 = "http://${server}:3030/loki/api/v1/push"
+        url = "http://${server}:3030/loki/api/v1/push"
+        remote_timeout = "10s"
+        min_backoff_period = "500ms"
+        max_backoff_period = "5m"
         max_backoff_retries = 20
+        retry_on_http_429 = true
       }
     }
   ''
