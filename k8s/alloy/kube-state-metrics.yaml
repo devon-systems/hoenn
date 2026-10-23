@@ -1,0 +1,168 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: prometheus-community
+  namespace: flux-system
+spec:
+  interval: 24h
+  url: https://prometheus-community.github.io/helm-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-state-metrics
+  namespace: flux-system
+spec:
+  interval: 30m
+  releaseName: kube-state-metrics
+  targetNamespace: alloy-system
+  chart:
+    spec:
+      chart: kube-state-metrics
+      version: 8.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    replicas: 1
+    collectors:
+      - nodes
+      - namespaces
+      - pods
+      - deployments
+      - replicasets
+      - statefulsets
+      - daemonsets
+      - jobs
+      - cronjobs
+    prometheus:
+      monitor:
+        enabled: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    metricAllowlist:
+      - gotk_resource_info
+      - gotk_resource_generation
+      - gotk_resource_observed_generation
+      - kube_node_info
+      - kube_node_status_allocatable
+      - kube_node_status_condition
+      - kube_pod_info
+      - kube_pod_owner
+      - kube_pod_container_info
+      - kube_pod_container_resource_requests
+      - kube_pod_container_resource_limits
+      - kube_pod_container_status_restarts_total
+      - kube_pod_container_status_last_terminated_reason
+      - kube_pod_container_status_ready
+      - kube_pod_status_phase
+      - kube_replicaset_owner
+      - kube_deployment_spec_replicas
+      - kube_deployment_status_replicas_available
+      - kube_statefulset_replicas
+      - kube_statefulset_status_replicas_ready
+      - kube_daemonset_status_desired_number_scheduled
+      - kube_daemonset_status_number_available
+      - kube_job_status_succeeded
+      - kube_job_status_failed
+      - kube_cronjob_status_last_successful_time
+    rbac:
+      extraRules:
+        - apiGroups: [source.toolkit.fluxcd.io]
+          resources: [gitrepositories, helmrepositories, helmcharts]
+          verbs: [list, watch]
+        - apiGroups: [kustomize.toolkit.fluxcd.io]
+          resources: [kustomizations]
+          verbs: [list, watch]
+        - apiGroups: [helm.toolkit.fluxcd.io]
+          resources: [helmreleases]
+          verbs: [list, watch]
+    customResourceState:
+      enabled: true
+      config:
+        spec:
+          resources:
+            - groupVersionKind:
+                group: source.toolkit.fluxcd.io
+                version: v1
+                kind: GitRepository
+              metricNamePrefix: gotk
+              labelsFromPath:
+                name: [metadata, name]
+                exported_namespace: [metadata, namespace]
+                source_type: [spec, type]
+              metrics: &flux-resource-metrics
+                - name: resource_info
+                  help: Flux resource readiness and suspension.
+                  each:
+                    type: Info
+                    info:
+                      labelsFromPath:
+                        ready: [status, conditions, "[type=Ready]", status]
+                        suspended: [spec, suspend]
+                - name: resource_generation
+                  help: Desired generation.
+                  each:
+                    type: Gauge
+                    gauge:
+                      path: [metadata, generation]
+                - name: resource_observed_generation
+                  help: Observed generation of the Ready condition.
+                  each:
+                    type: Gauge
+                    gauge:
+                      path:
+                        [status, conditions, "[type=Ready]", observedGeneration]
+            - groupVersionKind:
+                group: source.toolkit.fluxcd.io
+                version: v1
+                kind: HelmRepository
+              metricNamePrefix: gotk
+              labelsFromPath:
+                name: [metadata, name]
+                exported_namespace: [metadata, namespace]
+                source_type: [spec, type]
+              metrics: *flux-resource-metrics
+            - groupVersionKind:
+                group: source.toolkit.fluxcd.io
+                version: v1
+                kind: HelmChart
+              metricNamePrefix: gotk
+              labelsFromPath:
+                name: [metadata, name]
+                exported_namespace: [metadata, namespace]
+                source_type: [spec, type]
+              metrics: *flux-resource-metrics
+            - groupVersionKind:
+                group: kustomize.toolkit.fluxcd.io
+                version: v1
+                kind: Kustomization
+              metricNamePrefix: gotk
+              labelsFromPath:
+                name: [metadata, name]
+                exported_namespace: [metadata, namespace]
+                source_type: [spec, type]
+              metrics: *flux-resource-metrics
+            - groupVersionKind:
+                group: helm.toolkit.fluxcd.io
+                version: v2
+                kind: HelmRelease
+              metricNamePrefix: gotk
+              labelsFromPath:
+                name: [metadata, name]
+                exported_namespace: [metadata, namespace]
+                source_type: [spec, type]
+              metrics: *flux-resource-metrics

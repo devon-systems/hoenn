@@ -52,6 +52,7 @@ in
     }
 
     prometheus.remote_write "mauville" {
+      external_labels = {cluster = "hoenn"}
       endpoint {
         url = "http://${server}:3020/api/v1/write"
         queue_config {
@@ -61,6 +62,31 @@ in
       wal {
         max_keepalive_time = "24h"
       }
+    }
+
+    prometheus.exporter.self "host" {}
+
+    discovery.relabel "alloy_self" {
+      targets = prometheus.exporter.self.host.targets
+      rule {
+        target_label = "instance"
+        replacement = "${hostName}"
+      }
+      rule {
+        target_label = "host"
+        replacement = "${hostName}"
+      }
+      rule {
+        target_label = "os"
+        replacement = "${os}"
+      }
+    }
+
+    prometheus.scrape "alloy_self" {
+      targets = discovery.relabel.alloy_self.output
+      job_name = "alloy-host"
+      scrape_interval = "60s"
+      forward_to = [prometheus.remote_write.mauville.receiver]
     }
 
     loki.process "redact" {
@@ -128,9 +154,9 @@ in
         }
         rule {
           source_labels = ["__journal__systemd_unit"]
-          regex         = "comin[.]service"
+          regex         = "(comin|observability-canary)[.]service"
           target_label  = "service"
-          replacement   = "comin"
+          replacement   = "$1"
         }
         rule {
           source_labels = ["__journal__systemd_user_unit"]
@@ -149,6 +175,8 @@ in
         labels        = {
           job  = "systemd-journal",
           host = "${hostName}",
+          node = "${hostName}",
+          cluster = "hoenn",
           os   = "linux",
         }
       }
@@ -157,8 +185,9 @@ in
       ''
         local.file_match "system" {
           path_targets = [
-            {__path__ = "/var/log/system.log", job = "system-log", host = "${hostName}", os = "darwin"},
-            {__path__ = "/var/log/nix-darwin-upgrade.log", job = "system-log", host = "${hostName}", os = "darwin"},
+            {__path__ = "/var/log/observability-canary.log", job = "system-log", service = "observability-canary", host = "${hostName}", node = "${hostName}", cluster = "hoenn", os = "darwin"},
+            {__path__ = "/var/log/system.log", job = "system-log", host = "${hostName}", node = "${hostName}", cluster = "hoenn", os = "darwin"},
+            {__path__ = "/var/log/nix-darwin-upgrade.log", job = "system-log", host = "${hostName}", node = "${hostName}", cluster = "hoenn", os = "darwin"},
           ]
         }
 
@@ -176,6 +205,8 @@ in
               job      = "comin",
               service  = "comin",
               host     = "${hostName}",
+              node     = "${hostName}",
+              cluster  = "hoenn",
               os       = "darwin",
             }]
           }

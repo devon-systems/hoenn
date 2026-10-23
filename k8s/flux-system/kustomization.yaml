@@ -8,3 +8,4 @@ resources:
   - tailscale.yaml
   - tailscale-private-ingress.yaml
   - homebridge.yaml
+  - alloy.yaml

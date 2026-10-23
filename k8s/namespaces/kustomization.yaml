@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - homebridge.yaml
   - tailscale.yaml
+  - alloy-system.yaml

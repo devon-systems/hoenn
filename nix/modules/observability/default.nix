@@ -14,7 +14,7 @@ in {
 
   config.flake = {
     nixosModules.observability = {config, ...}: {
-      imports = [./_filesystem-metrics.nix];
+      imports = [./_filesystem-metrics.nix ./_canary.nix];
 
       services.prometheus.exporters.smartctl = {
         enable = true;
@@ -60,6 +60,26 @@ in {
           else null;
       });
     in {
+      launchd.daemons.observability-canary = {
+        script = ''
+          echo "observability_canary timestamp=$(${pkgs.coreutils}/bin/date +%s)"
+        '';
+        serviceConfig = {
+          RunAtLoad = true;
+          StartInterval = 60;
+          StandardOutPath = "/var/log/observability-canary.log";
+          StandardErrorPath = "/var/log/observability-canary.log";
+        };
+      };
+      system.newsyslog.files.observability = [
+        {
+          logfilename = "/var/log/observability-canary.log";
+          count = 7;
+          size = "1024";
+          flags = ["N" "Z"];
+        }
+      ];
+
       launchd.daemons.alloy = {
         script = ''
           /bin/mkdir -p /var/lib/alloy
@@ -85,7 +105,7 @@ in {
         server = "mauville.narwhal-snapper.ts.net";
       });
     in {
-      imports = [./_filesystem-metrics.nix];
+      imports = [./_filesystem-metrics.nix ./_canary.nix];
 
       systemd.services.prometheus-smartctl-exporter = {
         description = "Collect SMART and NVMe drive health";

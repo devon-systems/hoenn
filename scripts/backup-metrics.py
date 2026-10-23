@@ -10,7 +10,7 @@ import tempfile
 import time
 from pathlib import Path
 
-PREFIX = "hoenn_backup_"
+PREFIX = "restic_backup_"
 
 
 def completed_result(job, scope):
@@ -39,8 +39,6 @@ def report(directory, job, scope, owner, seed):
     destination = directory / f"backup-{job}.prom"
     with (directory / f"backup-{job}.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        if seed and destination.exists():
-            return
         values = {
             "job_info": 1,
             "last_completion_timestamp_seconds": "NaN",
@@ -49,9 +47,11 @@ def report(directory, job, scope, owner, seed):
         }
         if destination.exists():
             for line in destination.read_text().splitlines():
-                if line.startswith(PREFIX):
+                if not line.startswith("#") and "_backup_" in line:
                     metric, value = line.rsplit(" ", 1)
-                    values[metric.split("{", 1)[0].removeprefix(PREFIX)] = value
+                    name = metric.split("{", 1)[0].split("_backup_", 1)[1]
+                    if name in values:
+                        values[name] = value
         if not seed:
             success = completed_result(job, scope)
             timestamp = int(time.time())

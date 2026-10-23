@@ -9,13 +9,28 @@ _: {
         scrape_interval = "60s";
         evaluation_interval = "60s";
       };
-      scrapeConfigs = [
+      scrapeConfigs = map (scrape:
+        scrape
+        // {
+          relabel_configs =
+            (scrape.relabel_configs or [])
+            ++ [
+              {
+                target_label = "cluster";
+                replacement = "hoenn";
+              }
+            ];
+        }) [
         {
           job_name = "prometheus";
           static_configs = [
             {
               targets = ["127.0.0.1:3020"];
-              labels.host = "mauville";
+              labels = {
+                instance = "mauville";
+                host = "mauville";
+                os = "linux";
+              };
             }
           ];
         }
@@ -24,7 +39,11 @@ _: {
           static_configs = [
             {
               targets = ["127.0.0.1:3030"];
-              labels.host = "mauville";
+              labels = {
+                instance = "mauville";
+                host = "mauville";
+                os = "linux";
+              };
             }
           ];
         }
