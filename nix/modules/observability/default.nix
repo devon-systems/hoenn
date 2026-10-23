@@ -54,6 +54,7 @@ in {
       configuration = pkgs.writeText "config.alloy" (alloyConfig {
         hostName = config.networking.hostName;
         isLinux = false;
+        server = "mauville.narwhal-snapper.ts.net";
         cominPort =
           if config.services.comin.enable
           then config.services.comin.exporter.port
