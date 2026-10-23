@@ -16,6 +16,8 @@ _: {
           window-inherit-working-directory = false;
           font-family = "CaskaydiaCove Nerd Font";
           font-size = 14;
+          background-blur = true;
+          background-opacity = 0.8;
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           # gtk-titlebar-style = "tabs";
@@ -24,8 +26,6 @@ _: {
           keybind = ["ctrl+shift+backquote=toggle_tab_overview"];
           window-show-tab-bar = "never";
           window-decoration = false;
-          background-blur = true;
-          background-opacity = 0.8;
         };
     };
   };
