@@ -72,6 +72,7 @@ in {
           StandardErrorPath = "/var/log/observability-canary.log";
         };
       };
+      system.newsyslog.enable = true;
       system.newsyslog.files.observability = [
         {
           logfilename = "/var/log/observability-canary.log";
