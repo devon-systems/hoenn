@@ -87,8 +87,8 @@ and Tailscale service exposure.
 
 Mauville also stores metrics and logs from the Hoenn desktops in Prometheus
 and Loki. Canalave's Grafana has the Hoenn data sources and desktop dashboard.
-See [Hoenn desktop telemetry](docs/observability.md) for collection, retention,
-and deployment details.
+See the shared [observability runbook](https://github.com/devon-systems/infra/blob/master/docs/observability.md)
+to check collection and troubleshoot missing data.
 
 ## Deployment
 
