@@ -15,6 +15,7 @@ _: {
           tab-inherit-working-directory = false;
           window-inherit-working-directory = false;
           font-family = "CaskaydiaCove Nerd Font";
+          font-size = 14;
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           # gtk-titlebar-style = "tabs";
