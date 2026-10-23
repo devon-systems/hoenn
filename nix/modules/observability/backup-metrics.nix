@@ -2,7 +2,7 @@ _: let
   backupReporter = pkgs:
     pkgs.writeShellApplication {
       name = "hoenn-backup-metrics";
-      runtimeInputs = [pkgs.python3 pkgs.systemd];
+      runtimeInputs = [pkgs.python3 pkgs.systemd pkgs.coreutils];
       text = ''exec python3 ${../../../scripts/backup-metrics.py} "$@"'';
     };
 in {
@@ -15,7 +15,7 @@ in {
     directory = "/var/lib/hoenn-metrics/backups-system";
     jobs = builtins.attrNames config.services.restic.backups;
     reporter = backupReporter pkgs;
-    command = "${lib.getExe reporter} --directory ${directory} --scope system --owner root";
+    command = "${lib.getExe reporter} --directory ${directory} --scope system --owner root --file-prefix backup-";
   in {
     systemd.services = lib.mkMerge [
       # Report after the complete unit, including Restic's cleanup commands.
@@ -23,6 +23,7 @@ in {
         lib.nameValuePair "restic-backups-${job}" {
           onSuccess = ["hoenn-backup-metrics-${job}.service"];
           onFailure = ["hoenn-backup-metrics-${job}.service"];
+          serviceConfig.ExecStartPre = lib.mkBefore ["-${command} --start ${lib.escapeShellArg job}"];
         })
       config.services.restic.backups)
       (lib.listToAttrs (map (job:
@@ -59,12 +60,14 @@ in {
     owner = config.home.username;
     directory = "/var/lib/hoenn-metrics/backups-user-${owner}";
     reporter = backupReporter pkgs;
-    command = "${lib.getExe reporter} --directory ${directory} --scope user --owner ${lib.escapeShellArg owner}";
+    command = "${lib.getExe reporter} --directory ${directory} --scope user --owner ${lib.escapeShellArg owner} --file-prefix backup-";
   in
     lib.mkIf (config.services.restic.enable && jobs != []) {
       systemd.user.services = lib.mkMerge [
         (lib.mapAttrs' (job: _:
           lib.nameValuePair "restic-backups-${job}" {
+            # Home Manager's Restic module owns ExecStartPre.
+            Service.ExecCondition = "-${command} --start ${lib.escapeShellArg job}";
             Unit = {
               OnSuccess = ["hoenn-backup-metrics-${job}.service"];
               OnFailure = ["hoenn-backup-metrics-${job}.service"];

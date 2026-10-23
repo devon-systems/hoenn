@@ -5,7 +5,7 @@
     before = ["alloy.service"];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.python3}/bin/python3 ${../../../scripts/btrfs-metrics.py}";
+      ExecStart = "${pkgs.python3}/bin/python3 ${../../../scripts/btrfs-metrics.py} --directory /var/lib/hoenn-metrics/btrfs";
       StateDirectory = "hoenn-metrics/btrfs";
       StateDirectoryMode = "0755";
       ProtectSystem = "strict";

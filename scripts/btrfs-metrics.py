@@ -6,6 +6,7 @@ import os
 import sys
 import tempfile
 import time
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from uuid import UUID
 
@@ -27,7 +28,8 @@ SCRUB_ERRORS = [
 ]
 
 
-def atomic_write(destination, content):
+def atomic_write(destination: Path, content: str) -> None:
+    """Replace a metrics or state file without exposing partial contents."""
     descriptor, temporary = tempfile.mkstemp(dir=destination.parent, suffix=".tmp")
     try:
         with os.fdopen(descriptor, "w") as output:
@@ -40,13 +42,15 @@ def atomic_write(destination, content):
         Path(temporary).unlink(missing_ok=True)
 
 
-def sample(name, labels, value):
+def sample(name: str, labels: dict[str, str], value: float | None) -> str:
+    """Format a Prometheus sample with quoted label values."""
     descriptor = ",".join(f"{key}={json.dumps(value)}" for key, value in labels.items())
-    return f"hoenn_btrfs_{name}{{{descriptor}}} {'NaN' if value is None else value}\n"
+    return f"btrfs_{name}{{{descriptor}}} {'NaN' if value is None else value}\n"
 
 
-def scrub_records(path):
-    records = {}
+def scrub_records(path: Path) -> dict[str, dict[str, str]]:
+    """Read existing scrub records without starting a scrub."""
+    records: dict[str, dict[str, str]] = {}
     if not path.exists():
         return records
     for line in path.read_text().splitlines():
@@ -57,13 +61,52 @@ def scrub_records(path):
     return records
 
 
-def device_metrics(filesystem, device, record, record_mtime, directory):
+@dataclass
+class ScrubState:
+    """Retain completed scrub outcomes while a later scrub is running."""
+
+    completion: int | None = None
+    last_success: int | None = None
+    success: int | None = None
+    duration: int | None = None
+    errors: dict[str, int] = field(default_factory=dict)
+    record: list[str] | None = None
+
+
+def read_state(path: Path, legacy: Path) -> ScrubState:
+    """Read persisted history or import Johto's previous scrub metrics."""
+    if path.exists():
+        return ScrubState(**json.loads(path.read_text()))
+    state = ScrubState()
+    if legacy.exists():
+        values = {
+            line.split("{", 1)[0]: float(line.rsplit(" ", 1)[1])
+            for line in legacy.read_text().splitlines()
+            if line.startswith("johto_btrfs_")
+        }
+        state.completion = int(values["johto_btrfs_scrub_completion_timestamp_seconds"])
+        state.success = int(values["johto_btrfs_scrub_success"])
+        if state.success:
+            state.last_success = state.completion
+    return state
+
+
+def device_metrics(
+    filesystem: Path,
+    device: Path,
+    record: dict[str, str] | None,
+    record_mtime: int | None,
+    directory: Path,
+) -> str:
+    """Publish device counters and preserve the most recent completed scrub."""
     labels = {"filesystem": filesystem.name, "device": device.name}
     destination = directory / f"btrfs-{filesystem.name}-{device.name}"
     state_file = destination.with_suffix(".json")
-    state = json.loads(state_file.read_text()) if state_file.exists() else {}
+    state = read_state(
+        state_file, directory / f"scrub-{filesystem.name}-{device.name}.prom"
+    )
     output = [
-        "# TYPE hoenn_btrfs_device_errors_total counter\n",
+        "# TYPE btrfs_device_errors_total counter\n",
         sample("device_info", labels, 1),
     ]
     errors = dict(
@@ -86,10 +129,12 @@ def device_metrics(filesystem, device, record, record_mtime, directory):
             record[key]
             for key in ["t_start", "t_resumed", "duration", "finished", "canceled"]
         ]
-        if (finished or canceled) and state.get("record") != record_identity:
+        if (finished or canceled) and state.record != record_identity:
             completion = int(record["t_start"]) + int(record["duration"])
             if int(record["t_resumed"]) > int(record["t_start"]):
                 # Accumulated scrub duration omits time spent paused.
+                if record_mtime is None:
+                    raise ValueError("Resumed scrub has no record modification time")
                 completion = record_mtime
             success = (
                 finished
@@ -97,51 +142,54 @@ def device_metrics(filesystem, device, record, record_mtime, directory):
                 and int(record["uncorrectable_errors"]) == 0
                 and int(record.get("malloc_errors", 0)) == 0
             )
-            state.update(
-                {
-                    "completion": completion,
-                    "success": int(success),
-                    "duration": int(record["duration"]),
-                    "errors": {name: int(record.get(name, 0)) for name in SCRUB_ERRORS},
-                    "record": record_identity,
-                }
-            )
+            state.completion = completion
+            state.success = int(success)
+            state.duration = int(record["duration"])
+            state.errors = {name: int(record.get(name, 0)) for name in SCRUB_ERRORS}
+            state.record = record_identity
             if success:
-                state["last_success"] = completion
-            atomic_write(state_file, json.dumps(state))
+                state.last_success = completion
     else:
         output.append(sample("scrub_finished", labels, None))
+    atomic_write(state_file, json.dumps(asdict(state)))
 
-    for metric, key in {
-        "scrub_last_completion_timestamp_seconds": "completion",
-        "scrub_last_success_timestamp_seconds": "last_success",
-        "scrub_last_run_success": "success",
-        "scrub_duration_seconds": "duration",
+    for metric, value in {
+        "scrub_last_completion_timestamp_seconds": state.completion,
+        "scrub_last_success_timestamp_seconds": state.last_success,
+        "scrub_last_run_success": state.success,
+        "scrub_duration_seconds": state.duration,
     }.items():
-        output.append(sample(metric, labels, state.get(key)))
+        output.append(sample(metric, labels, value))
     for name in SCRUB_ERRORS:
         output.append(
             sample(
                 "scrub_errors",
                 labels | {"kind": name},
-                state.get("errors", {}).get(name),
+                state.errors.get(name),
             )
         )
     atomic_write(destination.with_suffix(".prom"), "".join(output))
     return destination.with_suffix(".prom").name
 
 
-def main():
+class Arguments(argparse.Namespace):
+    """Typed filesystem locations supplied by the service or command line."""
+
+    directory: Path
+    sysfs: Path
+    scrub_directory: Path
+
+
+def main() -> None:
+    """Collect each mounted filesystem and mark partial collection failures."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--directory", type=Path, default=Path("/var/lib/hoenn-metrics/btrfs")
-    )
+    parser.add_argument("--directory", type=Path, required=True)
     parser.add_argument("--sysfs", type=Path, default=Path("/sys/fs/btrfs"))
     parser.add_argument("--scrub-directory", type=Path, default=Path("/var/lib/btrfs"))
-    arguments = parser.parse_args()
+    arguments = parser.parse_args(namespace=Arguments())
     arguments.directory.mkdir(parents=True, exist_ok=True)
     success = True
-    expected = set()
+    expected: set[str] = set()
     for filesystem in arguments.sysfs.glob("*"):
         try:
             UUID(filesystem.name)
@@ -171,7 +219,7 @@ def main():
                         arguments.directory,
                     )
                 )
-            except (OSError, ValueError, KeyError) as error:
+            except (OSError, TypeError, ValueError, KeyError) as error:
                 print(
                     f"Btrfs metrics for {filesystem.name}/{device.name}: {error}",
                     file=sys.stderr,
@@ -183,8 +231,10 @@ def main():
             if path.name not in expected:
                 path.unlink()
                 path.with_suffix(".json").unlink(missing_ok=True)
-    output = f"hoenn_btrfs_collector_success {int(success)}\n"
-    output += f"hoenn_btrfs_collector_last_run_timestamp_seconds {int(time.time())}\n"
+        for path in arguments.directory.glob("scrub-*.prom"):
+            path.unlink()
+    output = f"btrfs_collector_success {int(success)}\n"
+    output += f"btrfs_collector_last_run_timestamp_seconds {int(time.time())}\n"
     atomic_write(arguments.directory / "collector.prom", output)
 
 
