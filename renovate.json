@@ -49,6 +49,12 @@
       "matchManagers": ["nix"],
       "matchPackageNames": ["/^https:\\/\\/flakehub\\.com\\/f\\//"],
       "enabled": false
+    },
+    {
+      "description": "Let the Flux manager update the bundle instead of individual controller images",
+      "matchManagers": ["kubernetes"],
+      "matchFileNames": ["k8s/flux-system/gotk-components.yaml"],
+      "enabled": false
     }
   ],
 

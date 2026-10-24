@@ -147,6 +147,11 @@ Follow the shared [k3s recovery guide](../../infra/docs/k3s-control-plane-recove
 GitHub Actions, Kubernetes container images, and Flux dependencies. Images and
 GitHub Actions use digest pins. OCI Helm charts use chart versions.
 
+Renovate updates the Flux installation as a complete release, including controller
+images, API definitions, and permissions. Its Kubernetes manager skips individual
+images in `gotk-components.yaml`. The existing required CI check validates the
+bundle against its declared release before automatic merging.
+
 Routine minor, patch, digest, and pin updates can merge automatically after
 GitHub's required checks pass. Major updates require manual review. Flake lock
 maintenance also merges automatically and is scheduled before 04:00 in the

@@ -17,6 +17,8 @@ jobs:
         name: alyraffauf
     - name: Check flake evaluation
       run: nix -Lv flake check
+    - name: Check Flux release bundle
+      run: nix run .#check-k8s -- --flux-bundle-only
 name: check-nix
 'on':
   pull_request:
