@@ -49,17 +49,20 @@ Use scoped Conventional Commits: `fix(<scope>): <description>` for fixes and `fe
 
 ## Deploy deliberately
 
-`mauville` and `petalburg` are the registered `blzrd` nodes, declared in their `nix/hosts/nixos/<host>/default.nix` files. Run `blzrd switch <host>` to activate one, or `blzrd boot <host>` to set its next boot. Do not use a bare `blzrd switch` unless you mean to target every registered node. Never deploy only to test a configuration.
+Comin reconciles host configurations from `master`. Flux reconciles Kubernetes
+resources from `master`. Commit and push validated changes, then let the existing
+automation reconcile them. Use read-only checks to verify rollout.
 
-Flux deploys Kubernetes changes from `master`. Use `just flux-bootstrap` for
-initial installation. Do not apply repository manifests with `kubectl` during
-normal operation. Use `kubectl` to apply manifests only during bootstrap or
-cluster recovery. `just reconcile` and `just flux-status` target the `hoenn`
-context explicitly.
+Manual deployment, forced reconciliation, Nix store copies to hosts, and restarts
+of deployment services require an explicit user request. Never deploy to test a
+configuration.
+
+Use `just flux-bootstrap` for user-requested initial installation. Apply repository
+manifests with `kubectl` only during user-requested bootstrap or cluster recovery.
+`just flux-status` targets the `hoenn` context explicitly.
 
 `renovate.json` follows Sinnoh's update policy. Keep shared dependency rules
-generic. Host reconciliation uses Comin where enabled, and Flux reconciles
-Kubernetes workloads.
+generic.
 
 ## Keep secrets out of Git
 
