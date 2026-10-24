@@ -44,6 +44,8 @@ in {
           operation = "boot";
           upgrade = false;
         };
+
+      systemd.services = upgradeService "nixos-upgrade";
     };
 
     darwinModules.autoUpgrade = {
