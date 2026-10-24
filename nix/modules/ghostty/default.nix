@@ -15,7 +15,6 @@ _: {
           tab-inherit-working-directory = false;
           window-inherit-working-directory = false;
           font-family = "CaskaydiaCove Nerd Font";
-          font-size = 14;
           background-blur = true;
           background-opacity = 0.8;
         }
