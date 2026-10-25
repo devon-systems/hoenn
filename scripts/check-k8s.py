@@ -180,8 +180,60 @@ def check_roots(root, targets):
             raise ValueError(f"Unreachable Kustomization: {path.relative_to(root)}")
 
 
+def check_tailscale_chart(resource, repository, temporary):
+    """Verify public resource settings against the pinned operator chart."""
+    spec = resource["spec"]
+    values = spec.get("values", {})
+    expected = values.get("operatorConfig", {}).get("resources")
+    if "resources" in values or not expected:
+        raise ValueError(
+            f"{resource_name(resource)}: set resources under values.operatorConfig.resources"
+        )
+    values_path = temporary / "tailscale-values.yaml"
+    values_path.write_text(yaml.safe_dump(values))
+    chart = spec["chart"]["spec"]
+    # Credentials remain encrypted. Only the Deployment is rendered, using public values.
+    documents = render(
+        "helm",
+        "template",
+        spec.get("releaseName", resource["metadata"]["name"]),
+        chart["chart"],
+        "--repo",
+        repository["spec"]["url"],
+        "--version",
+        chart["version"],
+        "--namespace",
+        spec["targetNamespace"],
+        "--values",
+        str(values_path),
+        "--show-only",
+        "templates/deployment.yaml",
+    )
+    operators = [
+        container
+        for document in documents
+        if document.get("kind") == "Deployment"
+        for container in document["spec"]["template"]["spec"]["containers"]
+        if container["name"] == "operator"
+    ]
+    if len(operators) != 1 or operators[0].get("resources") != expected:
+        raise ValueError(
+            f"{resource_name(resource)}: pinned chart did not apply operator resources"
+        )
+    print(f"Verified operator resources: {resource_name(resource)}", flush=True)
+
+
 def render_charts(root, targets, temporary, version):
-    """Render local charts and explicitly report remote charts left unrendered."""
+    """Render local charts and check the pinned Tailscale operator's public values."""
+    repositories = {
+        (
+            document["metadata"].get("namespace", "default"),
+            document["metadata"]["name"],
+        ): document
+        for target in targets.values()
+        for document in target["documents"]
+        if document.get("kind") == "HelmRepository"
+    }
     for owner, target in targets.items():
         for resource in list(target["documents"]):
             if resource.get("kind") != "HelmRelease":
@@ -190,6 +242,20 @@ def render_charts(root, targets, temporary, version):
             chart = spec.get("chart", {}).get("spec", {})
             source = chart.get("sourceRef", {})
             if source.get("kind") != "GitRepository":
+                if (
+                    source.get("kind") == "HelmRepository"
+                    and chart.get("chart") == "tailscale-operator"
+                ):
+                    key = (
+                        source.get("namespace", resource["metadata"]["namespace"]),
+                        source["name"],
+                    )
+                    if key not in repositories:
+                        raise ValueError(
+                            f"{owner}: missing Tailscale HelmRepository {key}"
+                        )
+                    check_tailscale_chart(resource, repositories[key], temporary)
+                    continue
                 print(f"Not rendered: upstream {resource_name(resource)}")
                 continue
             if (

@@ -68,7 +68,9 @@ class FluxBundleTests(unittest.TestCase):
             for document in self.original
             if document["metadata"]["name"] != "alerts.notification.toolkit.fluxcd.io"
         ]
-        with self.assertRaisesRegex(ValueError, "alerts.notification.toolkit.fluxcd.io"):
+        with self.assertRaisesRegex(
+            ValueError, "alerts.notification.toolkit.fluxcd.io"
+        ):
             self.check(actual)
 
     def test_changed_permissions_are_rejected(self):
@@ -79,6 +81,59 @@ class FluxBundleTests(unittest.TestCase):
         role["rules"] = []
         with self.assertRaisesRegex(ValueError, "ClusterRole/"):
             self.check(actual)
+
+
+class TailscaleChartTests(unittest.TestCase):
+    def setUp(self):
+        self.resources = {
+            "requests": {"cpu": "25m", "memory": "64Mi"},
+            "limits": {"memory": "128Mi"},
+        }
+        self.release = {
+            "kind": "HelmRelease",
+            "metadata": {"name": "tailscale-operator", "namespace": "flux-system"},
+            "spec": {
+                "chart": {
+                    "spec": {"chart": "tailscale-operator", "version": "1.104.2"}
+                },
+                "targetNamespace": "tailscale",
+                "values": {"operatorConfig": {"resources": self.resources}},
+            },
+        }
+        self.repository = {"spec": {"url": "https://pkgs.tailscale.com/helmcharts"}}
+
+    def check(self, resources):
+        rendered = [
+            {
+                "kind": "Deployment",
+                "spec": {
+                    "template": {
+                        "spec": {
+                            "containers": [{"name": "operator", "resources": resources}]
+                        }
+                    }
+                },
+            }
+        ]
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            patch.object(checker, "render", return_value=rendered),
+        ):
+            checker.check_tailscale_chart(
+                self.release, self.repository, Path(temporary)
+            )
+
+    def test_operator_resources_are_applied(self):
+        self.check(self.resources)
+
+    def test_misplaced_resources_are_rejected(self):
+        self.release["spec"]["values"] = {"resources": self.resources}
+        with self.assertRaisesRegex(ValueError, "values.operatorConfig.resources"):
+            self.check({})
+
+    def test_chart_ignoring_resources_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "did not apply operator resources"):
+            self.check({})
 
 
 if __name__ == "__main__":
