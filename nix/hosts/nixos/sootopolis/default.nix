@@ -16,6 +16,7 @@
       self.nixosModules.default
       self.nixosModules.google-chrome
       self.nixosModules.homebrew
+      self.nixosModules.nfsClient
       self.nixosModules.niri
       self.nixosModules.nixos
       self.nixosModules.observability

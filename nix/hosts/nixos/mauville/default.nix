@@ -19,6 +19,7 @@
         self.nixosModules.homebrew
         self.nixosModules.k3s
         self.nixosModules.mauville
+        self.nixosModules.nfsClient
         self.nixosModules.nixos
         self.nixosModules.observability
         self.nixosModules.sway
