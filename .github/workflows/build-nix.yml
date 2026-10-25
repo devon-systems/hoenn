@@ -27,5 +27,5 @@ name: build-nix
     - .github/**
     - flake.lock
     - flake.nix
-    - nix/devShells.nix
+    - nix/**
   workflow_dispatch: {}
