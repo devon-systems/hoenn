@@ -141,7 +141,7 @@
             transport = "chat_completions";
             default_model = "Qwen3.8-Flash-Next-Strata";
             models = {
-              "Qwen3.8-Flash-Next-Strata".context_length = 131072;
+              "Qwen3.8-Flash-Next-Strata".context_length = 262144;
               "qwen3.8:latest".context_length = 65536;
               "qwen3.6:35b-a3b-mtp-q4_K_M".context_length = 65536;
               "muse-glimmer:latest".context_length = 65536;

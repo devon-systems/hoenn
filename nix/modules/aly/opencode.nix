@@ -25,7 +25,7 @@
         models = {
           "Qwen3.8-Flash-Next-Strata" = {
             name = "Qwen Strata";
-            limit.context = 131072;
+            limit.context = 262144;
           };
           "qwen3.8:latest" = {
             name = "Qwen 3.8 (Ollama)";
