@@ -7,8 +7,6 @@
     imports = [inputs.lanzaboote.nixosModules.lanzaboote];
 
     boot = {
-      initrd.systemd.enable = true;
-
       lanzaboote = {
         enable = true;
         autoEnrollKeys.enable = true;
