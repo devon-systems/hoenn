@@ -164,14 +164,14 @@ deployment. Use the same encrypted cluster token as Mauville.
 ## Back up and restore the cluster
 
 Mauville backs up etcd snapshots and local-path application volumes to B2 with
-Restic daily. Each backup retains seven daily, four weekly, and twelve monthly
+Restic daily. Each backup retains seven daily, four weekly, and three monthly
 snapshots. Homebridge's volume includes its configuration, Google credentials,
 pairing state, and installed plugins. Treat these backups as secret data.
 
 Database workloads need application-consistent backups in addition to file
 backups. The encrypted cluster token must remain available for recovery.
 Follow the shared
-[k3s recovery guide](../../infra/docs/k3s-control-plane-recovery.md).
+[k3s recovery guide](https://github.com/devon-systems/infra/blob/master/docs/k3s-control-plane-recovery.md).
 
 ## Manage automatic updates
 
