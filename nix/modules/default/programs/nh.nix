@@ -1,6 +1,6 @@
 _: let
   variables = let
-    FLAKE = "github:alyraffauf/hoenn";
+    FLAKE = "github:devon-systems/hoenn";
   in {
     inherit FLAKE;
     NH_FLAKE = FLAKE;
