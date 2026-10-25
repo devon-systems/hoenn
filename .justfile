@@ -114,7 +114,8 @@ sops-rekey:
     echo "regenerated .sops.yaml"
     shopt -s globstar
     for f in secrets/**/*.yaml secrets/**/*.yml k8s/secrets/**/*.yaml k8s/secrets/**/*.yml; do
-        if [[ "$(sops filestatus "$f")" == *'"encrypted":true'* ]]; then
+        file_status=$(sops filestatus "$f")
+        if [[ "$file_status" == *'"encrypted":true'* ]]; then
             echo "rekeying $f"
             sops updatekeys -y "$f"
         fi
