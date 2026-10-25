@@ -5,6 +5,19 @@ resources:
   - repository.yaml
   - release.yaml
   - kube-state-metrics.yaml
+replacements:
+  - source:
+      kind: HelmRelease
+      name: alloy
+      fieldPath: spec.chart.spec.version
+    targets:
+      - select:
+          kind: HelmRepository
+          name: grafana
+        fieldPaths:
+          - metadata.annotations.[reconcile.fluxcd.io/requestedAt]
+        options:
+          create: true
 configMapGenerator:
   - name: alloy-config-values
     namespace: flux-system
