@@ -19,8 +19,8 @@ nix build .#systemConfigs.sootopolis
 ```
 
 If a host's `facter.json` or `system-profiler.json` changes, run
-`nix run github:alyraffauf/infra#generate-host-readmes`. Capture Darwin hardware
-over SSH with `nix run github:alyraffauf/infra#generate-host-readmes -- --capture-darwin <host>`.
+`nix run github:devon-systems/infra#generate-host-readmes`. Capture Darwin hardware
+over SSH with `nix run github:devon-systems/infra#generate-host-readmes -- --capture-darwin <host>`.
 Do not edit text between generated-section markers in a host README.
 
 After changing compositor keybindings, regenerate the keyboard references:
