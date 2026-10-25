@@ -4,7 +4,7 @@ metadata:
   name: prometheus-community
   namespace: flux-system
 spec:
-  interval: 24h
+  interval: 1h
   url: https://prometheus-community.github.io/helm-charts
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
