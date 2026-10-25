@@ -164,7 +164,7 @@ deployment. Use the same encrypted cluster token as Mauville.
 ## Back up and restore the cluster
 
 Mauville backs up etcd snapshots and local-path application volumes to B2 with
-Restic daily. Each backup retains seven daily, four weekly, and three monthly
+Restic daily. Each backup retains seven daily, four weekly, and twelve monthly
 snapshots. Homebridge's volume includes its configuration, Google credentials,
 pairing state, and installed plugins. Treat these backups as secret data.
 
