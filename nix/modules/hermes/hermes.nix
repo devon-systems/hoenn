@@ -135,6 +135,19 @@
             provider = "openai-codex";
           };
           plugins.enabled = ["honcho"];
+          providers.kanto = {
+            api = "https://openwebui.narwhal-snapper.ts.net/api";
+            key_cmd = "${pkgs.coreutils}/bin/cat ${lib.escapeShellArg config.sops.secrets.openwebui.path}";
+            transport = "chat_completions";
+            default_model = "Qwen3.8-Flash-Next-Strata";
+            models = {
+              "Qwen3.8-Flash-Next-Strata".context_length = 131072;
+              "qwen3.8:latest".context_length = 65536;
+              "qwen3.6:35b-a3b-mtp-q4_K_M".context_length = 65536;
+              "muse-glimmer:latest".context_length = 65536;
+              "gemma4:latest".context_length = 65536;
+            };
+          };
           stt = {
             enabled = true;
             local.model = "base";
