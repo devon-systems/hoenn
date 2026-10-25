@@ -25,6 +25,11 @@
           key = "";
           sopsFile = self + "/secrets/kube-johto.yaml";
         };
+
+        kube-kanto = {
+          key = "";
+          sopsFile = self + "/secrets/kube-kanto.yaml";
+        };
       };
     };
 
@@ -46,6 +51,7 @@
               config.sops.secrets.kube-hoenn.path
               config.sops.secrets.kube-sinnoh.path
               config.sops.secrets.kube-johto.path
+              config.sops.secrets.kube-kanto.path
               "${config.home.homeDirectory}/.kube"
             ];
           }
