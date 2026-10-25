@@ -16,10 +16,6 @@ _default:
 update *inputs:
     nix flake update {{ inputs }} --commit-lock-file
 
-# Update all nixpkgs inputs
-[group('flake')]
-update-nixpkgs: (update "nixpkgs")
-
 ############################################################################
 #
 #  Secrets (sops + age)
