@@ -20,7 +20,7 @@ nix build .#darwinConfigurations.verdanturf.config.system.build.toplevel
 nix build .#systemConfigs.sootopolis
 ```
 
-After `facter.json` or `system-profiler.json` changes, run `nix run github:devon-systems/infra#generate-host-readmes`. Capture Darwin hardware with `nix run github:devon-systems/infra#generate-host-readmes -- --capture-darwin <host>`. Never edit text between generated-section markers.
+After `facter.json` or `system-profiler.json` changes, run `nix run github:devon-systems/dvnpkgs#generate-host-readmes`. Capture Darwin hardware with `nix run github:devon-systems/dvnpkgs#generate-host-readmes -- --capture-darwin <host>`. Never edit text between generated-section markers.
 
 After compositor keybinding changes, edit the compositor config and regenerate both references:
 
