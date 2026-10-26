@@ -81,6 +81,7 @@ in {
         sopsFile = self + "/secrets/wireguard-hoenn.yaml";
         key = config.networking.hostName;
         mode = "0400";
+        restartUnits = ["wireguard-hoenn.service"];
       };
 
       networking = {
