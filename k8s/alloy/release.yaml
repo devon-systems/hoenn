@@ -74,6 +74,6 @@ spec:
     crds:
       create: false
     image:
-      registry: docker.io
-      repository: grafana/alloy
-      tag: v1.21.2@sha256:89a5a320168387336b9ac3c850609c3ba7757eadd4ae5f1d819deb35e9854b18
+      # renovate: image=docker.io/grafana/alloy
+      tag: v1.21.2
+      digest: sha256:89a5a320168387336b9ac3c850609c3ba7757eadd4ae5f1d819deb35e9854b18
