@@ -1,4 +1,4 @@
-"""Regression tests for Flux controller and API version consistency."""
+"""Tests for Flux bundles, Helm charts, and Secret dependencies."""
 
 from copy import deepcopy
 import importlib.util

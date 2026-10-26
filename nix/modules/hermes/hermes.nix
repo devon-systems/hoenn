@@ -76,7 +76,6 @@
         source = honchoPlugin;
       };
 
-      # Extend the packaged runtime PATH without sourcing interactive shell files.
       systemd.user.services = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         hermes-agent.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
         hermes-backend.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];

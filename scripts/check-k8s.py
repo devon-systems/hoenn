@@ -40,7 +40,6 @@ SOPS_VALUE = re.compile(r"^ENC\[AES256_GCM,data:([^,]*),")
 
 
 def render(*command):
-    """Run a renderer and load its YAML documents."""
     result = subprocess.run(command, check=True, stdout=subprocess.PIPE, text=True)
     return [document for document in yaml.safe_load_all(result.stdout) if document]
 
@@ -54,7 +53,6 @@ def local_path(root, path):
 
 
 def resource_name(document):
-    """Identify a resource without including its data."""
     metadata = document["metadata"]
     return "/".join(
         filter(None, [document["kind"], metadata.get("namespace"), metadata["name"]])
@@ -213,7 +211,7 @@ def check_tailscale_chart(resource, repository, temporary):
     values_path = temporary / "tailscale-values.yaml"
     values_path.write_text(yaml.safe_dump(values))
     chart = spec["chart"]["spec"]
-    # Credentials remain encrypted. Only the Deployment is rendered, using public values.
+    # Render public values without decrypting credentials.
     documents = render(
         "helm",
         "template",
@@ -245,7 +243,6 @@ def check_tailscale_chart(resource, repository, temporary):
 
 
 def chart_version_exists(repository, chart, version):
-    """Ask the chart repository whether it publishes the pinned version."""
     url = repository["spec"]["url"]
     if repository["spec"].get("type") == "oci" or url.startswith("oci://"):
         command = ["helm", "show", "chart", f"{url.rstrip('/')}/{chart}"]
@@ -381,7 +378,7 @@ def check_ownership(targets):
                             )
                         secrets[key] = owner
                 elif encrypted_length(fields[0]) in {None, len("Secret")}:
-                    # Encrypted metadata: AES-GCM keeps the plaintext length.
+                    # AES-GCM preserves the plaintext length of encrypted metadata.
                     lengths = tuple(
                         encrypted_length(field) or len(field) for field in fields[1:]
                     )
@@ -454,7 +451,6 @@ def find_named(value, keys):
 
 
 def pod_template(document):
-    """Return the pod template for a supported workload, if present."""
     kind = document.get("kind")
     if kind == "Pod":
         return document
@@ -719,7 +715,6 @@ def validate_schemas(targets, temporary, version):
 
 
 def main():
-    """Run the same credential-free checks locally and in CI."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--kubernetes-version", required=True)
     parser.add_argument(

@@ -7,20 +7,19 @@
   config.flake = {
     darwinModules.tailscale = {
       networking = {
-        # Explicitly manage these
         knownNetworkServices = [
           "Wi-Fi"
           "Ethernet Adaptor"
           "Thunderbolt Ethernet"
         ];
 
-        # Otherwise tailscale ssh only works with FQDNs
+        # Resolve short hostnames for Tailscale SSH.
         search = ["narwhal-snapper.ts.net"];
       };
 
       services.tailscale = {
         enable = true;
-        # Needs a declared DNS provider in Tailscale's admin panel
+        # Requires a DNS provider in the tailnet configuration.
         overrideLocalDns = true;
       };
     };

@@ -16,8 +16,6 @@ _: {
         enableUpdateCheck = false;
 
         extensions = with pkgs; [
-          # vscode-extensions.catppuccin.catppuccin-vsc
-          # vscode-extensions.catppuccin.catppuccin-vsc-icons
           vscode-extensions.jnoortheen.nix-ide
           vscode-extensions.mkhl.direnv
           vscode-extensions.ms-vscode-remote.remote-ssh

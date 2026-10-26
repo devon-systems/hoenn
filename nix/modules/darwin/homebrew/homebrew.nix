@@ -5,7 +5,6 @@ _: {
       global.autoUpdate = true;
 
       onActivation = {
-        # cleanup = "zap";
         upgrade = true;
       };
     };

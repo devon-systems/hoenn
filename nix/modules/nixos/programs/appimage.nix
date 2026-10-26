@@ -10,7 +10,6 @@ _: {
       package = let
         upstreamAppimageRun = pkgs.appimage-run;
 
-        # Add support for AnyLinux AppImages
         anylinuxAwareAppimageRun = pkgs.writeShellApplication {
           name = "appimage-run";
 

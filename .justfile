@@ -1,10 +1,3 @@
-# just is a command runner, Justfile is very similar to Makefile, but simpler.
-############################################################################
-#
-#  Common recipes
-#
-############################################################################
-
 # List all recipes
 _default:
     @printf '\033[1;36mnixcfg recipes\033[0m\n\n'
@@ -16,15 +9,8 @@ _default:
 update *inputs:
     nix flake update {{ inputs }} --commit-lock-file
 
-############################################################################
-#
-#  Secrets (sops + age)
-#
-############################################################################
-
-# Derive this machine's age private key from its ssh ed25519 key, install
-# at ~/.config/sops/age/keys.txt. Run once per machine. The corresponding
-# public key (age1...) must already be a recipient in .sops.yaml.
+# Derive a local age key from ~/.ssh/id_ed25519
+# Its age recipient must already be in .sops.yaml.
 [group('secrets')]
 sops-bootstrap:
     #!/usr/bin/env bash
@@ -127,7 +113,7 @@ sops-rekey:
         fi
     done
 
-# Edit a sops-encrypted secrets file. Usage: just sops-edit tailscale.yaml
+# Edit a SOPS secret, such as tailscale.yaml
 [group('secrets')]
 [positional-arguments]
 sops-edit FILE:
@@ -137,12 +123,6 @@ sops-edit FILE:
         secrets/*|k8s/secrets/*) sops "$1" ;;
         *) sops "secrets/$1" ;;
     esac
-
-############################################################################
-#
-#  Kubernetes
-#
-############################################################################
 
 cluster := "hoenn"
 
@@ -210,12 +190,6 @@ flux-bootstrap AGE_KEY_FILE SSH_KEY_FILE:
     flux --context "{{cluster}}" create secret git flux-system --url="$remote" --private-key-file="$2" --export | kubectl --context "{{cluster}}" apply -f -
     kubectl --context "{{cluster}}" apply -f k8s/flux-system/gotk-sync.yaml
     flux --context "{{cluster}}" reconcile kustomization flux-system --with-source
-
-############################################################################
-#
-#  Darwin
-#
-############################################################################
 
 # Reset launchpad to force it to reindex Applications
 [group('desktop')]

@@ -18,8 +18,8 @@ nix build .#nixosConfigurations.mauville.config.system.build.toplevel
 just check-k8s
 ```
 
-Commit and push the validated configuration when ready. Comin activates host
-changes from `master`. To deploy a reviewed local configuration explicitly, run
+Commit and push the validated configuration. Comin activates host
+changes from `master`. To deploy a reviewed local configuration, run
 `blzrd switch mauville`.
 
 ## Bootstrap Flux
@@ -60,8 +60,8 @@ just reconcile
 
 The bootstrap recipe installs the checked-in Flux controller manifests, creates
 the `sops-age` and Git credential secrets, and applies the checked-in sync
-resources. The SSH identity is stored in the cluster's `flux-system` Git
-credential secret. Use a repository-scoped deploy key when available.
+resources. The recipe stores the SSH identity in the cluster's `flux-system` Git
+credential secret.
 
 `secrets/flux-age.yaml` holds the encrypted Flux age identity, and
 `keys/flux_k8s.pub` holds its public recipient. `just sops-rekey` includes that
@@ -103,9 +103,9 @@ and joins the tailnet once its credentials and the tailnet policy are ready.
 
 The private-ingress ProxyGroup follows Johto's configuration with one replica
 on Mauville. It uses automatic endpoint discovery because Mauville has no
-Kubernetes ExternalIP. Give each service a tailnet hostname that is unique
-across the clusters. Homebridge uses `homebridge`. Application LAN discovery is
-configured separately from cluster transit.
+Kubernetes ExternalIP. Give each service a unique tailnet hostname across the
+clusters. Homebridge uses `homebridge`. Configure application LAN discovery
+separately from cluster traffic.
 
 Mauville accepts a Tailscale subnet route for `192.168.1.0/24`, which overlaps
 its home LAN. The `k3s-lan-routing` service gives pod traffic arriving on `cni0`
@@ -127,11 +127,11 @@ Pair the bridge in Apple Home using the QR code shown in Homebridge.
 Homebridge uses host networking and Ciao on Mauville's `wlo1` LAN interface for
 HomeKit discovery. The LAN firewall allows TCP `51826` for the main bridge and
 `52100` through `52150` for external accessories. Set any child bridge's port
-within that range. The web UI is exposed through the Tailscale ingress proxy.
+within that range. The Tailscale ingress proxy exposes the web UI.
 
-Configuration, pairing state, and plugins persist on `homebridge-data` and are
-included in Mauville's local-path volume backups. The init container creates
-the initial configuration only when none exists, so UI changes survive
+Configuration, pairing state, and plugins persist on `homebridge-data`.
+Mauville's local-path volume backups include this volume. The init container
+creates the initial configuration only when none exists, so UI changes survive
 restarts.
 
 ### Connect the Nest thermostat
@@ -183,9 +183,8 @@ GitHub Actions use digest pins. OCI Helm charts use chart versions.
 
 Renovate updates the Flux installation as a complete release, including
 controller images, API definitions, and permissions. Its Kubernetes manager
-skips individual images in `gotk-components.yaml`. The existing required CI
-check validates the bundle against its declared release before automatic
-merging.
+skips individual images in `gotk-components.yaml`. The required CI check
+validates the bundle against its declared release before automatic merging.
 
 Routine minor, patch, digest, and pin updates can merge automatically after
 GitHub's required checks pass. Major updates require manual review. Flake lock
@@ -201,7 +200,7 @@ minutes on hosts that enable it and activates the new configuration. Flux
 checks Git every minute and reconciles the affected Kubernetes resources. Use
 `just reconcile` to request an immediate reconciliation.
 
-The scheduled host upgrade jobs also use the committed flake lock. On NixOS,
+Scheduled host upgrades use the committed flake lock. On NixOS,
 the daily job runs from 02:00 with up to 45 minutes of delay, sets the next boot
 configuration, and does not reboot. Comin handles activation on hosts that
 enable it.
