@@ -22,6 +22,18 @@
     "managerFilePatterns": ["/k8s/.+\\.ya?ml$/"]
   },
 
+  "customManagers": [
+    {
+      "description": "CloudNativePG Cluster imageName pins",
+      "customType": "regex",
+      "managerFilePatterns": ["/^k8s/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "imageName:\\s+[\"']?(?<depName>[^\\s\"'@:]+(?::\\d+)?/[^\\s\"'@:]+):(?<currentValue>[^\\s\"'@]+)@(?<currentDigest>sha256:[a-f0-9]{64})"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
+
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
