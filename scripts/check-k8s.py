@@ -1,6 +1,8 @@
 """Check the local Flux graph, resource ownership, and Kubernetes schemas."""
 
 import argparse
+import base64
+import re
 import subprocess
 import sys
 import tempfile
@@ -16,6 +18,25 @@ BUILTIN_NAMESPACES = {
     "kube-node-lease",
     "flux-system",
 }
+CLUSTER_SCOPED = {
+    "APIService",
+    "ClusterIssuer",
+    "ClusterRole",
+    "ClusterRoleBinding",
+    "CustomResourceDefinition",
+    "IngressClass",
+    "MutatingWebhookConfiguration",
+    "Namespace",
+    "PersistentVolume",
+    "PriorityClass",
+    "StorageClass",
+    "ValidatingWebhookConfiguration",
+}
+# Secrets that CloudNativePG creates for each Cluster.
+CNPG_SECRET_SUFFIXES = ("app", "superuser", "ca", "server", "replication")
+# ClusterIssuer Secrets live in cert-manager's cluster resource namespace.
+CERT_MANAGER_NAMESPACE = "cert-manager"
+SOPS_VALUE = re.compile(r"^ENC\[AES256_GCM,data:([^,]*),")
 
 
 def render(*command):
@@ -223,24 +244,67 @@ def check_tailscale_chart(resource, repository, temporary):
     print(f"Verified operator resources: {resource_name(resource)}", flush=True)
 
 
-def render_charts(root, targets, temporary, version):
+def chart_version_exists(repository, chart, version):
+    """Ask the chart repository whether it publishes the pinned version."""
+    url = repository["spec"]["url"]
+    if repository["spec"].get("type") == "oci" or url.startswith("oci://"):
+        command = ["helm", "show", "chart", f"{url.rstrip('/')}/{chart}"]
+    else:
+        command = ["helm", "show", "chart", chart, "--repo", url]
+    result = subprocess.run(
+        command + ["--version", str(version)],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    return result.returncode == 0, result.stderr.strip().splitlines()[-1:]
+
+
+def render_charts(root, targets, temporary, version, ancestors):
     """Render local charts and check the pinned Tailscale operator's public values."""
-    repositories = {
-        (
-            document["metadata"].get("namespace", "default"),
-            document["metadata"]["name"],
-        ): document
-        for target in targets.values()
-        for document in target["documents"]
-        if document.get("kind") == "HelmRepository"
-    }
+    repositories, sources = {}, {}
+    for owner, target in targets.items():
+        for document in target["documents"]:
+            if document.get("kind") in {"HelmRepository", "OCIRepository"}:
+                key = (
+                    document["kind"],
+                    document["metadata"].get("namespace", "default"),
+                    document["metadata"]["name"],
+                )
+                sources[key] = owner
+                if document["kind"] == "HelmRepository":
+                    repositories[key[1:]] = document
     for owner, target in targets.items():
         for resource in list(target["documents"]):
             if resource.get("kind") != "HelmRelease":
                 continue
             spec = resource["spec"]
             chart = spec.get("chart", {}).get("spec", {})
-            source = chart.get("sourceRef", {})
+            source = chart.get("sourceRef", spec.get("chartRef", {}))
+            if source.get("kind") in {"HelmRepository", "OCIRepository"}:
+                key = (
+                    source["kind"],
+                    source.get("namespace", resource["metadata"]["namespace"]),
+                    source["name"],
+                )
+                producer = sources.get(key)
+                if producer is None:
+                    raise ValueError(
+                        f"{owner}: {resource_name(resource)} uses missing {'/'.join(key)}"
+                    )
+                if producer != owner and producer not in ancestors[owner]:
+                    raise ValueError(
+                        f"{owner}: {'/'.join(key)} requires dependency {producer}"
+                    )
+                if source["kind"] == "HelmRepository":
+                    found, error = chart_version_exists(
+                        repositories[key[1:]], chart["chart"], chart["version"]
+                    )
+                    if not found:
+                        raise ValueError(
+                            f"{owner}: {resource_name(resource)} chart "
+                            f"{chart['chart']} {chart['version']} not found: {' '.join(error)}"
+                        )
             if source.get("kind") != "GitRepository":
                 if (
                     source.get("kind") == "HelmRepository"
@@ -276,20 +340,23 @@ def render_charts(root, targets, temporary, version):
             values.write_text(yaml.safe_dump(spec.get("values", {})))
             chart_path = local_path(root, chart["chart"])
             print(f"Rendering local Helm release {namespace}/{name}", flush=True)
-            target["documents"].extend(
-                render(
-                    "helm",
-                    "template",
-                    name,
-                    str(chart_path),
-                    "--namespace",
-                    namespace,
-                    "--values",
-                    str(values),
-                    "--kube-version",
-                    version,
-                )
+            rendered = render(
+                "helm",
+                "template",
+                name,
+                str(chart_path),
+                "--namespace",
+                namespace,
+                "--values",
+                str(values),
+                "--kube-version",
+                version,
             )
+            for document in rendered:
+                # Helm applies the release namespace when the template omits it.
+                if document.get("kind") not in CLUSTER_SCOPED:
+                    document["metadata"].setdefault("namespace", namespace)
+            target["documents"].extend(rendered)
 
 
 def check_ownership(targets):
@@ -299,11 +366,26 @@ def check_ownership(targets):
         visible = 0
         for document in target["documents"]:
             if "sops" in document:
-                if document.get("kind") == "Secret":
-                    metadata = document["metadata"]
-                    secrets[
-                        (metadata.get("namespace", "default"), metadata["name"])
-                    ] = owner
+                metadata = document.get("metadata", {})
+                fields = [
+                    document.get("kind"),
+                    metadata.get("namespace", "default"),
+                    metadata.get("name"),
+                ]
+                if not any(map(encrypted_length, fields)):
+                    if fields[0] == "Secret":
+                        key = (fields[1], fields[2])
+                        if key in secrets:
+                            raise ValueError(
+                                f"Secret {'/'.join(key)}: duplicate owners {secrets[key]} and {owner}"
+                            )
+                        secrets[key] = owner
+                elif encrypted_length(fields[0]) in {None, len("Secret")}:
+                    # Encrypted metadata: AES-GCM keeps the plaintext length.
+                    lengths = tuple(
+                        encrypted_length(field) or len(field) for field in fields[1:]
+                    )
+                    secrets.setdefault(lengths, set()).add(owner)
                 continue
             metadata = document["metadata"]
             identity = (
@@ -332,6 +414,45 @@ def check_ownership(targets):
     return namespaces, secrets
 
 
+def encrypted_length(value):
+    """Return the plaintext length of a SOPS value, or None if unencrypted."""
+    match = SOPS_VALUE.match(value) if isinstance(value, str) else None
+    return len(base64.b64decode(match.group(1))) if match else None
+
+
+def generated_secrets(targets):
+    """Return Secrets that controllers create from visible resources."""
+    generated = set()
+    for target in targets.values():
+        for document in target["documents"]:
+            if "sops" in document:
+                continue
+            kind, metadata = document.get("kind"), document["metadata"]
+            namespace = metadata.get("namespace", "default")
+            if kind == "Certificate":
+                generated.add((namespace, document["spec"]["secretName"]))
+            if kind == "Cluster" and document["apiVersion"].startswith(
+                "postgresql.cnpg.io/"
+            ):
+                generated.update(
+                    (namespace, f"{metadata['name']}-{suffix}")
+                    for suffix in CNPG_SECRET_SUFFIXES
+                )
+    return generated
+
+
+def find_named(value, keys):
+    """Find name fields under the given reference keys in arbitrary values."""
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if key in keys and isinstance(child, dict) and "name" in child:
+                yield child["name"]
+            yield from find_named(child, keys)
+    elif isinstance(value, list):
+        for child in value:
+            yield from find_named(child, keys)
+
+
 def pod_template(document):
     """Return the pod template for a supported workload, if present."""
     kind = document.get("kind")
@@ -345,7 +466,44 @@ def pod_template(document):
 
 
 def secret_references(document):
-    """Find the supported explicit Secret references without reading values."""
+    """Find the supported explicit Secret references as (namespace, name)."""
+    namespace = document["metadata"].get("namespace", "default")
+    kind, spec = document.get("kind"), document.get("spec", {})
+    references = set()
+    if kind == "HelmRelease":
+        # Rendered pods run in the target namespace.
+        target = spec.get("targetNamespace", namespace)
+        references.update(
+            (target, name)
+            for name in find_named(spec.get("values", {}), {"secretKeyRef", "secretRef"})
+        )
+    if kind == "Cluster" and document["apiVersion"].startswith("postgresql.cnpg.io/"):
+        names = [role["passwordSecret"]["name"]
+                 for role in spec.get("managed", {}).get("roles", [])
+                 if "passwordSecret" in role]
+        names += find_named(spec.get("bootstrap", {}), {"secret"})
+        names += find_named(spec, {"superuserSecret"})
+        references.update((namespace, name) for name in names)
+    if kind == "ObjectStore" and document["apiVersion"].startswith("barmancloud.cnpg.io/"):
+        credentials = spec.get("configuration", {}).get("s3Credentials", {})
+        references.update(
+            (namespace, name)
+            for name in find_named(credentials, {"accessKeyId", "secretAccessKey", "region", "sessionToken"})
+        )
+    if kind in {"ClusterIssuer", "Issuer"}:
+        issuer = CERT_MANAGER_NAMESPACE if kind == "ClusterIssuer" else namespace
+        references.update(
+            (issuer, name)
+            for name in find_named(
+                spec.get("acme", {}).get("solvers", []),
+                {"apiTokenSecretRef", "apiKeySecretRef", "secretAccessKeySecretRef"},
+            )
+        )
+    return references | {(namespace, name) for name in local_secret_references(document)}
+
+
+def local_secret_references(document):
+    """Find Secret names that resolve in the document's own namespace."""
     names = set()
     if document.get("kind") == "HelmRelease":
         names.update(
@@ -383,6 +541,13 @@ def secret_references(document):
 
 def check_prerequisites(targets, ancestors, namespaces, secrets):
     """Check ordering for visible namespaces and known encrypted Secrets."""
+    generated = generated_secrets(targets)
+    issuers = {
+        document["metadata"]["name"]: owner
+        for owner, target in targets.items()
+        for document in target["documents"]
+        if document.get("kind") == "ClusterIssuer"
+    }
     for owner, target in targets.items():
         for document in target["documents"]:
             if "sops" in document:
@@ -400,11 +565,34 @@ def check_prerequisites(targets, ancestors, namespaces, secrets):
                     raise ValueError(
                         f"{owner}: namespace {name} requires dependency {producer}"
                     )
-            for name in secret_references(document):
-                producer = secrets.get((namespace or "default", name))
-                if producer and producer != owner and producer not in ancestors[owner]:
+            issuer = document.get("spec", {}).get("issuerRef", {})
+            if document["kind"] == "Certificate" and issuer.get("kind") == "ClusterIssuer":
+                producer = issuers.get(issuer["name"])
+                if producer is None:
                     raise ValueError(
-                        f"{owner}: Secret {namespace}/{name} requires dependency {producer}"
+                        f"{owner}: ClusterIssuer {issuer['name']} is not declared"
+                    )
+                if producer != owner and producer not in ancestors[owner]:
+                    raise ValueError(
+                        f"{owner}: ClusterIssuer {issuer['name']} requires dependency {producer}"
+                    )
+            for key in secret_references(document):
+                producer = secrets.get(key)
+                if producer is None:
+                    if key in generated:
+                        continue
+                    # Fall back to SOPS Secrets whose name and namespace are encrypted.
+                    producer = secrets.get(tuple(map(len, key)))
+                    if producer is None:
+                        raise ValueError(
+                            f"{owner}: Secret {'/'.join(key)} is not declared or generated"
+                        )
+                    if owner in producer or producer & ancestors[owner]:
+                        continue
+                    producer = ", ".join(sorted(producer))
+                if producer != owner and producer not in ancestors[owner]:
+                    raise ValueError(
+                        f"{owner}: Secret {'/'.join(key)} requires dependency {producer}"
                     )
 
 
@@ -549,7 +737,7 @@ def main():
     check_roots(root, targets)
     with tempfile.TemporaryDirectory(prefix="check-k8s-") as temporary:
         temporary = Path(temporary)
-        render_charts(root, targets, temporary, args.kubernetes_version)
+        render_charts(root, targets, temporary, args.kubernetes_version, ancestors)
         namespaces, secrets = check_ownership(targets)
         check_prerequisites(targets, ancestors, namespaces, secrets)
         check_security(targets)
