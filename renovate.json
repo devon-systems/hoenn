@@ -31,6 +31,15 @@
         "imageName:\\s+[\"']?(?<depName>[^\\s\"'@:]+(?::\\d+)?/[^\\s\"'@:]+):(?<currentValue>[^\\s\"'@]+)@(?<currentDigest>sha256:[a-f0-9]{64})"
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Helm values image pins annotated with a renovate comment",
+      "customType": "regex",
+      "managerFilePatterns": ["/^k8s/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "#\\s*renovate:\\s*image=(?<depName>\\S+)\\s+tag:\\s*(?<currentValue>\\S+)\\s+digest:\\s*(?<currentDigest>sha256:[a-f0-9]{64})"
+      ],
+      "datasourceTemplate": "docker"
     }
   ],
 
