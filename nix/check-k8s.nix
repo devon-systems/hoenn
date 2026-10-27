@@ -8,7 +8,6 @@ _: {
       name = "check-k8s";
       runtimeInputs = [
         (pkgs.python3.withPackages (python: [python.pyyaml]))
-        pkgs.fluxcd
         pkgs.kustomize
         pkgs.kubernetes-helm
         pkgs.kubeconform
