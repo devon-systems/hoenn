@@ -2,11 +2,17 @@
 
 import argparse
 import base64
+import hashlib
+import io
+import platform
 import re
 import subprocess
 import sys
+import tarfile
 import tempfile
 from pathlib import Path
+from urllib.error import URLError
+from urllib.request import urlopen
 
 import yaml
 
@@ -59,6 +65,38 @@ def resource_name(document):
     )
 
 
+def render_flux_release(version):
+    if not re.fullmatch(r"v[0-9]+\.[0-9]+\.[0-9]+", version):
+        raise ValueError(f"Invalid Flux release version: {version}")
+    system = platform.system().lower()
+    machine = platform.machine().lower()
+    architecture = {"x86_64": "amd64", "aarch64": "arm64", "arm64": "arm64"}.get(
+        machine
+    )
+    if system not in {"linux", "darwin"} or not architecture:
+        raise ValueError(f"Unsupported Flux CLI platform: {system}/{machine}")
+    release = f"https://github.com/fluxcd/flux2/releases/download/{version}"
+    name = f"flux_{version[1:]}_{system}_{architecture}.tar.gz"
+    with urlopen(f"{release}/flux_{version[1:]}_checksums.txt", timeout=60) as response:
+        checksums = dict(
+            (filename, checksum)
+            for checksum, filename in (
+                line.split() for line in response.read().decode().splitlines()
+            )
+        )
+    with urlopen(f"{release}/{name}", timeout=60) as response:
+        archive = response.read()
+    if hashlib.sha256(archive).hexdigest() != checksums.get(name):
+        raise ValueError(f"Flux release checksum mismatch: {name}")
+    with tempfile.TemporaryDirectory(prefix="check-flux-") as temporary:
+        executable = Path(temporary) / "flux"
+        with tarfile.open(fileobj=io.BytesIO(archive), mode="r:gz") as bundle:
+            with bundle.extractfile("flux") as binary:
+                executable.write_bytes(binary.read())
+        executable.chmod(0o700)
+        return render(str(executable), "install", "--export")
+
+
 def check_flux_bundle(root):
     """Compare controllers, CRDs, and RBAC with the declared Flux release."""
     path = root / "k8s/flux-system/gotk-components.yaml"
@@ -70,7 +108,7 @@ def check_flux_bundle(root):
         and document["metadata"]["name"] == "flux-system"
     )
     version = namespace["metadata"]["labels"]["app.kubernetes.io/version"]
-    published = render("flux", "install", "--version", version, "--export")
+    published = render_flux_release(version)
 
     def resources(bundle):
         for document in bundle:
@@ -88,7 +126,7 @@ def check_flux_bundle(root):
     if changed:
         raise ValueError(
             f"Flux bundle differs from release {version}: {', '.join(changed)}. "
-            f"Regenerate gotk-components.yaml with flux install --version={version} --export; "
+            f"Regenerate gotk-components.yaml with the Flux {version} CLI; "
             "keep customizations in kustomization.yaml."
         )
     print(f"Flux controllers, CRDs, and RBAC match release {version}", flush=True)
@@ -742,6 +780,6 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except (ValueError, subprocess.CalledProcessError) as error:
+    except (ValueError, subprocess.CalledProcessError, URLError) as error:
         print(f"check-k8s: {error}", file=sys.stderr)
         sys.exit(1)

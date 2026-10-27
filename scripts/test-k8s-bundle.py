@@ -1,8 +1,11 @@
 """Tests for Flux bundles, Helm charts, and Secret dependencies."""
 
 from copy import deepcopy
+import hashlib
 import importlib.util
+import io
 from pathlib import Path
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -32,7 +35,7 @@ class FluxBundleTests(unittest.TestCase):
     def check(self, documents):
         self.path.write_text(yaml.safe_dump_all(documents))
         with patch.object(
-            checker, "render", side_effect=lambda *args: deepcopy(self.original)
+            checker, "render_flux_release", return_value=deepcopy(self.original)
         ):
             checker.check_flux_bundle(self.root)
 
@@ -81,6 +84,52 @@ class FluxBundleTests(unittest.TestCase):
         role["rules"] = []
         with self.assertRaisesRegex(ValueError, "ClusterRole/"):
             self.check(actual)
+
+
+class FluxReleaseTests(unittest.TestCase):
+    def setUp(self):
+        buffer = io.BytesIO()
+        with tarfile.open(fileobj=buffer, mode="w:gz") as archive:
+            member = tarfile.TarInfo("flux")
+            member.size = len(b"release CLI")
+            archive.addfile(member, io.BytesIO(b"release CLI"))
+        self.archive = buffer.getvalue()
+        self.name = "flux_2.10.0_linux_amd64.tar.gz"
+        self.checksum = hashlib.sha256(self.archive).hexdigest()
+
+    def render(self, checksum):
+        with (
+            patch.object(checker.platform, "system", return_value="Linux"),
+            patch.object(checker.platform, "machine", return_value="x86_64"),
+            patch.object(
+                checker,
+                "urlopen",
+                side_effect=[
+                    io.BytesIO(f"{checksum}  {self.name}\n".encode()),
+                    io.BytesIO(self.archive),
+                ],
+            ) as download,
+            patch.object(checker, "render") as render,
+        ):
+            def check_executable(executable, *args):
+                self.assertEqual(Path(executable).read_bytes(), b"release CLI")
+                self.assertEqual(args, ("install", "--export"))
+                return []
+
+            render.side_effect = check_executable
+            checker.render_flux_release("v2.10.0")
+            self.assertEqual(
+                download.call_args_list[-1].args[0],
+                "https://github.com/fluxcd/flux2/releases/download/v2.10.0/"
+                + self.name,
+            )
+
+    def test_declared_release_is_used_without_system_cli(self):
+        self.render(self.checksum)
+
+    def test_checksum_mismatch_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "checksum mismatch"):
+            self.render("0" * 64)
 
 
 class TailscaleChartTests(unittest.TestCase):
