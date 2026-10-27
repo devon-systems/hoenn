@@ -7,7 +7,6 @@ stores:
 
 keys:
   # === user keys (aly@<host>) ===
-  - &user_aly_goldenrod age1e5a0aaueyk34klry2qk094zrwfsvga0uft93mwweye30xhqhvfzs3jgqku
   - &user_aly_lilycove age1tdgfvwl4qdptyvgxju3rwz9uh45hz422txzcgsrwm4f4f96x558skzxklr
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
   - &user_aly_pacifidlog age1j9jju3whwj72udhge7v4c77gk6v6w2cq8zjngzyppwtptfsz499qyywu9a
@@ -29,7 +28,6 @@ creation_rules:
   - path_regex: ^secrets/.*\.ya?ml$
     key_groups:
       - age:
-          - *user_aly_goldenrod
           - *user_aly_lilycove
           - *user_aly_mauville
           - *user_aly_pacifidlog
@@ -47,7 +45,6 @@ creation_rules:
   - path_regex: ^k8s/secrets/.*\.ya?ml$
     key_groups:
       - age:
-          - *user_aly_goldenrod
           - *user_aly_lilycove
           - *user_aly_mauville
           - *user_aly_pacifidlog
