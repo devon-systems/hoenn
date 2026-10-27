@@ -1,9 +1,5 @@
 _: {
-  flake.nixosModules.mauville = {
-    config,
-    pkgs,
-    ...
-  }: {
+  flake.nixosModules.mauville = {config, ...}: {
     services.k3s = {
       role = "server";
       clusterInit = true;
@@ -12,21 +8,6 @@ _: {
         "--node-ip=10.254.1.2"
         "--advertise-address=10.254.1.2"
       ];
-    };
-
-    # Tailscale's accepted LAN subnet route otherwise captures proxy UDP traffic.
-    systemd.services.k3s-lan-routing = {
-      description = "Keep Kubernetes pod traffic to the home LAN local";
-      wantedBy = ["multi-user.target"];
-      before = ["k3s.service"];
-      after = ["network-online.target"];
-      wants = ["network-online.target"];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = "${pkgs.iproute2}/bin/ip -4 rule add priority 5200 iif cni0 to 192.168.1.0/24 lookup main";
-        ExecStop = "${pkgs.iproute2}/bin/ip -4 rule del priority 5200 iif cni0 to 192.168.1.0/24 lookup main";
-      };
     };
 
     services.restic.backups.k3s = {

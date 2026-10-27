@@ -107,11 +107,10 @@ Kubernetes ExternalIP. Give each service a unique tailnet hostname across the
 clusters. Homebridge uses `homebridge`. Configure application LAN discovery
 separately from cluster traffic.
 
-Mauville accepts a Tailscale subnet route for `192.168.1.0/24`, which overlaps
-its home LAN. The `k3s-lan-routing` service gives pod traffic arriving on `cni0`
-priority to use the main routing table for that subnet. This keeps the ingress
-proxy's direct UDP connections on the LAN. The rule applies only to pod traffic
-to the home LAN. Internal cluster traffic continues to use Hoenn WireGuard.
+Mauville rejects Tailscale subnet routes, because the Apple TV advertises
+Mauville's own home LAN, `192.168.1.0/24`. Its host and pod traffic to the LAN
+stays local, including the ingress proxy's direct UDP connections. Internal
+cluster traffic uses Hoenn WireGuard.
 
 ## Configure Homebridge
 
