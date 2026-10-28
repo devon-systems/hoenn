@@ -3,6 +3,7 @@ _: {
     services.k3s = {
       role = "server";
       clusterInit = true;
+      disable = ["traefik" "servicelb"];
 
       extraFlags = [
         "--node-ip=10.254.1.2"
