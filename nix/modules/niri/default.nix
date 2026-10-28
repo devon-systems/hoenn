@@ -49,21 +49,21 @@ in {
       services.displayManager.noctalia-greeter.enable = true;
     };
 
-    nixosModules.niriDms = {pkgs, ...}: {
+    nixosModules.niriDux = {pkgs, ...}: {
       imports = [
-        (mkNiriModule "niri-dms")
+        (mkNiriModule "niri-dux")
       ];
 
       environment.systemPackages = [
         pkgs.satty
       ];
 
-      programs.dms-shell = {
+      programs.dux-shell = {
         enable = true;
         systemd.enable = true;
       };
 
-      services.displayManager.dms-greeter = {
+      services.displayManager.dux-greeter = {
         enable = true;
         compositor.name = "niri";
       };

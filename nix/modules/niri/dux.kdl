@@ -1,5 +1,5 @@
 binds {
-    // DankMaterialShell
+    // Dux Shell
     Mod+D hotkey-overlay-title="Open App Launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Mod+S hotkey-overlay-title="Take a Screenshot" { spawn "dms" "ipc" "call" "niri" "screenshot"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }

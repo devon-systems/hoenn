@@ -15,9 +15,9 @@ const variants = [
     shellConfigPath: resolve(configDirectory, "noctalia.kdl"),
   },
   {
-    name: "Niri with DankMaterialShell",
-    outputPath: resolve(configDirectory, "README-dms.md"),
-    shellConfigPath: resolve(configDirectory, "dms.kdl"),
+    name: "Niri with Dux Shell",
+    outputPath: resolve(configDirectory, "README-dux.md"),
+    shellConfigPath: resolve(configDirectory, "dux.kdl"),
   },
 ];
 

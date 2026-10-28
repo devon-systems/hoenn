@@ -38,10 +38,10 @@
         shellPackage = pkgs.noctalia;
       };
 
-      niri-dms = mkNiri {
-        shellConfig = ./dms.kdl;
-        shellName = "dms";
-        shellPackage = pkgs.dms-shell;
+      niri-dux = mkNiri {
+        shellConfig = ./dux.kdl;
+        shellName = "dux";
+        shellPackage = pkgs.dux-shell;
       };
     });
   };
