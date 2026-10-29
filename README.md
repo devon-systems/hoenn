@@ -64,6 +64,8 @@ nix build .#darwinConfigurations.verdanturf.config.system.build.toplevel
 nix build .#systemConfigs.sootopolis
 ```
 
+Shared validation and metrics helpers come from the pinned dvnpkgs input.
+
 After Kubernetes changes, run `just check-k8s`. Run `just` to list the other
 maintenance commands.
 

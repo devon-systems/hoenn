@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  inputs,
+  lib,
+  ...
+}: let
   alloyConfig = import ./_config.nix;
 in {
   options.flake = {
@@ -14,7 +18,7 @@ in {
 
   config.flake = {
     nixosModules.observability = {config, ...}: {
-      imports = [./_filesystem-metrics.nix ./_canary.nix];
+      imports = [(import ./_filesystem-metrics.nix {inherit inputs;}) ./_canary.nix];
 
       services.prometheus.exporters.smartctl = {
         enable = true;
@@ -107,7 +111,7 @@ in {
         server = "mauville.narwhal-snapper.ts.net";
       });
     in {
-      imports = [./_filesystem-metrics.nix ./_canary.nix];
+      imports = [(import ./_filesystem-metrics.nix {inherit inputs;}) ./_canary.nix];
 
       systemd.services.prometheus-smartctl-exporter = {
         description = "Collect SMART and NVMe drive health";

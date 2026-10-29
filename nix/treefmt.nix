@@ -1,5 +1,5 @@
 _: {
-  perSystem = {pkgs, ...}: {
+  perSystem = {
     treefmt.config = {
       programs = {
         alejandra.enable = true;
@@ -9,12 +9,6 @@ _: {
         shfmt.enable = true;
         statix.enable = true;
         terraform.enable = true;
-      };
-
-      settings.formatter.python-reporters = {
-        command = "${pkgs.ruff}/bin/ruff";
-        options = ["format" "--isolated" "--target-version" "py313"];
-        includes = ["scripts/backup-metrics.py" "scripts/btrfs-metrics.py"];
       };
 
       settings.excludes = [

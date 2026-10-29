@@ -1,11 +1,11 @@
-{pkgs, ...}: {
+{inputs}: {pkgs, ...}: {
   systemd.services.hoenn-btrfs-metrics = {
     description = "Publish Btrfs scrub results and device error counters";
     wantedBy = ["multi-user.target"];
     before = ["alloy.service"];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.python3}/bin/python3 ${../../../scripts/btrfs-metrics.py} --directory /var/lib/hoenn-metrics/btrfs";
+      ExecStart = "${inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.btrfs-metrics}/bin/btrfs-metrics --directory /var/lib/hoenn-metrics/btrfs";
       StateDirectory = "hoenn-metrics/btrfs";
       StateDirectoryMode = "0755";
       ProtectSystem = "strict";

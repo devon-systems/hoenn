@@ -1,10 +1,6 @@
-_: let
+{inputs, ...}: let
   backupReporter = pkgs:
-    pkgs.writeShellApplication {
-      name = "hoenn-backup-metrics";
-      runtimeInputs = [pkgs.python3 pkgs.systemd pkgs.coreutils];
-      text = ''exec python3 ${../../../scripts/backup-metrics.py} "$@"'';
-    };
+    inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.backup-metrics;
 in {
   flake.nixosModules.observability = {
     config,
