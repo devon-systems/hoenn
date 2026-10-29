@@ -23,7 +23,7 @@
           self.homeModules.signal-desktop
           self.homeModules.slack
           self.homeModules.t3code
-          self.homeModules.t3codeServer
+          self.homeModules.t3codeCli
           self.homeModules.ghostty
           self.homeModules.hermesAgent
           self.homeModules.himalaya
