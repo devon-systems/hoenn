@@ -2,7 +2,14 @@
   description = "Personal NixOS, Darwin, Home Manager, and system-manager configurations";
 
   inputs = {
-    wg-hoenn.url = "github:devon-systems/wg-hoenn";
+    wg-hoenn = {
+      url = "github:devon-systems/wg-hoenn";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.import-tree.follows = "import-tree";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.nix-darwin.follows = "nix-darwin";
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     import-tree.url = "github:denful/import-tree";
     flake-parts.url = "github:hercules-ci/flake-parts";

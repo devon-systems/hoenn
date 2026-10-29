@@ -23,6 +23,6 @@ ASUS 1.0 Zenbook 14 UM3405GA running NixOS.
 
 ## Network setup
 
-Lilycove uses `10.254.1.9` on the Hoenn WireGuard network. Add its public key
-to the Sunnyshore peer configuration and add `lilycove.hoenn` to private DNS
-before enabling the tunnel.
+Lilycove is a peer in [wg-hoenn](https://github.com/devon-systems/wg-hoenn)'s
+`network.nix`. Sunnyshore generates its hub peer and `lilycove.hoenn` record
+from that inventory.

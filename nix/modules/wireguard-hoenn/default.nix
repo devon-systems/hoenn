@@ -32,7 +32,7 @@
 
       sops.secrets.wireguard-hoenn-private = {
         sopsFile = self + "/secrets/wireguard-hoenn.yaml";
-        key = config.networking.hostName;
+        key = config.wg-hoenn.nodeName;
       };
       wg-hoenn.privateKeyFile = config.sops.secrets.wireguard-hoenn-private.path;
     };
@@ -44,7 +44,7 @@
       imports = [inputs.wg-hoenn.nixosModules.client];
       sops.secrets.wireguard-hoenn-private = {
         sopsFile = self + "/secrets/wireguard-hoenn.yaml";
-        key = config.networking.hostName;
+        key = config.wg-hoenn.nodeName;
         mode = "0400";
         restartUnits = ["wireguard-hoenn.service"];
       };

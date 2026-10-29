@@ -1,4 +1,6 @@
-_: {
+{inputs, ...}: let
+  address = inputs.wg-hoenn.lib.network.nodes.mauville.address;
+in {
   flake.nixosModules.mauville = {config, ...}: {
     services.k3s = {
       role = "server";
@@ -6,8 +8,8 @@ _: {
       disable = ["traefik" "servicelb"];
 
       extraFlags = [
-        "--node-ip=10.254.1.2"
-        "--advertise-address=10.254.1.2"
+        "--node-ip=${address}"
+        "--advertise-address=${address}"
         "--kube-controller-manager-arg=terminated-pod-gc-threshold=10"
       ];
     };
