@@ -1,41 +1,23 @@
-{lib, ...}: let
-  subnet = "10.254.1.0/24";
-  resolver = "10.254.1.1";
-
-  peer = {
-    allowedIPs = [subnet];
-    endpoint = "40.160.83.152:51821";
-    persistentKeepalive = 25;
-    publicKey = "vinYIK2laJ19yVMlw6iB5lb9+wY8ZBrM+Y4nrBmMxxQ=";
-  };
-
-  nodeAddresses = {
-    mauville = "10.254.1.2";
-    rustboro = "10.254.1.3";
-    sootopolis = "10.254.1.4";
-    verdanturf = "10.254.1.5";
-    pacifidlog = "10.254.1.7";
-    petalburg = "10.254.1.8";
-    lilycove = "10.254.1.9";
-  };
-in {
+{
+  inputs,
+  lib,
+  ...
+}: {
   options.flake.darwinModules.wireguardHoenn = lib.mkOption {
     type = lib.types.deferredModule;
     default = {};
   };
-
   config.flake = {
     darwinModules.wireguardHoenn = {
       config,
       lib,
       self,
       ...
-    }: let
-      privateKey = config.sops.secrets.wireguard-hoenn-private.path;
-    in {
+    }: {
       # Backport nix-darwin#1738 without changing the pinned nix-darwin input.
       disabledModules = ["services/wg-quick.nix"];
       imports = [
+        inputs.wg-hoenn.darwinModules.default
         (builtins.toFile "wg-quick.nix" (lib.replaceStrings
           [
             "      serviceConfig = {"
@@ -48,61 +30,26 @@ in {
           (builtins.readFile "${self.inputs.nix-darwin}/modules/services/wg-quick.nix")))
       ];
 
-      environment.etc."resolver/hoenn".text = "nameserver ${resolver}";
-
       sops.secrets.wireguard-hoenn-private = {
         sopsFile = self + "/secrets/wireguard-hoenn.yaml";
         key = config.networking.hostName;
       };
-
-      networking.wg-quick.interfaces.hoenn = {
-        address = ["${nodeAddresses.${config.networking.hostName}}/24"];
-        privateKeyFile = privateKey;
-        preUp = ''
-          while [ ! -r ${privateKey} ]; do
-            /bin/sleep 1
-          done
-        '';
-
-        peers = [peer];
-      };
+      wg-hoenn.privateKeyFile = config.sops.secrets.wireguard-hoenn-private.path;
     };
-
     nixosModules.wireguardHoenn = {
       config,
-      pkgs,
       self,
       ...
-    }: let
-      nodeAddress = nodeAddresses.${config.networking.hostName};
-      privateKey = config.sops.secrets.wireguard-hoenn-private.path;
-    in {
+    }: {
+      imports = [inputs.wg-hoenn.nixosModules.client];
       sops.secrets.wireguard-hoenn-private = {
         sopsFile = self + "/secrets/wireguard-hoenn.yaml";
         key = config.networking.hostName;
         mode = "0400";
         restartUnits = ["wireguard-hoenn.service"];
       };
-
-      networking = {
-        firewall.trustedInterfaces = ["hoenn"];
-
-        wireguard.interfaces.hoenn = {
-          ips = ["${nodeAddress}/24"];
-          privateKeyFile = privateKey;
-          postSetup = ''
-            ${pkgs.systemd}/bin/resolvectl dns hoenn ${resolver}
-            ${pkgs.systemd}/bin/resolvectl domain hoenn ~hoenn
-            ${pkgs.systemd}/bin/resolvectl default-route hoenn false
-          '';
-
-          peers = [peer];
-        };
-      };
-
-      services.resolved.enable = true;
-
-      systemd.services.wireguard-hoenn.after = ["systemd-resolved.service"];
+      wg-hoenn.privateKeyFile = config.sops.secrets.wireguard-hoenn-private.path;
+      networking.firewall.trustedInterfaces = ["hoenn"];
     };
   };
 }

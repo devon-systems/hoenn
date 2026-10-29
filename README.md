@@ -28,6 +28,11 @@ for Grafana on Sinnoh's Canalave host.
 Comin reconciles host configurations from `master`. Flux reconciles the
 Kubernetes resources in `k8s/flux-system/` from the same branch.
 
+The Hoenn WireGuard peer inventory and reusable modules live in
+[wg-hoenn](https://github.com/devon-systems/wg-hoenn). This repository keeps its
+private keys and host firewall policy. After changing the shared inventory,
+update the `wg-hoenn` input in both Hoenn and Sinnoh.
+
 ## Repository layout
 
 ```text

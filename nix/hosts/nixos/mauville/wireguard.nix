@@ -1,12 +1,14 @@
-_: {
+{inputs, ...}: let
+  peer = inputs.wg-hoenn.lib.network.nodes.petalburg;
+in {
   flake.nixosModules.mauville = {self, ...}: {
     imports = [self.nixosModules.wireguardHoennLan];
 
     networking.wireguard.interfaces.hoenn.peers = [
       {
         name = "petalburg";
-        publicKey = "sodFLJVrTVsifP5ltziHkQrWDwEj+3Cvj6csZbWtgEE=";
-        allowedIPs = ["10.254.1.8/32"];
+        inherit (peer) publicKey;
+        allowedIPs = ["${peer.address}/32"];
       }
     ];
   };
