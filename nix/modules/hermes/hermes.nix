@@ -133,6 +133,7 @@
             default = "gpt-6.1-sol";
             provider = "openai-codex";
           };
+          model_catalog.excluded_providers = ["nous" "openrouter"];
           plugins.enabled = ["honcho"];
           providers.kanto = {
             api = "https://openwebui.narwhal-snapper.ts.net/api";
