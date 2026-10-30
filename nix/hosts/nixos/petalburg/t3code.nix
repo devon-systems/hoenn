@@ -6,7 +6,6 @@
   }: {
     users.users.aly.linger = true;
 
-    # T3 downloads an unpatched Chromium that loads its dependencies through nix-ld.
     programs.nix-ld.libraries = with pkgs; [
       alsa-lib
       at-spi2-atk

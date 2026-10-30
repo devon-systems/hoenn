@@ -1,5 +1,6 @@
 {inputs, ...}: let
   peer = inputs.wg-hoenn.lib.network.nodes.mauville;
+  desktopPeer = inputs.wg-hoenn.lib.network.nodes.lavaridge;
 in {
   flake.nixosModules.petalburg = {self, ...}: {
     imports = [self.nixosModules.wireguardHoennLan];
@@ -13,6 +14,13 @@ in {
         inherit (peer) publicKey;
         allowedIPs = ["${peer.address}/32"];
         endpoint = "192.168.1.243:${toString inputs.wg-hoenn.lib.network.listenPort}";
+        persistentKeepalive = 25;
+      }
+      {
+        name = "lavaridge";
+        inherit (desktopPeer) publicKey;
+        allowedIPs = ["${desktopPeer.address}/32"];
+        endpoint = "192.168.1.210:51823";
         persistentKeepalive = 25;
       }
     ];

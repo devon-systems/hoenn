@@ -99,7 +99,7 @@ _: {
           type = folderType {
             path = "~/Sync";
             id = "default";
-            devices = ["lilycove" "mauville" "pacifidlog" "petalburg" "rustboro" "sootopolis" "verdanturf"];
+            devices = ["lavaridge" "lilycove" "mauville" "pacifidlog" "petalburg" "rustboro" "sootopolis" "verdanturf"];
 
             versioning = {
               type = "trashcan";
@@ -117,6 +117,7 @@ _: {
             id = "emudeck";
             devices = [
               "aynthor"
+              "lavaridge"
               "rpclassic"
               "mauville"
               "pacifidlog"

@@ -7,6 +7,7 @@ stores:
 
 keys:
   # === user keys (aly@<host>) ===
+  - &user_aly_lavaridge age12kxzklacs2qf2x4daevwznj36ww6j6vwnm3y3plfhkww9ftfma7s08574m
   - &user_aly_lilycove age1tdgfvwl4qdptyvgxju3rwz9uh45hz422txzcgsrwm4f4f96x558skzxklr
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
   - &user_aly_pacifidlog age1j9jju3whwj72udhge7v4c77gk6v6w2cq8zjngzyppwtptfsz499qyywu9a
@@ -15,6 +16,7 @@ keys:
   - &user_aly_sootopolis age16fm9jk3msta76lp7t0m5a5hn8l4gc752unl09azjkk33z3ghxg7sd52yrj
   - &user_aly_verdanturf age1zl4dad3jwhff9f8smv9l2g78g2fpa7huye9354y9vvhrw03vs47skqhue3
   # === host keys (root@<host>) ===
+  - &host_lavaridge age1c729lq6m3crk5ucy2dcrm3ej77zt44xd97ga9clj2klyum8asulsmz7zf7
   - &host_lilycove age1l5t62uzsj05pzftv9wg6s346csxyq202vxmmyyx8gwy8zu2nrfrs7v2a4z
   - &host_mauville age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
   - &host_pacifidlog age1m4w05c5afudrw94c3yd0mmgx79y5rxwn2lv8ag4w9m34wk4sxeeq7jufw9
@@ -28,6 +30,7 @@ creation_rules:
   - path_regex: ^secrets/.*\.ya?ml$
     key_groups:
       - age:
+          - *user_aly_lavaridge
           - *user_aly_lilycove
           - *user_aly_mauville
           - *user_aly_pacifidlog
@@ -35,6 +38,7 @@ creation_rules:
           - *user_aly_rustboro
           - *user_aly_sootopolis
           - *user_aly_verdanturf
+          - *host_lavaridge
           - *host_lilycove
           - *host_mauville
           - *host_pacifidlog
@@ -45,6 +49,7 @@ creation_rules:
   - path_regex: ^k8s/secrets/.*\.ya?ml$
     key_groups:
       - age:
+          - *user_aly_lavaridge
           - *user_aly_lilycove
           - *user_aly_mauville
           - *user_aly_pacifidlog
@@ -52,6 +57,7 @@ creation_rules:
           - *user_aly_rustboro
           - *user_aly_sootopolis
           - *user_aly_verdanturf
+          - *host_lavaridge
           - *host_lilycove
           - *host_mauville
           - *host_pacifidlog
