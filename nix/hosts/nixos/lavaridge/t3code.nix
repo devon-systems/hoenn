@@ -45,18 +45,6 @@
         '';
       });
 
-      systemd.user.services.t3code = {
-        Unit.Description = "T3 Code local host server";
-        Service = {
-          ExecStart = "${lib.getExe inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.t3code} start --host 127.0.0.1 --port 3773 --no-browser --base-dir ${config.home.homeDirectory}/.t3";
-          WorkingDirectory = config.home.homeDirectory;
-          Environment = "PATH=/etc/profiles/per-user/aly/bin:/run/current-system/sw/bin:%h/.local/bin";
-          Restart = "on-failure";
-          RestartSec = 5;
-        };
-        Install.WantedBy = ["default.target"];
-      };
-
       xdg.desktopEntries."com.t3tools.T3Code" = {
         name = "T3 Code (Beta)";
         exec = "${config.programs.t3code.package}/bin/t3code-desktop %U";
