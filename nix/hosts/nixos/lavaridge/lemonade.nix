@@ -1,5 +1,9 @@
 {inputs, ...}: {
-  flake.nixosModules.lavaridge = {
+  flake.nixosModules.lavaridge = {pkgs, ...}: let
+    modelRevision = "ed59f92082b1e93c0e96d60a8b11aab089b52f09";
+    modelCache = "/var/lib/lemonade/models/hf/hub";
+    modelDirectory = "${modelCache}/models--ISTA-DASLab--Qwen3.8-Flash-Next-GSQ-RCO-GGUF/snapshots/${modelRevision}/IQ2_XS";
+  in {
     imports = [inputs.nix-amd-ai.nixosModules.default];
 
     hardware.amd-npu = {
@@ -31,12 +35,37 @@
 
       strata = {
         enable = true;
-        quant = "GSQ-RCO-IQ3_S";
+        model = "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf";
         profile = "fast";
         contextSize = 65536;
         expertCache = 6000;
         vision.enable = true;
       };
+    };
+
+    systemd.services.strata-model-download = {
+      description = "Download the pinned Strata IQ2_XS model";
+      after = ["network-online.target"];
+      wants = ["network-online.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        User = "lemonade";
+        RemainAfterExit = true;
+        TimeoutStartSec = "infinity";
+        ExecStart = pkgs.writeShellScript "strata-model-download" ''
+          if test -f "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf" &&
+             test -f "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf"; then
+            exit 0
+          fi
+          exec ${pkgs.huggingface-cli}/bin/hf download ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF \
+            --revision ${modelRevision} --include 'IQ2_XS/*' --cache-dir ${modelCache}
+        '';
+      };
+    };
+
+    systemd.services.strata-prepare = {
+      requires = ["strata-model-download.service"];
+      after = ["strata-model-download.service"];
     };
 
     users = {
