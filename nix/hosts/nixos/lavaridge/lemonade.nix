@@ -32,8 +32,9 @@
       strata = {
         enable = true;
         quant = "GSQ-RCO-IQ3_S";
+        profile = "fast";
         contextSize = 65536;
-        expertCache = 4000;
+        expertCache = 6000;
         vision.enable = true;
       };
     };
