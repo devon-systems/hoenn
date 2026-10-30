@@ -51,6 +51,7 @@
     };
 
     systemd.tmpfiles.rules = [
+      "d /var/lib/lemonade/models 0750 lemonade lemonade -"
       "d /var/lib/lemonade/models/hf 0750 lemonade lemonade -"
       "d /var/lib/lemonade/models/lemonade 0750 lemonade lemonade -"
     ];
