@@ -34,7 +34,7 @@ cursor {
 // https://niri-wm.github.io/niri/Configuration:-Outputs
 output "Guangxi Century Innovation Display Electronics Co., Ltd 27C1U-D 0000000000001" {
     mode "3840x2160@60.000"
-    scale 1.87
+    scale 1.66
     transform "normal"
     focus-at-startup
 }
