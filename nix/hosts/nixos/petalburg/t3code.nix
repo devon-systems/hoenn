@@ -1,6 +1,33 @@
 {inputs, ...}: {
-  flake.nixosModules.petalburg = {config, ...}: {
+  flake.nixosModules.petalburg = {
+    config,
+    pkgs,
+    ...
+  }: {
     users.users.aly.linger = true;
+
+    # T3 downloads an unpatched Chromium that loads its dependencies through nix-ld.
+    programs.nix-ld.libraries = with pkgs; [
+      alsa-lib
+      at-spi2-atk
+      at-spi2-core
+      atk
+      dbus
+      expat
+      glib
+      libgbm
+      libx11
+      libxcb
+      libxcomposite
+      libxdamage
+      libxext
+      libxfixes
+      libxkbcommon
+      libxrandr
+      nspr
+      nss
+      systemd
+    ];
 
     home-manager.users.aly = {
       config,
