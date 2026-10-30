@@ -37,6 +37,8 @@
         enable = true;
         model = "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf";
         profile = "fast";
+        # The pinned engine cannot expand IQ2_XS's draft head in place to Q4_0.
+        extraArgs = ["--mtp-q4" "proj"];
         contextSize = 65536;
         expertCache = 6000;
         vision.enable = true;
