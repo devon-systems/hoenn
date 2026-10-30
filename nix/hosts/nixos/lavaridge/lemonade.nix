@@ -38,12 +38,27 @@
         model = "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf";
         profile = "fast";
         # The pinned engine cannot expand IQ2_XS's draft head in place to Q4_0.
-        extraArgs = ["--mtp-q4" "proj"];
+        extraArgs = [
+          "--mtp-q4"
+          "proj"
+          "--prompt-cache"
+          "8"
+          "--conversation-cache-mib"
+          "2048"
+          "--conversation-cache-slots"
+          "4"
+          "--conversation-cache-min-tokens"
+          "512"
+          "--conversation-cache-min-free-mib"
+          "8192"
+        ];
         contextSize = 65536;
         expertCache = 6000;
         vision.enable = true;
       };
     };
+
+    systemd.services.lemond.environment.STRATA_PREFILL_STREAM_MIN = "128";
 
     systemd.services.strata-model-download = {
       description = "Download the pinned Strata IQ2_XS model";
