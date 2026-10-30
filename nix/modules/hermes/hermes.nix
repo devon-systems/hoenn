@@ -77,8 +77,12 @@
       };
 
       systemd.user.services = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
-        hermes-agent.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
-        hermes-backend.Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
+        hermes-agent = lib.mkIf config.services.hermes-agent.gateway.enable {
+          Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
+        };
+        hermes-backend = lib.mkIf (config.services.hermes-agent.backend.mode != "none") {
+          Service.Environment = lib.mkAfter ["PATH=${servicePath}:${profilePath}"];
+        };
       };
 
       services.hermes-agent = {
