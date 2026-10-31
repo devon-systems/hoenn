@@ -53,7 +53,7 @@
           "8192"
         ];
         contextSize = 65536;
-        expertCache = 6000;
+        expertCache = 16000;
         vision.enable = true;
       };
     };
