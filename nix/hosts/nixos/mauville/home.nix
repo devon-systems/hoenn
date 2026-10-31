@@ -17,18 +17,8 @@
 
         imports = [
           self.homeModules.aly
-          self.homeModules.appherder
-          self.homeModules.chatgpt
-          self.homeModules.claude-desktop
-          self.homeModules.signal-desktop
-          self.homeModules.slack
           self.homeModules.t3code
-          self.homeModules.ghostty
           self.homeModules.himalaya
-          self.homeModules.zed-editor
-          self.homeModules.vscode
-          self.homeModules.opencodeDesktop
-          self.homeModules.switchyard
         ];
       };
     };
