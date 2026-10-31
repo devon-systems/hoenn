@@ -18,14 +18,12 @@
         imports = [
           self.homeModules.aly
           self.homeModules.appherder
-          self.homeModules.t3code
           self.homeModules.t3codeCli
           self.homeModules.ghostty
           self.homeModules.hermesAgent
           self.homeModules.himalaya
           self.homeModules.vicinae
           self.homeModules.vscode
-          self.homeModules.zed-editor
         ];
 
         sops.secrets.petalburgHermes = {
