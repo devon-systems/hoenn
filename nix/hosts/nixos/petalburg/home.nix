@@ -17,13 +17,9 @@
 
         imports = [
           self.homeModules.aly
-          self.homeModules.appherder
           self.homeModules.t3codeCli
-          self.homeModules.ghostty
           self.homeModules.hermesAgent
           self.homeModules.himalaya
-          self.homeModules.vicinae
-          self.homeModules.vscode
         ];
 
         sops.secrets.petalburgHermes = {
