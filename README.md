@@ -16,6 +16,7 @@ See also [Johto](https://github.com/devon-systems/johto) for the homelab,
 | [`petalburg`](nix/hosts/nixos/petalburg/README.md)    | NixOS          | `nixosConfigurations.petalburg`   |
 | [`rustboro`](nix/hosts/nixos/rustboro/README.md)      | NixOS          | `nixosConfigurations.rustboro`    |
 | [`sootopolis`](nix/hosts/nixos/sootopolis/README.md)  | NixOS          | `nixosConfigurations.sootopolis`  |
+| [`fallarbor`](nix/hosts/darwin/fallarbor/README.md)   | nix-darwin     | `darwinConfigurations.fallarbor`  |
 | [`verdanturf`](nix/hosts/darwin/verdanturf/README.md) | nix-darwin     | `darwinConfigurations.verdanturf` |
 | `sootopolis`                                          | system-manager | `systemConfigs.sootopolis`        |
 
