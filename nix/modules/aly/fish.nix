@@ -67,6 +67,7 @@ in {
             "$HOME/.local/share/pnpm" \
             "$HOME/.deno/bin" \
             "$HOME/.volta/bin" \
+            "$HOME/.npm/bin" \
             "$HOME/.npm-global/bin"
             test -d "$path_dir"; and fish_add_path --path --prepend --move "$path_dir"
           end
