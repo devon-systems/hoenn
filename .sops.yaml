@@ -10,7 +10,6 @@ keys:
   - &user_aly_lavaridge age12kxzklacs2qf2x4daevwznj36ww6j6vwnm3y3plfhkww9ftfma7s08574m
   - &user_aly_lilycove age1tdgfvwl4qdptyvgxju3rwz9uh45hz422txzcgsrwm4f4f96x558skzxklr
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
-  - &user_aly_pacifidlog age1j9jju3whwj72udhge7v4c77gk6v6w2cq8zjngzyppwtptfsz499qyywu9a
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
   - &user_aly_rustboro age1fczwtlqdqq7pjyzna2yl9nvmhpe68zk5k6nyn0dt4sp0lts04anskhcmu6
   - &user_aly_sootopolis age16fm9jk3msta76lp7t0m5a5hn8l4gc752unl09azjkk33z3ghxg7sd52yrj
@@ -19,7 +18,6 @@ keys:
   - &host_lavaridge age1c729lq6m3crk5ucy2dcrm3ej77zt44xd97ga9clj2klyum8asulsmz7zf7
   - &host_lilycove age1l5t62uzsj05pzftv9wg6s346csxyq202vxmmyyx8gwy8zu2nrfrs7v2a4z
   - &host_mauville age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
-  - &host_pacifidlog age1m4w05c5afudrw94c3yd0mmgx79y5rxwn2lv8ag4w9m34wk4sxeeq7jufw9
   - &host_petalburg age1g20str5ef8922ggeqxqj46x2zfws04w2529mzl5776kd8jl4y56s5yx83w
   - &host_rustboro age1c62ajygt7yx5k0f85h6w3tquu4ak0gg5c9drrhh34yyyea3xtpas8knau3
   - &host_sootopolis age1gz3835qckr54gn44znlefa6m7yvjx83gptq8keslyq944nfxsfzqndenmt
@@ -33,7 +31,6 @@ creation_rules:
           - *user_aly_lavaridge
           - *user_aly_lilycove
           - *user_aly_mauville
-          - *user_aly_pacifidlog
           - *user_aly_petalburg
           - *user_aly_rustboro
           - *user_aly_sootopolis
@@ -41,7 +38,6 @@ creation_rules:
           - *host_lavaridge
           - *host_lilycove
           - *host_mauville
-          - *host_pacifidlog
           - *host_petalburg
           - *host_rustboro
           - *host_sootopolis
@@ -52,7 +48,6 @@ creation_rules:
           - *user_aly_lavaridge
           - *user_aly_lilycove
           - *user_aly_mauville
-          - *user_aly_pacifidlog
           - *user_aly_petalburg
           - *user_aly_rustboro
           - *user_aly_sootopolis
@@ -60,7 +55,6 @@ creation_rules:
           - *host_lavaridge
           - *host_lilycove
           - *host_mauville
-          - *host_pacifidlog
           - *host_petalburg
           - *host_rustboro
           - *host_sootopolis

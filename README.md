@@ -13,7 +13,6 @@ See also [Johto](https://github.com/devon-systems/johto) for the homelab,
 | ----------------------------------------------------- | -------------- | --------------------------------- |
 | [`lilycove`](nix/hosts/nixos/lilycove/README.md)      | NixOS          | `nixosConfigurations.lilycove`    |
 | [`mauville`](nix/hosts/nixos/mauville/README.md)      | NixOS          | `nixosConfigurations.mauville`    |
-| [`pacifidlog`](nix/hosts/nixos/pacifidlog/README.md)  | NixOS          | `nixosConfigurations.pacifidlog`  |
 | [`petalburg`](nix/hosts/nixos/petalburg/README.md)    | NixOS          | `nixosConfigurations.petalburg`   |
 | [`rustboro`](nix/hosts/nixos/rustboro/README.md)      | NixOS          | `nixosConfigurations.rustboro`    |
 | [`sootopolis`](nix/hosts/nixos/sootopolis/README.md)  | NixOS          | `nixosConfigurations.sootopolis`  |
