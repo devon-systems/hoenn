@@ -17,7 +17,6 @@
         self.nixosModules.default
         self.nixosModules.docker
         self.nixosModules.google-chrome
-        self.nixosModules.hermesWebui
         self.nixosModules.nfsClient
         self.nixosModules.niri
         self.nixosModules.nixos
