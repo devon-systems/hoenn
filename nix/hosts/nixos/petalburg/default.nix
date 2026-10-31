@@ -24,7 +24,6 @@
         self.nixosModules.petalburg
         self.nixosModules.tailscale
         self.nixosModules.wireguardHoenn
-        self.nixosModules.zen
       ];
 
       specialArgs = {inherit self;};
