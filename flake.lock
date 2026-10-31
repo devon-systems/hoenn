@@ -3194,11 +3194,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793390063,
-        "narHash": "sha256-EIm0QvJCmVx7ubeljoc+icPLL4jZL+rrZLXJG47UvDs=",
+        "lastModified": 1793414884,
+        "narHash": "sha256-veAswyVwCJ/Up3KBwXDJnQ+QkiYls6wqc3gEdRTH/SY=",
         "owner": "devon-systems",
         "repo": "wg-hoenn",
-        "rev": "a094a5f7a04b262aadf4b9fe1a79ee1e2ae2ccb7",
+        "rev": "6db9815912fdd605f21f8ff578cf90d36107cb9f",
         "type": "github"
       },
       "original": {
