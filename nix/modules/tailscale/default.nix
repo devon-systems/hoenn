@@ -19,8 +19,9 @@
 
       services.tailscale = {
         enable = true;
-        # Requires a DNS provider in the tailnet configuration.
-        overrideLocalDns = true;
+        # Keep public DNS working before Tailscale login; nix-darwin manages
+        # a separate .ts.net resolver for MagicDNS.
+        overrideLocalDns = false;
       };
     };
 
