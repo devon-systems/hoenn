@@ -20,7 +20,3 @@ Mac mini Mac16,10 running nix-darwin.
 | Firmware  | 18000.120.36                |
 
 <!-- END GENERATED HOST SPECS -->
-
-## Configuration
-
-Based on Verdanturf, with independent SSH, Syncthing, and WireGuard identities.
