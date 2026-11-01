@@ -65,11 +65,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hermes-webui = {
-      url = "github:nesquena/hermes-webui";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     lanzaboote = {

@@ -169,34 +169,5 @@
         };
       };
     };
-
-    nixosModules.hermesWebui = {
-      config,
-      lib,
-      ...
-    }: {
-      imports = [inputs.hermes-webui.nixosModules.default];
-
-      systemd.services.hermes-webui = {
-        serviceConfig.WorkingDirectory = "/home/aly";
-        environment.PATH = lib.mkForce (lib.concatStringsSep ":" [
-          (lib.makeBinPath config.systemd.services.hermes-webui.path)
-          "/etc/profiles/per-user/aly/bin"
-          "/home/aly/.nix-profile/bin"
-          "/run/current-system/sw/bin"
-          "/home/aly/.local/bin"
-        ]);
-      };
-
-      services.hermes-webui = {
-        enable = true;
-        group = "aly";
-        hermesHome = "/home/aly/.hermes";
-        stateDir = "/home/aly/.hermes/webui";
-        user = "aly";
-
-        agent.package = config.home-manager.users.aly.programs.hermes-agent.package;
-      };
-    };
   };
 }

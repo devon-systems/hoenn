@@ -1212,26 +1212,6 @@
         "type": "github"
       }
     },
-    "hermes-webui": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793507856,
-        "narHash": "sha256-w5LnnqwfsF4XkIH/Q43MXEa2AOSIEA/jh9Cxt15rhLI=",
-        "owner": "nesquena",
-        "repo": "hermes-webui",
-        "rev": "a355f1873e684e256341111872826d685762fb4b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nesquena",
-        "repo": "hermes-webui",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -2597,7 +2577,6 @@
         "flake-parts": "flake-parts_6",
         "helium-browser": "helium-browser",
         "hermes-agent": "hermes-agent",
-        "hermes-webui": "hermes-webui",
         "home-manager": "home-manager_2",
         "import-tree": "import-tree_3",
         "lanzaboote": "lanzaboote",
