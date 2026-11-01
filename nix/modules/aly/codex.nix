@@ -8,6 +8,8 @@
       settings = {
         approval_policy = "never";
         default_permissions = ":danger-full-access";
+        # Avoid blocking startup on desktop keyring access in SSH sessions.
+        mcp_oauth_credentials_store = "file";
       };
 
       package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
