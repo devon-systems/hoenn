@@ -1,0 +1,34 @@
+{
+  "SPHardwareDataType": [
+    {
+      "machine_name": "Mac mini",
+      "machine_model": "Mac16,10",
+      "chip_type": "Apple M4",
+      "number_processors": "proc 10:4:6:0",
+      "physical_memory": "16 GB",
+      "boot_rom_version": "18000.120.36"
+    }
+  ],
+  "SPDisplaysDataType": [
+    {
+      "sppci_model": "Apple M4",
+      "sppci_cores": "10",
+      "spdisplays_ndrvs": [
+        {
+          "_name": "27C1U-D",
+          "spdisplays_pixelresolution": "spdisplays_2160p"
+        }
+      ]
+    }
+  ],
+  "SPNVMeDataType": [
+    {
+      "_items": [
+        {
+          "device_model": "APPLE SSD AP0256Z",
+          "size_in_bytes": 251000193024
+        }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,26 @@
-# Fallarbor
+<!-- BEGIN GENERATED HOST SPECS -->
 
-Nix-darwin configuration based on Verdanturf. Hardware inventory has not been captured yet.
+# 🍃 Fallarbor
 
-## Bootstrap
+## Overview
 
-Private bootstrap material is stored locally in `.bootstrap/fallarbor/`. Install the user SSH key as `/Users/aly/.ssh/id_ed25519` with mode `0600`. Syncthing and WireGuard identities are encrypted in `secrets/`.
+Mac mini Mac16,10 running nix-darwin.
 
-Before activation, collect macOS's `/etc/ssh/ssh_host_ed25519_key.pub` into `keys/root_fallarbor.pub`, then run `just sops-rekey`. Fallarbor cannot decrypt its system secrets until its real host key has been added. Capture its hardware report on the Mac rather than copying Verdanturf's.
+## Specs
+
+| Component | Details                     |
+| --------- | --------------------------- |
+| Platform  | nix-darwin                  |
+| Model     | Mac mini Mac16,10           |
+| CPU       | Apple M4 — 10 cores         |
+| Memory    | 16 GB                       |
+| Storage   | APPLE SSD AP0256Z — 233 GiB |
+| Graphics  | Apple M4 — 10 cores         |
+| Display   | 27C1U-D — spdisplays_2160p  |
+| Firmware  | 18000.120.36                |
+
+<!-- END GENERATED HOST SPECS -->
+
+## Configuration
+
+Based on Verdanturf, with independent SSH, Syncthing, and WireGuard identities.
