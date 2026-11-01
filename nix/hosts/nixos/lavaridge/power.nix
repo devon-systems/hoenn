@@ -1,5 +1,7 @@
 _: {
   flake.nixosModules.lavaridge.services.tuned = {
+    recommend.lavaridge-performance = {};
+
     profiles.lavaridge-performance = {
       main = {
         summary = "Performance mode for shared CPU and GPU workloads";
