@@ -1,6 +1,6 @@
 _: {
   flake.nixosModules.lavaridge.services.tuned = {
-    recommend.lavaridge-performance = {};
+    recommend.balanced = {};
 
     profiles.lavaridge-performance = {
       main = {
@@ -15,7 +15,7 @@ _: {
     };
 
     ppdSettings = {
-      main.default = "performance";
+      main.default = "balanced";
       profiles = {
         balanced = "balanced";
         performance = "lavaridge-performance";
