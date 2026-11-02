@@ -12,22 +12,22 @@
         name = "hermes-plugin-honcho";
         owner = "plastic-labs";
         repo = "honcho";
-        rev = "e2d2aba182862deeb846e5cd4a30a41bce0ed82a";
+        rev = "7dd3702933d5cc1ce1f0a44bba6525cc61ee6e16";
         rootDir = "hermes-plugin-honcho";
-        hash = "sha256-Lg17/7BPmqS2znsCAM/h2X8wrqYrIhNto+8eok5AgQA=";
+        hash = "sha256-/9cirxS0ruMwVamHcY0bRSL/eCGcAOyPt+AuErgMwF0=";
       };
       honchoSdk = hermesPackage.python.pkgs.buildPythonPackage {
         pname = "honcho-ai";
-        version = "2.2.0";
+        version = "2.8.0";
         format = "wheel";
 
         src = pkgs.fetchPypi {
           pname = "honcho_ai";
-          version = "2.2.0";
+          version = "2.8.0";
           format = "wheel";
           python = "py3";
           dist = "py3";
-          hash = "sha256-MvCYpMi8/kKI8JlN2rC8UqaNyHBp0PLOLIdY7ioXYfI=";
+          hash = "sha256-dL+IWz2GwRG2pXTmldULhhoIDiDxC+7P5gM27s/ZI34=";
         };
 
         # Use Hermes's httpx and pydantic without propagating duplicate packages.
