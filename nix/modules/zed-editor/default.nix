@@ -102,11 +102,11 @@ _: {
           toolbar.breadcrumbs = false;
         };
 
-        theme = {
-          dark = "Catppuccin Frappé - No Italics";
-          light = "One Light";
-          mode = "dark";
-        };
+        # theme = {
+        #   dark = "Catppuccin Frappé - No Italics";
+        #   light = "One Light";
+        #   mode = "dark";
+        # };
 
         theme_overrides."Catppuccin Frappé - No Italics" = {
           "background.appearance" =
