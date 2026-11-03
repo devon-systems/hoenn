@@ -20,5 +20,13 @@
       noDisplay = true;
       mimeType = ["x-scheme-handler/t3code"];
     };
+    # Electron writes a user-local handler that otherwise shadows the profile entry.
+    xdg.dataFile."applications/com.t3tools.T3Code.desktop" = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+      source = "${config.home.path}/share/applications/com.t3tools.T3Code.desktop";
+      force = true;
+      onChange = ''
+        ${pkgs.desktop-file-utils}/bin/update-desktop-database ${lib.escapeShellArg "${config.xdg.dataHome}/applications"}
+      '';
+    };
   };
 }
