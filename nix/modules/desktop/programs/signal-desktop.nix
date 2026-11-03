@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.aly-desktop = {pkgs, ...}: {
+  flake.homeModules.desktop = {pkgs, ...}: {
     home.packages = [pkgs.signal-desktop];
   };
 }

@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.homeModules.aly-desktop = {
+  flake.homeModules.desktop = {
     lib,
     pkgs,
     ...

@@ -38,7 +38,7 @@
 
         imports = [
           self.homeModules.aly
-          self.homeModules.aly-desktop
+          self.homeModules.desktop
           self.homeModules.himalaya
           self.homeModules.syncthing
         ];
