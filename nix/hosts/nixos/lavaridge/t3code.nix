@@ -44,13 +44,6 @@
             --set T3CODE_HOME ${lib.escapeShellArg "${config.home.homeDirectory}/.t3-desktop"}
         '';
       });
-
-      xdg.desktopEntries."com.t3tools.T3Code" = {
-        name = "T3 Code (Beta)";
-        exec = "${config.programs.t3code.package}/bin/t3code-desktop %U";
-        noDisplay = true;
-        mimeType = ["x-scheme-handler/t3code"];
-      };
     };
 
     systemd.services.t3code-tailscale = {
