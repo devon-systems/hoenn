@@ -24,7 +24,6 @@
       self.nixosModules.tailscale
       self.nixosModules.thermald
       self.nixosModules.wireguardHoenn
-      self.nixosModules.zen
     ];
 
     specialArgs = {inherit self;};

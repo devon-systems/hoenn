@@ -19,10 +19,5 @@
       type = lib.types.deferredModule;
       default = {};
     };
-
-    zen = lib.mkOption {
-      type = lib.types.deferredModule;
-      default = {};
-    };
   };
 }

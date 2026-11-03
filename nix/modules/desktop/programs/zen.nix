@@ -1,6 +1,6 @@
 {inputs, ...}: {
   flake = {
-    nixosModules.zen = {pkgs, ...}: {
+    nixosModules.desktop = {pkgs, ...}: {
       environment.systemPackages = [
         (inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser.override {
           wrapFirefox = browser: options:
@@ -15,7 +15,7 @@
       ];
     };
 
-    darwinModules.zen = {
+    darwinModules.desktop = {
       homebrew.casks = ["zen"];
     };
   };

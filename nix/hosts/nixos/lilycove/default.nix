@@ -23,7 +23,6 @@
       self.nixosModules.lilycove
       self.nixosModules.tailscale
       self.nixosModules.wireguardHoenn
-      self.nixosModules.zen
     ];
 
     specialArgs = {inherit self;};

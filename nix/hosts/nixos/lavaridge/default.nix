@@ -26,7 +26,6 @@
       self.nixosModules.observability
       self.nixosModules.tailscale
       self.nixosModules.wireguardHoenn
-      self.nixosModules.zen
     ];
   };
 

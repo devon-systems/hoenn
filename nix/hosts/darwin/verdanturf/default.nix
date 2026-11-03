@@ -22,7 +22,6 @@
         self.darwinModules.aly
         self.darwinModules.tailscale
         self.darwinModules.wireguardHoenn
-        self.darwinModules.zen
       ];
 
       specialArgs = {inherit self;};
