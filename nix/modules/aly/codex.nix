@@ -8,6 +8,7 @@
       settings = {
         approval_policy = "never";
         default_permissions = ":danger-full-access";
+        features.code_mode = true;
         # Avoid blocking startup on desktop keyring access in SSH sessions.
         mcp_oauth_credentials_store = "file";
       };
