@@ -25,7 +25,6 @@
           self.homeModules.t3code
           self.homeModules.ghostty
           self.homeModules.himalaya
-          self.homeModules.opencodeDesktop
           self.homeModules.switchyard
           self.homeModules.vesktop
           self.homeModules.vicinae

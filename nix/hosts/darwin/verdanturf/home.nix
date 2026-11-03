@@ -49,7 +49,6 @@
           self.homeModules.vesktop
           self.homeModules.zed-editor
           self.homeModules.vscode
-          self.homeModules.opencodeDesktop
         ];
 
         hoenn.syncthing = {
