@@ -1,5 +1,5 @@
 {self, ...}: {
-  flake.homeModules.t3code = {pkgs, ...}: {
+  flake.homeModules.aly-desktop = {pkgs, ...}: {
     programs.t3code = {
       enable = true;
       package = self.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop;

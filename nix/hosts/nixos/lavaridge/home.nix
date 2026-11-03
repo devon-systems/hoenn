@@ -18,13 +18,9 @@
         imports = [
           self.homeModules.aly
           self.homeModules.aly-desktop
-          self.homeModules.appherder
-          self.homeModules.t3code
           self.homeModules.t3codeCli
           self.homeModules.hermesAgent
           self.homeModules.himalaya
-          self.homeModules.switchyard
-          self.homeModules.vicinae
         ];
 
         services.hermes-agent = {

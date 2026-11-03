@@ -17,7 +17,6 @@
 
         imports = [
           self.homeModules.aly
-          self.homeModules.t3code
           self.homeModules.himalaya
         ];
       };

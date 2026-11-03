@@ -18,11 +18,7 @@
         imports = [
           self.homeModules.aly
           self.homeModules.aly-desktop
-          self.homeModules.appherder
-          self.homeModules.t3code
           self.homeModules.himalaya
-          self.homeModules.vicinae
-          self.homeModules.switchyard
         ];
       };
     };
