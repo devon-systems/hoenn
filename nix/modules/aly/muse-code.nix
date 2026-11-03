@@ -1,5 +1,5 @@
-_: {
+{inputs, ...}: {
   flake.homeModules.aly = {pkgs, ...}: {
-    home.packages = [pkgs.muse-code];
+    home.packages = [inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.muse-code];
   };
 }
