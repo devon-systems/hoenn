@@ -10,12 +10,33 @@
     sops = {
       age.sshKeyPaths = ["${config.home.homeDirectory}/.ssh/id_ed25519"];
 
-      secrets.fastmail = {
-        sopsFile = self + "/secrets/aly-himalaya.yaml";
+      secrets = {
+        fastmail.sopsFile = self + "/secrets/aly-himalaya.yaml";
+        gmail.sopsFile = self + "/secrets/aly-himalaya.yaml";
       };
     };
 
     programs.himalaya.enable = true;
+
+    accounts.email.accounts.gmail = {
+      address = "achacega@gmail.com";
+      flavor = "gmail.com";
+      folders = {
+        drafts = "[Gmail]/Drafts";
+        inbox = "INBOX";
+        sent = "[Gmail]/Sent Mail";
+        trash = "[Gmail]/Trash";
+      };
+      imap.authentication = "plain";
+      passwordCommand = ["${pkgs.coreutils}/bin/cat" config.sops.secrets.gmail.path];
+      realName = "Aly Raffauf";
+      smtp.authentication = "plain";
+
+      himalaya = {
+        enable = true;
+        settings.mailbox.alias.archive = "[Gmail]/All Mail";
+      };
+    };
 
     accounts.email.accounts.fastmail = {
       address = "alyraffauf@fastmail.com";
