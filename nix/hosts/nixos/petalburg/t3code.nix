@@ -1,8 +1,5 @@
 {self, ...}: {
-  flake.nixosModules.petalburg = {
-    pkgs,
-    ...
-  }: {
+  flake.nixosModules.petalburg = {pkgs, ...}: {
     users.users.aly.linger = true;
 
     programs.nix-ld.libraries = with pkgs; [

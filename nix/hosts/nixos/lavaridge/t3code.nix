@@ -1,8 +1,5 @@
 {self, ...}: {
-  flake.nixosModules.lavaridge = {
-    pkgs,
-    ...
-  }: {
+  flake.nixosModules.lavaridge = {pkgs, ...}: {
     users.users.aly.linger = true;
 
     programs.nix-ld.libraries = with pkgs; [

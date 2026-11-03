@@ -20,8 +20,8 @@
           postFixup =
             (previous.postFixup or "")
             + ''
-              wrapProgram "$out/bin/t3code-desktop" \
-                --set-default T3CODE_DESKTOP_LAUNCHER_PATH "$out/bin/t3code-desktop"
+              wrapProgram "$desktop/bin/t3code-desktop" \
+                --set-default T3CODE_DESKTOP_LAUNCHER_PATH "$desktop/bin/t3code-desktop"
             '';
         });
     };
