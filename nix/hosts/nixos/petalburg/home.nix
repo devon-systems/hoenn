@@ -17,7 +17,6 @@
 
         imports = [
           self.homeModules.aly
-          self.homeModules.t3codeCli
           self.homeModules.hermesAgent
           self.homeModules.himalaya
         ];
