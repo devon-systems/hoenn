@@ -16,7 +16,6 @@
         self.nixosModules.comin
         self.nixosModules.default
         self.nixosModules.docker
-        self.nixosModules.google-chrome
         self.nixosModules.nfsClient
         self.nixosModules.nixos
         self.nixosModules.observability

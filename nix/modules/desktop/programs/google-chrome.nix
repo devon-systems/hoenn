@@ -1,10 +1,10 @@
 _: {
   flake = {
-    nixosModules.google-chrome = {pkgs, ...}: {
+    nixosModules.desktop = {pkgs, ...}: {
       environment.systemPackages = [pkgs.google-chrome];
     };
 
-    darwinModules.google-chrome = {
+    darwinModules.desktop = {
       homebrew.casks = ["google-chrome"];
     };
   };
