@@ -14,7 +14,16 @@
   in {
     packages = {
       inherit t3code;
-      t3code-desktop = t3code.desktop;
+      t3code-desktop = t3code.desktop.overrideAttrs (previous:
+        pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          nativeBuildInputs = (previous.nativeBuildInputs or []) ++ [pkgs.makeWrapper];
+          postFixup =
+            (previous.postFixup or "")
+            + ''
+              wrapProgram "$out/bin/t3code-desktop" \
+                --set-default T3CODE_DESKTOP_LAUNCHER_PATH "$out/bin/t3code-desktop"
+            '';
+        });
     };
   };
 }

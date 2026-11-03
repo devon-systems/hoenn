@@ -41,6 +41,7 @@
         nativeBuildInputs = [pkgs.makeWrapper];
         postBuild = ''
           wrapProgram "$out/bin/t3code-desktop" \
+            --set T3CODE_DESKTOP_LAUNCHER_PATH "$out/bin/t3code-desktop" \
             --set T3CODE_HOME ${lib.escapeShellArg "${config.home.homeDirectory}/.t3-desktop"}
         '';
       });
