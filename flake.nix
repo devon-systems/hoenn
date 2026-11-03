@@ -84,6 +84,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    openlogi = {
+      url = "github:AprilNEA/OpenLogi?dir=packaging";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
     sops-nix = {
