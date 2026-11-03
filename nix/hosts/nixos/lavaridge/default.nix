@@ -25,7 +25,6 @@
       self.nixosModules.niri
       self.nixosModules.nixos
       self.nixosModules.observability
-      self.nixosModules.openlogi
       self.nixosModules.tailscale
       self.nixosModules.wireguardHoenn
       self.nixosModules.zen
