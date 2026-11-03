@@ -1,4 +1,4 @@
-{self, ...}: {
+{inputs, ...}: {
   flake.nixosModules.petalburg = {pkgs, ...}: {
     users.users.aly.linger = true;
 
@@ -33,7 +33,7 @@
       # The background server owns ~/.t3; the desktop pairs with it separately.
       programs.t3code.package = lib.mkForce (pkgs.symlinkJoin {
         name = "t3code-desktop-petalburg";
-        paths = [self.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop];
+        paths = [inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop];
         nativeBuildInputs = [pkgs.makeWrapper];
         postBuild = ''
           wrapProgram "$out/bin/t3code-desktop" \

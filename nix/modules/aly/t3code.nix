@@ -1,8 +1,8 @@
-{self, ...}: {
-  flake.homeModules.aly-desktop = {pkgs, ...}: {
+{inputs, ...}: {
+  flake.homeModules.aly = {pkgs, ...}: {
     programs.t3code = {
       enable = true;
-      package = self.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop;
+      package = inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop;
       mutableClientSettings = true;
       mutableKeybindings = true;
       mutableUserSettings = true;

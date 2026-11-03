@@ -1,4 +1,4 @@
-{self, ...}: {
+{inputs, ...}: {
   flake.nixosModules.lavaridge = {pkgs, ...}: {
     users.users.aly.linger = true;
 
@@ -32,7 +32,7 @@
     }: {
       programs.t3code.package = lib.mkForce (pkgs.symlinkJoin {
         name = "t3code-desktop-lavaridge";
-        paths = [self.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop];
+        paths = [inputs.dvnpkgs.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop];
         nativeBuildInputs = [pkgs.makeWrapper];
 
         postBuild = ''
