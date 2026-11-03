@@ -18,6 +18,7 @@
       self.nixosModules.autoUpgrade
       self.nixosModules.comin
       self.nixosModules.default
+      self.nixosModules.desktop
       self.nixosModules.docker
       self.nixosModules.google-chrome
       self.nixosModules.nfsClient

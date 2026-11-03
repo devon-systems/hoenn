@@ -1,10 +1,10 @@
 _: {
   flake = {
-    darwinModules.default = {pkgs, ...}: {
+    darwinModules.desktop = {pkgs, ...}: {
       environment.systemPackages = [pkgs.firefox];
     };
 
-    nixosModules.default = {
+    nixosModules.desktop = {
       programs.firefox.enable = true;
     };
   };

@@ -16,6 +16,7 @@
         inputs.sops-nix.darwinModules.sops
         self.darwinModules.comin
         self.darwinModules.default
+        self.darwinModules.desktop
         self.darwinModules.darwin
         self.darwinModules.observability
         self.darwinModules.aly

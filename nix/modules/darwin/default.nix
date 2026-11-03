@@ -5,6 +5,11 @@
       default = {};
     };
 
+    desktop = lib.mkOption {
+      type = lib.types.deferredModule;
+      default = {};
+    };
+
     darwin = lib.mkOption {
       type = lib.types.deferredModule;
       default = {};

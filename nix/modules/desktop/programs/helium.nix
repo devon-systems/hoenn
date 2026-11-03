@@ -1,12 +1,12 @@
 {inputs, ...}: {
   flake = {
-    nixosModules.default = {
+    nixosModules.desktop = {
       imports = [inputs.helium-browser.nixosModules.default];
 
       programs.helium.enable = true;
     };
 
-    darwinModules.default = {
+    darwinModules.desktop = {
       homebrew.casks = ["helium-browser"];
     };
   };
