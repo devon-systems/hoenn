@@ -38,11 +38,10 @@
 
         imports = [
           self.homeModules.aly
-          self.homeModules.chatgpt
+          self.homeModules.aly-desktop
           self.homeModules.signal-desktop
           self.homeModules.slack
           self.homeModules.t3code
-          self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.syncthing
           self.homeModules.vesktop

@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.ghostty = {
+  flake.homeModules.aly-desktop = {
     pkgs,
     lib,
     ...

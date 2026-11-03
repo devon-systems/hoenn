@@ -17,12 +17,11 @@
 
         imports = [
           self.homeModules.aly
+          self.homeModules.aly-desktop
           self.homeModules.appherder
-          self.homeModules.chatgpt
           self.homeModules.signal-desktop
           self.homeModules.slack
           self.homeModules.t3code
-          self.homeModules.ghostty
           self.homeModules.himalaya
           self.homeModules.vesktop
           self.homeModules.vicinae
