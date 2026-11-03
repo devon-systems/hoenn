@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.zed-editor = {pkgs, ...}: {
+  flake.homeModules.aly-desktop = {pkgs, ...}: {
     programs.zed-editor = {
       enable = true;
       enableMcpIntegration = true;

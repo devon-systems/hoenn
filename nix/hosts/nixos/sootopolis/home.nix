@@ -19,14 +19,9 @@
           self.homeModules.aly
           self.homeModules.aly-desktop
           self.homeModules.appherder
-          self.homeModules.signal-desktop
-          self.homeModules.slack
           self.homeModules.t3code
           self.homeModules.himalaya
-          self.homeModules.vesktop
           self.homeModules.vicinae
-          self.homeModules.zed-editor
-          self.homeModules.vscode
           self.homeModules.switchyard
         ];
       };

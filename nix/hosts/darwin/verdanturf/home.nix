@@ -39,14 +39,9 @@
         imports = [
           self.homeModules.aly
           self.homeModules.aly-desktop
-          self.homeModules.signal-desktop
-          self.homeModules.slack
           self.homeModules.t3code
           self.homeModules.himalaya
           self.homeModules.syncthing
-          self.homeModules.vesktop
-          self.homeModules.zed-editor
-          self.homeModules.vscode
         ];
 
         hoenn.syncthing = {

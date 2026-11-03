@@ -19,17 +19,12 @@
           self.homeModules.aly
           self.homeModules.aly-desktop
           self.homeModules.appherder
-          self.homeModules.signal-desktop
-          self.homeModules.slack
           self.homeModules.t3code
           self.homeModules.t3codeCli
           self.homeModules.hermesAgent
           self.homeModules.himalaya
           self.homeModules.switchyard
-          self.homeModules.vesktop
           self.homeModules.vicinae
-          self.homeModules.vscode
-          self.homeModules.zed-editor
         ];
 
         services.hermes-agent = {

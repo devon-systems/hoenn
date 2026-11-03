@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.vesktop = {
+  flake.homeModules.aly-desktop = {
     programs.vesktop = {
       enable = true;
       mutableSettings = true;
