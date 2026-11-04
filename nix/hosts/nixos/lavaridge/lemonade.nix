@@ -18,7 +18,9 @@
         user = "lemonade";
         cacheDir = "/var/lib/lemonade/models";
         desktopApp.enable = false;
-        host = "127.0.0.1";
+        # The firewall only trusts Tailscale and Hoenn WireGuard, so this
+        # stays off the LAN while other Hoenn hosts can reach the API.
+        host = "0.0.0.0";
         port = 13305;
         autoStart = true;
 

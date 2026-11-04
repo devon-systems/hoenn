@@ -42,6 +42,20 @@
           };
         };
       };
+
+      settings.providers.lavaridge = {
+        name = "Lavaridge";
+        package = "@opencode/ai/providers/openai-compatible";
+        settings = {
+          baseURL = "http://lavaridge.narwhal-snapper.ts.net:13305/api/v1";
+          # Lemonade over Tailscale takes no key; the provider still sends one.
+          apiKey = "unused";
+        };
+        models."Qwen3.8-Flash-Next-Strata" = {
+          name = "Qwen 3.8 Flash Next (Strata)";
+          limit.context = 65536;
+        };
+      };
     };
   };
 }
