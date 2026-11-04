@@ -71,9 +71,9 @@
           "8192"
         ];
         contextSize = 65536;
-        # First step under the 44 GiB GTT ceiling. Step toward full
-        # residency only after measuring RAM headroom on the desktop.
-        expertCache = 14700;
+        # 17700 budgets slightly more bytes than the full IQ1 expert set.
+        # 14700 measured 20480 resident experts with healthy free RAM.
+        expertCache = 17700;
         vision.enable = true;
       };
     };
