@@ -13,6 +13,9 @@
       enableImageGen = false;
       enableROCm = true;
       gpuTarget = "gfx1151";
+      # Default is 31 GiB. 44 lets the expert cache grow while reserving
+      # the remaining unified memory for Linux and the desktop.
+      gpuMemory.ttmSizeGiB = 44;
 
       lemonade = {
         user = "lemonade";
@@ -68,9 +71,9 @@
           "8192"
         ];
         contextSize = 65536;
-        # IQ1_M's largest expert blob sizes 12000 slots at 22.0 GiB, like
-        # the old GSQ file at 16000. IQ2_XS needed 9000 to fit the pool.
-        expertCache = 12000;
+        # First step under the 44 GiB GTT ceiling. Step toward full
+        # residency only after measuring RAM headroom on the desktop.
+        expertCache = 14700;
         vision.enable = true;
       };
     };
