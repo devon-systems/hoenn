@@ -14,6 +14,7 @@ _: {
       settings.excludes = [
         "secrets/**"
         "k8s/flux-system/gotk-components.yaml"
+        "**/facter.json"
       ];
     };
   };
