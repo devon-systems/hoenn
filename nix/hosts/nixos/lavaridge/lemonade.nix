@@ -1,8 +1,8 @@
 {inputs, ...}: {
   flake.nixosModules.lavaridge = {pkgs, ...}: let
-    modelRevision = "ed59f92082b1e93c0e96d60a8b11aab089b52f09";
+    modelRevision = "d96201194f103c906994f283f504209dc8d2a10c";
     modelCache = "/var/lib/lemonade/models/hf/hub";
-    modelDirectory = "${modelCache}/models--ISTA-DASLab--Qwen3.8-Flash-Next-GSQ-RCO-GGUF/snapshots/${modelRevision}/IQ2_XS";
+    modelDirectory = "${modelCache}/models--unsloth--Qwen3.8-Flash-Next-GGUF/snapshots/${modelRevision}/UD-IQ2_XS";
   in {
     imports = [inputs.nix-amd-ai.nixosModules.default];
 
@@ -45,7 +45,7 @@
 
       strata = {
         enable = true;
-        model = "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf";
+        model = "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00001-of-00003.gguf";
         profile = "fast";
         # The pinned engine cannot expand IQ2_XS's draft head in place to Q4_0.
         extraArgs = [
@@ -71,7 +71,7 @@
     systemd.services.lemond.environment.STRATA_PREFILL_STREAM_MIN = "128";
 
     systemd.services.strata-model-download = {
-      description = "Download the pinned Strata IQ2_XS model";
+      description = "Download the pinned Strata UD-IQ2_XS model";
       after = ["network-online.target"];
       wants = ["network-online.target"];
       serviceConfig = {
@@ -80,12 +80,13 @@
         RemainAfterExit = true;
         TimeoutStartSec = "infinity";
         ExecStart = pkgs.writeShellScript "strata-model-download" ''
-          if test -f "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf" &&
-             test -f "${modelDirectory}/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf"; then
+          if test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00001-of-00003.gguf" &&
+             test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00002-of-00003.gguf" &&
+             test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00003-of-00003.gguf"; then
             exit 0
           fi
-          exec ${pkgs.huggingface-cli}/bin/hf download ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF \
-            --revision ${modelRevision} --include 'IQ2_XS/*' --cache-dir ${modelCache}
+          exec ${pkgs.huggingface-cli}/bin/hf download unsloth/Qwen3.8-Flash-Next-GGUF \
+            --revision ${modelRevision} --include 'UD-IQ2_XS/*' --cache-dir ${modelCache}
         '';
       };
     };
