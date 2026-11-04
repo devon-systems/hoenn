@@ -143,13 +143,14 @@
             api = "https://openwebui.narwhal-snapper.ts.net/api";
             key_cmd = "${pkgs.coreutils}/bin/cat ${lib.escapeShellArg config.sops.secrets.openwebui.path}";
             transport = "chat_completions";
-            default_model = "Qwen3.8-Flash-Next-Strata";
+            default_model = "Qwen3.8-Flash-Next-Halogen";
             models = {
+              "Qwen3.8-Flash-Next-Halogen".context_length = 262144;
+              # Compatibility alias for Halogen; kept for existing chats.
               "Qwen3.8-Flash-Next-Strata".context_length = 262144;
-              "qwen3.8:latest".context_length = 65536;
-              "qwen3.6:35b-a3b-mtp-q4_K_M".context_length = 65536;
-              "muse-glimmer:latest".context_length = 65536;
-              "gemma4:latest".context_length = 65536;
+              "Qwen3.8-27B-DFlash-GGUF".context_length = 65536;
+              "Qwen3.6-35B-A3B-MTP-GGUF".context_length = 65536;
+              "Muse-Glimmer-30B-GGUF".context_length = 65536;
             };
           };
           stt = {
