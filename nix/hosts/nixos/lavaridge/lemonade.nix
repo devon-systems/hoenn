@@ -2,7 +2,7 @@
   flake.nixosModules.lavaridge = {pkgs, ...}: let
     modelRevision = "d96201194f103c906994f283f504209dc8d2a10c";
     modelCache = "/var/lib/lemonade/models/hf/hub";
-    modelDirectory = "${modelCache}/models--unsloth--Qwen3.8-Flash-Next-GGUF/snapshots/${modelRevision}/UD-IQ2_XS";
+    modelDirectory = "${modelCache}/models--unsloth--Qwen3.8-Flash-Next-GGUF/snapshots/${modelRevision}/UD-IQ1_M";
   in {
     imports = [inputs.nix-amd-ai.nixosModules.default];
 
@@ -50,7 +50,7 @@
 
       strata = {
         enable = true;
-        model = "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00001-of-00003.gguf";
+        model = "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ1_M-00001-of-00003.gguf";
         profile = "fast";
         # The pinned engine cannot expand IQ2_XS's draft head in place to Q4_0.
         extraArgs = [
@@ -68,9 +68,9 @@
           "8192"
         ];
         contextSize = 65536;
-        # V3.1's larger experts make 16000 slots ask for 27.3 GiB, which
-        # overruns the 31 GiB GPU pool. 9000 measured 18.2 GiB, 4.4 GiB free.
-        expertCache = 9000;
+        # IQ1_M's largest expert blob sizes 12000 slots at 22.0 GiB, like
+        # the old GSQ file at 16000. IQ2_XS needed 9000 to fit the pool.
+        expertCache = 12000;
         vision.enable = true;
       };
     };
@@ -78,7 +78,7 @@
     systemd.services.lemond.environment.STRATA_PREFILL_STREAM_MIN = "128";
 
     systemd.services.strata-model-download = {
-      description = "Download the pinned Strata UD-IQ2_XS model";
+      description = "Download the pinned Strata UD-IQ1_M model";
       after = ["network-online.target"];
       wants = ["network-online.target"];
       serviceConfig = {
@@ -87,13 +87,13 @@
         RemainAfterExit = true;
         TimeoutStartSec = "infinity";
         ExecStart = pkgs.writeShellScript "strata-model-download" ''
-          if test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00001-of-00003.gguf" &&
-             test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00002-of-00003.gguf" &&
-             test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ2_XS-00003-of-00003.gguf"; then
+          if test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ1_M-00001-of-00003.gguf" &&
+             test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ1_M-00002-of-00003.gguf" &&
+             test -f "${modelDirectory}/Qwen3.8-Flash-Next-UD-IQ1_M-00003-of-00003.gguf"; then
             exit 0
           fi
           exec ${pkgs.huggingface-cli}/bin/hf download unsloth/Qwen3.8-Flash-Next-GGUF \
-            --revision ${modelRevision} --include 'UD-IQ2_XS/*' --cache-dir ${modelCache}
+            --revision ${modelRevision} --include 'UD-IQ1_M/*' --cache-dir ${modelCache}
         '';
       };
     };
