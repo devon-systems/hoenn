@@ -24,12 +24,22 @@
 
         settings = {
           max_loaded_models = 1;
-          auto_evict = false;
+          auto_evict = true;
+          # Not an idle timer: this caps HTTP/inference/readiness requests.
+          # 0 disables the cap so long agent runs survive (nix-amd-ai #1364).
           global_timeout = 0;
           auto_update_models = false;
           auto_check_model_updates = true;
           telemetry.enabled = false;
           llamacpp.backend = "rocm";
+        };
+
+        # Idle eviction: unload the Strata model an hour after its last request
+        # (lemonade's default is 300s). Reload is transparent — a request that
+        # arrives mid-eviction interrupts it and is served. Strata is registered
+        # as a user model, so the recipe_options key needs the user. prefix.
+        recipeOptions."user.Qwen3.8-Flash-Next-Strata" = {
+          evict_idle_timeout = 3600;
         };
       };
 
