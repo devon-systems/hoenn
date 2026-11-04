@@ -65,7 +65,9 @@
           "8192"
         ];
         contextSize = 65536;
-        expertCache = 16000;
+        # V3.1's larger experts make 16000 slots ask for 27.3 GiB, which
+        # overruns the 31 GiB GPU pool. 9000 measured 18.2 GiB, 4.4 GiB free.
+        expertCache = 9000;
         vision.enable = true;
       };
     };
