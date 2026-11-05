@@ -1,6 +1,6 @@
-# Explainer Prompt Template
+# Explainer Template
 
-Build the explainer subagent's prompt from this template. Fill in the placeholders.
+Use this template when synthesizing an explanation, inline or from explorer findings. When synthesizing inline, apply the output format and communication style below directly and ignore the placeholders.
 
 ---
 
