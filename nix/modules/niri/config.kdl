@@ -32,6 +32,13 @@ cursor {
 }
 
 // https://niri-wm.github.io/niri/Configuration:-Outputs
+output "PNP(BNQ) BenQ RD280UG EMP7T00043087" {
+    mode "3840x2560@119.991"
+    scale 2.0
+    transform "normal"
+    variable-refresh-rate
+}
+
 output "Guangxi Century Innovation Display Electronics Co., Ltd 27C1U-D 0000000000001" {
     mode "3840x2160@60.000"
     scale 2.0
