@@ -1,0 +1,4 @@
+interface:
+  display_name: "Leaving PR Comments"
+  short_description: "Format agent-authored GitHub PR comments"
+  default_prompt: "Use $leaving-pr-comments when posting this comment on my behalf."
