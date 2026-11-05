@@ -58,11 +58,11 @@
           };
           "Qwen3.8-27B-DFlash-GGUF" = {
             name = "Qwen 3.8 27B DFlash (Lemonade)";
-            limit.context = 65536;
+            limit.context = 262144;
           };
           "Muse-Glimmer-30B-GGUF" = {
             name = "Muse Glimmer 30B (Lemonade)";
-            limit.context = 65536;
+            limit.context = 131072;
           };
         };
       };

@@ -32,8 +32,8 @@
             default_model = "Qwen3.8-Flash-Next-Strata";
             models = {
               "Qwen3.8-Flash-Next-Strata".context_length = 65536;
-              "Qwen3.8-27B-DFlash-GGUF".context_length = 65536;
-              "Muse-Glimmer-30B-GGUF".context_length = 65536;
+              "Qwen3.8-27B-DFlash-GGUF".context_length = 262144;
+              "Muse-Glimmer-30B-GGUF".context_length = 131072;
             };
           };
         };

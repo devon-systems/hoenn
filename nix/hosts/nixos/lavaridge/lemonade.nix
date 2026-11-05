@@ -16,6 +16,9 @@
       # Default is 31 GiB. 44 lets the expert cache grow while reserving
       # the remaining unified memory for Linux and the desktop.
       gpuMemory.ttmSizeGiB = 44;
+      # GSQHalo's gfx1151 kernels beat stock ROCm and Vulkan on prompt
+      # processing for the two dense GGUFs served below.
+      llamaCppRocmPackage = pkgs.llama-cpp-rocm-gsqhalo;
 
       lemonade = {
         user = "lemonade";
@@ -40,8 +43,8 @@
           recipe = "llamacpp";
           labels = ["chat" "reasoning" "vision" "tool-calling" "dflash"];
           recipe_options = {
-            ctx_size = 65536;
-            llamacpp_args = "--spec-draft-n-max 3";
+            ctx_size = 262144;
+            llamacpp_args = "--batch-size 4096 --ubatch-size 2048 --cache-type-k q8_0 --cache-type-v q8_0 --spec-draft-n-max 3";
           };
         };
 
@@ -66,8 +69,8 @@
           "builtin.Muse-Glimmer-30B-GGUF" = {
             auto_evict = true;
             evict_idle_timeout = 3600;
-            ctx_size = 65536;
-            llamacpp_args = "--spec-draft-n-max 3";
+            ctx_size = 131072;
+            llamacpp_args = "--batch-size 4096 --ubatch-size 2048 --cache-type-k q8_0 --cache-type-v q8_0 --spec-draft-n-max 3";
           };
           "user.Qwen3.8-27B-DFlash-GGUF" = {
             auto_evict = true;
