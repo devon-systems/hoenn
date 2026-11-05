@@ -51,9 +51,19 @@
           # Lemonade over Tailscale takes no key; the provider still sends one.
           apiKey = "unused";
         };
-        models."Qwen3.8-Flash-Next-Strata" = {
-          name = "Qwen 3.8 Flash Next (Strata)";
-          limit.context = 65536;
+        models = {
+          "Qwen3.8-Flash-Next-Strata" = {
+            name = "Qwen 3.8 Flash Next (Strata)";
+            limit.context = 65536;
+          };
+          "Qwen3.8-27B-DFlash-GGUF" = {
+            name = "Qwen 3.8 27B DFlash (Lemonade)";
+            limit.context = 65536;
+          };
+          "Muse-Glimmer-30B-GGUF" = {
+            name = "Muse Glimmer 30B (Lemonade)";
+            limit.context = 65536;
+          };
         };
       };
     };

@@ -27,6 +27,24 @@
         port = 13305;
         autoStart = true;
 
+        models = [
+          "Muse-Glimmer-30B-GGUF"
+          "user.Qwen3.8-27B-DFlash-GGUF"
+        ];
+        customModels."Qwen3.8-27B-DFlash-GGUF" = {
+          checkpoints = {
+            main = "unsloth/Qwen3.8-27B-GGUF:Qwen3.8-27B-UD-Q4_K_XL.gguf";
+            mmproj = "unsloth/Qwen3.8-27B-GGUF:mmproj-F16.gguf";
+            draft = "ggml-org/Qwen3.8-27B-GGUF:dflash-Qwen3.8-27B-Q8_0.gguf";
+          };
+          recipe = "llamacpp";
+          labels = ["chat" "reasoning" "vision" "tool-calling" "dflash"];
+          recipe_options = {
+            ctx_size = 65536;
+            llamacpp_args = "--spec-draft-n-max 3";
+          };
+        };
+
         settings = {
           max_loaded_models = 1;
           # Global must stay false: it gates VRAM-pressure polling, and this
@@ -44,10 +62,21 @@
         # Per-model true keeps idle eviction after an hour while the global
         # false above disables pressure polling. Reload is transparent — a
         # request that arrives mid-eviction interrupts it and is served.
-        # Strata is registered as a user model, so the key needs user.
-        recipeOptions."user.Qwen3.8-Flash-Next-Strata" = {
-          auto_evict = true;
-          evict_idle_timeout = 3600;
+        recipeOptions = {
+          "builtin.Muse-Glimmer-30B-GGUF" = {
+            auto_evict = true;
+            evict_idle_timeout = 3600;
+            ctx_size = 65536;
+            llamacpp_args = "--spec-draft-n-max 3";
+          };
+          "user.Qwen3.8-27B-DFlash-GGUF" = {
+            auto_evict = true;
+            evict_idle_timeout = 3600;
+          };
+          "user.Qwen3.8-Flash-Next-Strata" = {
+            auto_evict = true;
+            evict_idle_timeout = 3600;
+          };
         };
       };
 
