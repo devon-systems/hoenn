@@ -1,6 +1,6 @@
 ---
 name: nix
-description: Use Nix for installing packages, adding tools, setting up dev environments, and resolving missing binaries. Prefer Nix over apt, dnf, or brew when nix is available. Nix provides the runtime; use language PMs (npm, pip, cargo) inside a nix shell for project deps.
+description: Use Nix over apt, dnf, or brew for installing packages, adding tools, dev environments, and missing binaries when nix is available.
 ---
 
 # Nix
@@ -54,32 +54,11 @@ Every agent `nix shell` or `nix develop` call MUST include `-c <command>`, or it
 | `cargo install pkg`        | `nix shell nixpkgs#pkg`                 |
 | `curl ... \| sh`           | `nix shell nixpkgs#pkg`                 |
 
-## Common Packages
+## Package names
 
-| Tool    | Nix Ref             | Notes               |
-| ------- | ------------------- | ------------------- |
-| jq      | `nixpkgs#jq`        |                     |
-| ripgrep | `nixpkgs#ripgrep`   |                     |
-| fd      | `nixpkgs#fd`        |                     |
-| fzf     | `nixpkgs#fzf`       |                     |
-| bat     | `nixpkgs#bat`       |                     |
-| delta   | `nixpkgs#git-delta` | name is `git-delta` |
-| gh      | `nixpkgs#gh`        |                     |
-| direnv  | `nixpkgs#direnv`    |                     |
-| just    | `nixpkgs#just`      |                     |
-| yq      | `nixpkgs#yq-go`     | name is `yq-go`     |
-| watch   | `nixpkgs#procps`    | in procps           |
+Most tools and runtimes are the obvious `nixpkgs#<name>` (`jq`, `ripgrep`, `python3`, `nodejs`, `go`). Rust needs both `nixpkgs#cargo` and `nixpkgs#rustc`.
 
-| Lang   | Runtime                           | Tools                                                          |
-| ------ | --------------------------------- | -------------------------------------------------------------- |
-| Python | `nixpkgs#python3`                 | `nixpkgs#ruff`, `nixpkgs#black`, `nixpkgs#pyright`             |
-| Node   | `nixpkgs#nodejs`                  | `nixpkgs#nodePackages.prettier`, `nixpkgs#nodePackages.eslint` |
-| Rust   | `nixpkgs#cargo` + `nixpkgs#rustc` | `nixpkgs#rust-analyzer`, `nixpkgs#clippy`                      |
-| Go     | `nixpkgs#go`                      | `nixpkgs#gopls`, `nixpkgs#golangci-lint`                       |
-| C/C++  | `nixpkgs#gcc` / `nixpkgs#clang`   | `nixpkgs#clang-tools`                                          |
-| Nix    | —                                 | `nixpkgs#nil`                                                  |
-
-**Tricky names:** delta→`git-delta`, yq→`yq-go`, watch→`procps`, awscli→`awscli2`.
+**Tricky names** (package name differs from the binary, so use `nix-ensure -p <pkg> <bin>`): delta→`git-delta`, yq→`yq-go`, watch→`procps`, awscli→`awscli2`.
 
 ## Missing from nixpkgs?
 
@@ -103,20 +82,4 @@ scripts/nix-verify          # smoke test nix setup
 
 ## Flake & Project
 
-```bash
-# Interactive (no -c — for users, not agents)
-nix develop
-nix shell nixpkgs#pkg1 nixpkgs#pkg2
-
-# Flake lifecycle
-nix flake init -t nixpkgs#python
-nix flake update && nix flake check
-nix build && nix run .#app
-
-# direnv (auto-activate on cd)
-echo "use flake" > .envrc && direnv allow
-echo "use nix" > .envrc && direnv allow
-
-# Permanent (rare)
-nix profile install nixpkgs#pkg
-```
+Flake init and update, direnv, and permanent installs: see `references/flake.md`. Agent calls still need `-c`.
