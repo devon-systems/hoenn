@@ -61,7 +61,7 @@ output "Samsung Display Corp. 0x41AA Unknown" {
 
 output "Samsung Display Corp. ATNA40CT06-0  Unknown" {
     mode "1920x1200@60.003"
-    scale 1.5
+    scale 1.25
     transform "normal"
 }
 
