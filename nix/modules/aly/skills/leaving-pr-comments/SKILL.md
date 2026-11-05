@@ -3,10 +3,9 @@ name: leaving-pr-comments
 description: Use whenever leaving comments on GitHub.
 ---
 
-# Leaving PR Comments
+# Leaving PR comments
 
-Prefix every agent-authored comment left on the user's behalf with this GitHub
-note callout:
+Prefix agent-authored GitHub comments on the user's behalf with this callout:
 
 ```md
 > [!NOTE]
@@ -15,32 +14,25 @@ note callout:
 Actual comment starts here.
 ```
 
-Use the verified public name of the model that wrote the comment, and the
-user's name or GitHub login.
+Use the verified public model name and the user's name or GitHub login.
+If the model name is unavailable, use the harness name. Do not guess.
 
-If the harness does not expose a model name, use the harness name. Do not guess.
+Keep attribution inside the note and the reply outside it. Add no separator, heading,
+footer, or duplicate attribution.
 
-Before posting, check the entire comment, including quoted text and
-attachments, for secrets and private details.
+Use this format for top-level comments, inline reviews, replies, and explanations
+before resolving or dismissing feedback. Exclude PR descriptions, commit messages,
+and text the user explicitly asks to post verbatim without attribution.
 
-Keep the attribution inside the note and the actual reply outside it. The
-context line must start with the robot emoji. Do not add a horizontal rule,
-Setext underline, heading, signature footer, or a second attribution.
+Apply `unslop` and the sentence-level guidance in
+`technical-writing`. Reuse them if already loaded.
+Skip Diátaxis and document structure rules for comments.
 
-Apply this format to top-level PR comments, inline review comments, replies to
-bots or reviewers, and written explanations used before resolving or
-dismissing feedback. Do not add it to PR descriptions, commit messages, or text
-the user explicitly asked to post verbatim without attribution.
+Lead with the conclusion or requested change. Cite the relevant code, behavior,
+check, or reproduction, and distinguish verified facts from judgment. Include only
+the context the reviewer needs to act. Omit canned thanks and status narration.
 
-Write the comment itself in a direct style:
-
-- Lead with the conclusion.
-- Keep it clear and casual.
-- Cite the relevant code, behavior, check, or reproduction.
-- Keep it concise and avoid filler, canned thanks, or status narration.
-- Distinguish verified facts from judgment.
-- Use the `unslop` and `technical-writing` skills for clear communication.
-
-Preview the final Markdown before posting so quoting and blank lines render as
-shown. After posting, verify that GitHub returned the comment or review URL.
-Resolve a review thread only after its response was posted successfully.
+Before posting, check the whole comment, quotes, and attachments for secrets and
+private details. Preview the Markdown to check quoting and blank lines. After
+posting, verify that GitHub returned the comment or review URL. Resolve a review
+thread only after its response posts successfully.
