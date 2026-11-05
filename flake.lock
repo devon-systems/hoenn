@@ -544,6 +544,7 @@
       "inputs": {
         "crush-fork": "crush-fork",
         "flake-parts": "flake-parts_2",
+        "freepilot": "freepilot",
         "import-tree": "import-tree",
         "llm-agents": "llm-agents",
         "nix-wrapper-modules": "nix-wrapper-modules",
@@ -555,11 +556,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1793769406,
-        "narHash": "sha256-0I28tUl82NCOS3YTJXRJTCOmoZ2L/sOXL5whd6oxuP0=",
+        "lastModified": 1793854067,
+        "narHash": "sha256-eXz+qO8139tbR+lCCtD6EP6eEziuhvBdg5DSuFvRarM=",
         "owner": "devon-systems",
         "repo": "dvnpkgs",
-        "rev": "3589187f71fe4de1d0a492b2d1102f837b76e831",
+        "rev": "8e3c82ff487faf378212937abe14ecb5bea7b4ce",
         "type": "github"
       },
       "original": {
@@ -995,6 +996,51 @@
         "type": "github"
       }
     },
+    "freepilot": {
+      "inputs": {
+        "flake-parts": [
+          "dvnpkgs",
+          "flake-parts"
+        ],
+        "import-tree": [
+          "dvnpkgs",
+          "import-tree"
+        ],
+        "nixpkgs": [
+          "dvnpkgs",
+          "nixpkgs"
+        ],
+        "pyproject-build-systems": [
+          "dvnpkgs",
+          "pyproject-build-systems"
+        ],
+        "pyproject-nix": [
+          "dvnpkgs",
+          "pyproject-nix"
+        ],
+        "treefmt-nix": [
+          "dvnpkgs",
+          "treefmt-nix"
+        ],
+        "uv2nix": [
+          "dvnpkgs",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793719742,
+        "narHash": "sha256-TBDJbrfrBxppDnqY9fcJkszfMkyeExm8pv/GQzUspJE=",
+        "owner": "alyraffauf",
+        "repo": "freepilot",
+        "rev": "bb8d01789b10bf5da748a32d4a22908468356b6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alyraffauf",
+        "repo": "freepilot",
+        "type": "github"
+      }
+    },
     "friendlySnippets": {
       "flake": false,
       "locked": {
@@ -1382,11 +1428,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1793750192,
-        "narHash": "sha256-ueNHsKFN7SA7Lzk4DPnjWgpIET+IaJZ8uIIeDszen+Y=",
+        "lastModified": 1793780669,
+        "narHash": "sha256-6Gw3SLIXUr1AqakdcPdql07LdIwsXs/IdvOOJ1aljNw=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "78f777ba4f6141fca604a5cee3f6ff8dfab09f48",
+        "rev": "38235de70aec5e5ca95070e8e020be0f31cd8c03",
         "type": "github"
       },
       "original": {
