@@ -83,7 +83,7 @@ with a written reason when dismissing false positives.
 If the repo has `.macroscope/check-run-agents/*.md`, read those rules before you
 reply to a Macroscope finding. Its findings cite them.
 
-CodeRabbit, Copilot, etc. are advisory. Treat their findings like any other finding, verify them and choose how to proceed. but don't hold a merge for it.
+CodeRabbit, Copilot, etc. are advisory. Treat their findings like any other finding: verify them and choose how to proceed, but don't hold a merge for them.
 
 If a review bot leaves feedback you believe is not worth addressing, reply with
 a written reason and resolve the comment. Use the `leaving-pr-comments` skill
