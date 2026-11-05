@@ -55,9 +55,13 @@ Comment a non-obvious invariant, constraint, compatibility requirement, or desig
 
 - Create clear internal and external boundaries between parts that can change or be rebuilt independently. Let callers depend on a small, explicit contract instead of implementation details.
 - Give mutable or shared state one owner. The owner controls writes, lifetime, synchronization, and cleanup. Other parts use its contract instead of changing the state directly.
-- Add an abstraction when a part has multiple plausible implementations, changes for different reasons than its callers, or makes its callers simpler behind a stable contract. Do not abstract an imagined future.
+- Add an abstraction when a part has multiple plausible implementations, changes for different reasons than its callers, or makes its callers simpler behind a stable contract. Do not abstract an imagined future. Count a verified fake as a plausible second implementation. Do not count an interface created only to mock one concrete dependency.
 - Design each boundary for its real operating conditions. Consider unbounded input, concurrency, failure, cancellation, retries, timeouts, cleanup, and partial results. Add limits, pagination, streaming, batching, backpressure, or idempotency when needed. Keep these policies at the boundary.
 - Make invalid states hard to represent. Validate at boundaries, define error behavior, release resources, and avoid surprising defaults.
+- Keep decision logic callable without I/O. Make parsing, calculation, and policy take values and return values or typed errors. Keep effects at the boundary. Put inverse operations such as parse/format and encode/decode behind one contract. Give value types real equality and make ordering deterministic.
+- Pass clocks, random sources, ID generators, and external services in at the boundary. Supply real implementations through production wiring. Keep core code from reading ambient time, randomness, environment, or process globals.
+- Give errors callers must act on a typed kind instead of a message string. Validate before mutating so failed calls can leave state unchanged. Make retryable operations idempotent.
+- Parse untrusted input into a typed value or typed error. Never panic. Separate storage and wire types from domain types. Keep decoders for older versions when formats change.
 
 ## Work with the surrounding code
 
