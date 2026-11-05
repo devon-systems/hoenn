@@ -44,7 +44,7 @@
           labels = ["chat" "reasoning" "vision" "tool-calling" "dflash"];
           recipe_options = {
             ctx_size = 262144;
-            llamacpp_args = "--batch-size 4096 --ubatch-size 2048 --cache-type-k q8_0 --cache-type-v q8_0 --spec-draft-n-max 3";
+            llamacpp_args = "--batch-size 4096 --ubatch-size 2048 --cache-type-k q8_0 --cache-type-v q8_0 --spec-draft-n-max 5";
           };
         };
 
