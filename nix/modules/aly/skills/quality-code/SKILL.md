@@ -43,6 +43,7 @@ Comment a non-obvious invariant, constraint, compatibility requirement, or desig
 
 Solve today's problem with tomorrow's load in mind.
 
+- Do not build implicit state machines. Make state and event logic explicit.
 - Create clear internal and external boundaries between parts that can change or be rebuilt independently. Let callers depend on a small, explicit contract instead of implementation details.
 - Give mutable or shared state one owner. The owner controls writes, lifetime, synchronization, and cleanup. Other parts use its contract instead of changing the state directly.
 - Add an abstraction when a part has multiple plausible implementations, changes for different reasons than its callers, or makes its callers simpler behind a stable contract. Do not abstract an imagined future. Count a verified fake as a plausible second implementation. Do not count an interface created only to mock one concrete dependency.
@@ -55,7 +56,7 @@ Solve today's problem with tomorrow's load in mind.
 
 ## Work with the surrounding code
 
-Before changing shared behavior, inspect its callers, dependencies, and relevant tests. Update every dependent file the change requires. For a local detail, inspect only enough context to make the change fit.
+Before changing shared behavior, inspect its callers, dependencies, and relevant tests. Update every dependent file the change requires. For a local detail, inspect only enough context to make the change fit. Reuse existing types, contracts, and styles within the coedebase where possible.
 
 Make safe assumptions about small implementation details. Ask before changing product behavior, a public contract, data handling, or scope. Do not turn a one-off example, bug investigation, or rejected preference from the conversation into permanent product behavior.
 
