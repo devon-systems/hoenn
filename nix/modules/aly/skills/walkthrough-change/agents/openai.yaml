@@ -1,0 +1,6 @@
+interface:
+  display_name: "Walkthrough change"
+  short_description: "Walk through a PR, commit range, or local diff"
+  default_prompt: "Use $walkthrough-change to explain this change as a guided reading."
+policy:
+  allow_implicit_invocation: false
