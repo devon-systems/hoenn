@@ -13,7 +13,7 @@ Before drafting, check the target repository for `pull_request_template.md` or `
 
 If templates exist, use the one that best fits the change instead of the fallback below. Keep its headings, questions, and checklists. Fill placeholders with facts about the change. Remove author guidance only if the template says to. Ask the user only if you cannot infer the choice and it would materially affect the body.
 
-Repository instructions for titles or bodies override the defaults below.
+Repository instructions for titles or bodies take precedence over PR templates. PR templates take precedence over the fallback defaults below.
 
 ## Title
 
@@ -21,28 +21,38 @@ Use Conventional Commit format: `type(scope): concise imperative summary`.
 
 Choose the type for the primary change and the scope for the smallest clear component. Omit the scope if none fits. Name the concrete outcome. Prefer 72 characters or fewer, with no final period.
 
+Good: `fix(notifications): clear retry timer on reconnect`
+Bad: `feat: improve notifications`
+
 ## Fallback description
 
 Use the shortest description that explains the change and its rationale. Omit headings, section labels, test-plan sections, checklists, dividers, generated-by footers, commit lists, diff stats, file inventories, and pasted test output.
 
-1. Open with one or two sentences about the current behavior, constraint, or goal and why the change is needed.
-2. Describe the material changes in review order and say who or what notices a behavior change. Use bullets for distinct changes and prose for a connected sequence. Name modules, symbols, or files only when they help the reviewer navigate. Describe a material new test as a change, without a validation report.
-3. Add a final short paragraph about preserved behavior, migration or rollout limits, or required follow-ups only if reviewers need it to judge the change.
+Lead with what changes and why it matters. Use short paragraphs and everyday words. For a small change, a few sentences are usually enough. Stop when the reviewer can understand the problem and the result.
 
-Link or close issues this PR completes, using the repository's syntax. Replace vague claims such as "improve", "various", "robust", or "comprehensive" with exact effects. Do not repeat the title.
+Explain behavior before implementation. Include a file, symbol, or internal mechanism only when it helps the reviewer understand the change or a tradeoff. Leave details that are already clear in the diff there. Avoid packing several technical facts into one sentence.
 
-Bug fix example:
+Use bullets when distinct changes are easier to scan that way. Do not turn every edited component into a bullet. Add migration limits, required follow-ups, or preserved behavior only when they affect how the reviewer should judge the change. Describe a material new test only when its coverage needs explanation.
+
+Read the draft as someone who has not seen the conversation. Replace abstract summaries with concrete effects, explain necessary jargon, and cut repeated facts. Do not repeat the title or recount the work session. Link or close issues this PR completes, using the repository's syntax.
+
+Dense draft:
 
 ```md
 fix(notifications): clear retry timer on reconnect
 
-After a reconnect, the old retry timer remains active, so the client can receive the same notification twice.
-
-- Clear the old retry timer before starting a new one.
-- Add a regression test for duplicate notifications after a reconnect.
-
-Notification delivery on the first connection and retry timing stay the same.
+The reconnect lifecycle now performs explicit teardown of the prior retry timer before reinitializing notification delivery, preventing overlapping retry scheduling and duplicate notification dispatch across connection transitions. Regression coverage validates notification deduplication while preserving initial connection behavior and retry cadence.
 ```
+
+Clearer version of the same change:
+
+```md
+fix(notifications): clear retry timer on reconnect
+
+After a reconnect, the old retry timer can send the same notification twice. Clear it before starting a new timer.
+```
+
+The timer explains the fix. The test and unchanged retry timing do not need a separate report here.
 
 New feature example:
 
