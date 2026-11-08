@@ -36,6 +36,8 @@ Use bullets when distinct changes are easier to scan that way. Do not turn every
 
 Read the draft as someone who has not seen the conversation. Replace abstract summaries with concrete effects, explain necessary jargon, and cut repeated facts. Do not repeat the title or recount the work session. Link or close issues this PR completes, using the repository's syntax.
 
+No one cares how many tests pass or how you validated it, leave that out.
+
 Dense draft:
 
 ```md
