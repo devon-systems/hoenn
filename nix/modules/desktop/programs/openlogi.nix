@@ -1,12 +1,7 @@
-{inputs, ...}: {
+{
   flake = {
     nixosModules.desktop = {
-      imports = [inputs.openlogi.nixosModules.default];
-
-      programs.openlogi = {
-        enable = true;
-        launchAtLogin = true;
-      };
+      programs.openlogi.enable = true;
     };
 
     darwinModules.desktop = {
