@@ -7,6 +7,14 @@
     import-tree.url = "github:denful/import-tree";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    albedo = {
+      url = "git+https://tangled.org/okami.mom/albedo";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     blzrd = {
       url = "github:alyraffauf/blzrd";
       inputs.flake-parts.follows = "flake-parts";

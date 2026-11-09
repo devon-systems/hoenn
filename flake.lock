@@ -17,6 +17,37 @@
         "type": "github"
       }
     },
+    "albedo": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "tg": "tg",
+        "treefmt-nix": [
+          "treefmt-nix"
+        ],
+        "usage-core": "usage-core"
+      },
+      "locked": {
+        "lastModified": 1794190037,
+        "narHash": "sha256-84idq+6OyRyiKHxfGqO9FqXFeFfhfQUd2+4qhu9S7ac=",
+        "ref": "refs/heads/main",
+        "rev": "b3edd2cef626a98233fec0807d79f3093841e80d",
+        "revCount": 1804,
+        "type": "git",
+        "url": "https://tangled.org/okami.mom/albedo"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://tangled.org/okami.mom/albedo"
+      }
+    },
     "ansibleVim": {
       "flake": false,
       "locked": {
@@ -551,7 +582,7 @@
         "nixpkgs": "nixpkgs_5",
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",
-        "tg": "tg",
+        "tg": "tg_2",
         "treefmt-nix": "treefmt-nix_4",
         "uv2nix": "uv2nix_2"
       },
@@ -2614,6 +2645,7 @@
     },
     "root": {
       "inputs": {
+        "albedo": "albedo",
         "appherder": "appherder",
         "blzrd": "blzrd",
         "comin": "comin",
@@ -2859,6 +2891,22 @@
       }
     },
     "tg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793301292,
+        "narHash": "sha256-/CEkvZpDnfS4K/yjBX0w0P/l1Gr2a2WAkU50ttcNs5c=",
+        "ref": "refs/heads/master",
+        "rev": "1d013b170ade55fcfda8ed73535b67b0c7eff441",
+        "revCount": 182,
+        "type": "git",
+        "url": "https://tangled.org/aly.codes/tg"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://tangled.org/aly.codes/tg"
+      }
+    },
+    "tg_2": {
       "inputs": {
         "flake-parts": "flake-parts_4",
         "git-hooks-nix": "git-hooks-nix_2",
@@ -3099,6 +3147,18 @@
         "ref": "v2.10.1",
         "repo": "tsc.nvim",
         "type": "github"
+      }
+    },
+    "usage-core": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-dKjqffpCenUg0nKEiAepCfRsQxRk5odins7AR+1CA0c=",
+        "type": "file",
+        "url": "https://api.next.tangled.org/xrpc/org.tangled.temp.git.getArchive?repo=did%3Aplc%3A2lf7buutfnfcucljnmaypf7u&ref=3951be3&format=tar.gz&prefix=provide-usage-main"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://api.next.tangled.org/xrpc/org.tangled.temp.git.getArchive?repo=did%3Aplc%3A2lf7buutfnfcucljnmaypf7u&ref=3951be3&format=tar.gz&prefix=provide-usage-main"
       }
     },
     "userborn": {
