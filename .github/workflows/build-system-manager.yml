@@ -6,12 +6,12 @@ env:
   NIX_CONFIG: "access-tokens = github.com=${{ github.token }}"
 jobs:
   build-sootopolis:
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@ceedf095f4ec1a097402bc6bd80831f2e1a6fde6 # v2.0.0
       - name: Checkout
-        uses: useblacksmith/checkout@v1 # v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
       - name: Install Nix
