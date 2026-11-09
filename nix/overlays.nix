@@ -24,6 +24,16 @@ _: {
         buildInputs = (old.buildInputs or []) ++ [final.aws-lc final.zstd];
       });
 
+      # dwarfsextract aborts on the pwb, raw, and xar formats against the
+      # current libarchive. Skip those format tests until nixpkgs fixes dwarfs.
+      dwarfs = prev.dwarfs.overrideAttrs (old: {
+        env =
+          old.env
+          // {
+            GTEST_FILTER = "${old.env.GTEST_FILTER}:dwarfs/dwarfsextract_format_test.basic/*";
+          };
+      });
+
       tectonic-unwrapped = prev.tectonic-unwrapped.overrideAttrs (old: {
         buildInputs = (old.buildInputs or []) ++ [final.aws-lc];
       });
