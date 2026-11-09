@@ -5,7 +5,7 @@ env:
   NIX_CONFIG: "access-tokens = github.com=${{ github.token }}"
 jobs:
   build-verdanturf:
-    runs-on: macos-latest
+    runs-on: blacksmith-6vcpu-macos-15
     steps:
     - name: Checkout
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -21,7 +21,7 @@ jobs:
     - name: Build verdanturf
       run: nix build --accept-flake-config --print-out-paths .#darwinConfigurations.verdanturf.config.system.build.toplevel
   build-fallarbor:
-    runs-on: macos-latest
+    runs-on: blacksmith-6vcpu-macos-15
     steps:
     - name: Checkout
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
