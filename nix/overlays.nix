@@ -18,9 +18,10 @@ _: {
 
       # Same aws-lc-sys change: codex and tectonic only provide OpenSSL, so
       # their builds cannot find a system AWS-LC. Drop once nixpkgs adds
-      # aws-lc to them.
+      # aws-lc to them. codex's zstd-sys also probes pkg-config for a system
+      # libzstd, which codex does not provide.
       codex = prev.codex.overrideAttrs (old: {
-        buildInputs = (old.buildInputs or []) ++ [final.aws-lc];
+        buildInputs = (old.buildInputs or []) ++ [final.aws-lc final.zstd];
       });
 
       tectonic-unwrapped = prev.tectonic-unwrapped.overrideAttrs (old: {
