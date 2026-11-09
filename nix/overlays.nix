@@ -16,8 +16,13 @@ _: {
         buildInputs = (old.buildInputs or []) ++ [final.libgit2 final.sqlite];
       });
 
-      # Same aws-lc-sys change: tectonic only provides OpenSSL, so the build
-      # cannot find a system AWS-LC. Drop once nixpkgs adds aws-lc to it.
+      # Same aws-lc-sys change: codex and tectonic only provide OpenSSL, so
+      # their builds cannot find a system AWS-LC. Drop once nixpkgs adds
+      # aws-lc to them.
+      codex = prev.codex.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or []) ++ [final.aws-lc];
+      });
+
       tectonic-unwrapped = prev.tectonic-unwrapped.overrideAttrs (old: {
         buildInputs = (old.buildInputs or []) ++ [final.aws-lc];
       });
