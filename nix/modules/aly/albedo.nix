@@ -3,6 +3,10 @@
     imports = [inputs.albedo.homeModules.default];
 
     programs.albedo.enable = true;
-    services.albedo.enable = true;
+
+    services.albedo = {
+      enable = true;
+      enableMcpIntegration = true;
+    };
   };
 }
