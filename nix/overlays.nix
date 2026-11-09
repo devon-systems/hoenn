@@ -8,6 +8,13 @@ _: {
         nativeBuildInputs = (old.nativeBuildInputs or []) ++ [final.pkg-config];
         buildInputs = (old.buildInputs or []) ++ [final.aws-lc];
       });
+
+      # nixpkgs sets LIBGIT2_NO_VENDOR for Rust builds, but himalaya does not
+      # provide a system libgit2. Drop once NixOS/nixpkgs#584922 reaches
+      # nixos-unstable.
+      himalaya = prev.himalaya.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or []) ++ [final.libgit2 final.sqlite];
+      });
     };
   };
 }
