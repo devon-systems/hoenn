@@ -15,6 +15,12 @@ _: {
       himalaya = prev.himalaya.overrideAttrs (old: {
         buildInputs = (old.buildInputs or []) ++ [final.libgit2 final.sqlite];
       });
+
+      # Same aws-lc-sys change: tectonic only provides OpenSSL, so the build
+      # cannot find a system AWS-LC. Drop once nixpkgs adds aws-lc to it.
+      tectonic-unwrapped = prev.tectonic-unwrapped.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or []) ++ [final.aws-lc];
+      });
     };
   };
 }
