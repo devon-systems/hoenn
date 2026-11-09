@@ -7,7 +7,18 @@
       self,
       ...
     }: let
-      hermesPackage = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      # hermes-agent patches nixpkgs' patchelf with a fix written for 0.19.2,
+      # but nixpkgs reverted patchelf to 0.15.2 and the patch no longer
+      # applies. patchelfUnstable already contains that fix, so pass it with
+      # overrideAttrs as a no-op. Drop once hermes-agent builds against
+      # nixos-unstable again.
+      patchelf = pkgs.patchelfUnstable // {overrideAttrs = _: pkgs.patchelfUnstable;};
+      pmPackages = lib.filterAttrs (_: lib.isDerivation) (
+        pkgs.callPackage "${inputs.hermes-agent}/nix/pm-packages.nix" {inherit patchelf;}
+      );
+      hermesPackage = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+        inherit pmPackages;
+      };
       honchoPlugin = pkgs.fetchFromGitHub {
         name = "hermes-plugin-honcho";
         owner = "plastic-labs";
