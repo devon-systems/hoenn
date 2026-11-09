@@ -11,7 +11,7 @@ jobs:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@ceedf095f4ec1a097402bc6bd80831f2e1a6fde6 # v2.0.0
       - name: Checkout
-        uses: useblacksmith/checkout@v1 # v7.0.1
+        uses: useblacksmith/checkout@2b9fe87d796feea153b455ec2f3125b471a7b0e7 # v1
         with:
           fetch-depth: 1
       - name: Install Nix
