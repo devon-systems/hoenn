@@ -27,4 +27,10 @@
       specialArgs = {inherit self;};
     };
   };
+
+  config.blzrd.nodes.fallarbor = {
+    output = self.darwinConfigurations.fallarbor.config.system.build.toplevel;
+    type = "darwin";
+    user = "aly";
+  };
 }
