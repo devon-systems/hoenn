@@ -21,6 +21,7 @@
       self.nixosModules.nixos
       self.nixosModules.observability
       self.nixosModules.sootopolis
+      self.nixosModules.remoteBuilds
       self.nixosModules.tailscale
       self.nixosModules.thermald
       self.nixosModules.wireguardHoenn

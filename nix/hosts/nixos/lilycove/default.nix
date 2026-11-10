@@ -21,6 +21,7 @@
       self.nixosModules.nixos
       self.nixosModules.observability
       self.nixosModules.lilycove
+      self.nixosModules.remoteBuilds
       self.nixosModules.tailscale
       self.nixosModules.wireguardHoenn
     ];
