@@ -42,7 +42,7 @@ sudo nix store info --store ssh-ng://aly@lavaridge.narwhal-snapper.ts.net
 sudo nix store info --store ssh-ng://aly@fallarbor.narwhal-snapper.ts.net
 ```
 
-Verify and accept the SSH host keys on the initial connection. Tailscale SSH policy must allow unattended access as `aly`; an interactive approval requirement can block builds.
+NixOS clients trust the builders' host keys from `keys/root_<builder>.pub`. On the Macs, verify and accept the host keys on the initial connection. Tailscale SSH policy must allow unattended access as `aly`; an interactive approval requirement can block builds.
 
 Inspect the settings read by a fresh root CLI. This does not query the running daemon:
 
