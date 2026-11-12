@@ -70,8 +70,11 @@
 
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "hermes-nixpkgs";
     };
+
+    # Hermes requires the patchelf version from this nixpkgs revision.
+    hermes-nixpkgs.url = "github:NixOS/nixpkgs/1d060086d60cb76a40cf37109f979d88a5bd6396";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 

@@ -7,18 +7,7 @@
       self,
       ...
     }: let
-      hermesPackage = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-        pmPackages = lib.filterAttrs (_: lib.isDerivation) (pkgs.callPackage "${inputs.hermes-agent}/nix/pm-packages.nix" {
-          # Hermes patches 0.19.2; nixpkgs' default is older and its unstable version already includes the patch.
-          patchelf = pkgs.patchelf.overrideAttrs {
-            version = "0.19.2";
-            src = pkgs.fetchurl {
-              url = "https://github.com/NixOS/patchelf/releases/download/0.19.2/patchelf-0.19.2.tar.bz2";
-              hash = "sha256-1K2aTlxongkRnOLzCpSw6LT5jHhZASPqIWZeNMaSiAE=";
-            };
-          };
-        });
-      };
+      hermesPackage = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default;
       honchoPlugin = pkgs.fetchFromGitHub {
         name = "hermes-plugin-honcho";
         owner = "plastic-labs";
@@ -79,10 +68,7 @@
         };
       };
 
-      programs.hermes-agent = {
-        enable = true;
-        package = hermesPackage;
-      };
+      programs.hermes-agent.enable = true;
 
       # The memory-provider loader requires the directory name to match the provider.
       home.file.honcho-plugin = {
