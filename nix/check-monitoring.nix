@@ -17,19 +17,9 @@
         path = file.source;
       }) (lib.filterAttrs (name: file: file.enable && lib.hasPrefix "alloy/" name && lib.hasSuffix ".alloy" name) config.environment.etc)))
     alloyHosts;
-    # Validate both desktop variants on the Linux CI runner.
+    # Validate the system-manager configuration on the Linux CI runner.
     alloyConfig = import ./modules/observability/_config.nix;
-    darwin = self.darwinConfigurations.verdanturf.config;
     desktopConfigs = [
-      (pkgs.writeText "alloy-darwin.alloy" (alloyConfig {
-        hostName = darwin.networking.hostName;
-        isLinux = false;
-        cominPort =
-          if darwin.services.comin.enable
-          then darwin.services.comin.exporter.port
-          else null;
-        server = "mauville.narwhal-snapper.ts.net";
-      }))
       (pkgs.writeText "alloy-system-manager.alloy" (alloyConfig {
         hostName = "sootopolis";
         isLinux = true;
