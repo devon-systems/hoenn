@@ -20,22 +20,6 @@
           self.homeModules.desktop
           self.homeModules.himalaya
         ];
-
-        # services.hermes-agent = {
-        #   backend.mode = lib.mkForce "none";
-        #   # The shared messaging credentials already serve the existing gateway.
-        #   gateway.enable = lib.mkForce false;
-        #   settings.providers.lavaridge = {
-        #     api = "http://127.0.0.1:13305/api/v1";
-        #     transport = "chat_completions";
-        #     default_model = "Qwen3.8-Flash-Next-Strata";
-        #     models = {
-        #       "Qwen3.8-Flash-Next-Strata".context_length = 65536;
-        #       "Qwen3.8-27B-DFlash-GGUF".context_length = 262144;
-        #       "Muse-Glimmer-30B-GGUF".context_length = 131072;
-        #     };
-        #   };
-        # };
       };
     };
   };
