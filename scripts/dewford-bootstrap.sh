@@ -26,6 +26,9 @@ install -d -m 0755 /etc/nix
 if ! grep -qx 'experimental-features = nix-command flakes' /etc/nix/nix.conf; then
   echo 'experimental-features = nix-command flakes' >>/etc/nix/nix.conf
 fi
+if ! grep -qx 'trusted-users = root aly' /etc/nix/nix.conf; then
+  echo 'trusted-users = root aly' >>/etc/nix/nix.conf
+fi
 systemctl restart nix-daemon.service
 
 if ! command -v tailscale >/dev/null; then
