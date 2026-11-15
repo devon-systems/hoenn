@@ -50,7 +50,8 @@ fi
 activation=$(sudo -H -u aly /nix/var/nix/profiles/default/bin/nix build \
   --accept-flake-config --no-link --print-out-paths \
   '/home/aly/src/hoenn#homeConfigurations.aly@dewford.activationPackage')
-sudo -H -u aly env PATH=/nix/var/nix/profiles/default/bin:/usr/bin:/bin "$activation/activate"
+sudo -H -u aly env PATH=/nix/var/nix/profiles/default/bin:/usr/bin:/bin \
+  HOME_MANAGER_BACKUP_EXT=before-home-manager "$activation/activate"
 
 printf '%s\n' \
   'Home Manager is active. Join Tailscale with: sudo tailscale up --hostname=dewford' \
