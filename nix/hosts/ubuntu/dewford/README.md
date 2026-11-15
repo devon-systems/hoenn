@@ -72,10 +72,11 @@ Run Tailscale's interactive enrollment from Petalburg and open the printed login
 URL:
 
 ```sh
-sudo incus exec dewford -- tailscale up --hostname=dewford
+sudo incus exec dewford -- tailscale up --hostname=dewford --ssh
 ```
 
-After enrollment, connect through the tailnet:
+Bootstrap enables Tailscale SSH. Tailnet SSH policy controls access to the
+guest's local users. After enrollment, connect through the tailnet:
 
 ```sh
 ssh aly@dewford

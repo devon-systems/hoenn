@@ -41,6 +41,7 @@ if ! command -v tailscale >/dev/null; then
   apt-get install --yes tailscale
 fi
 systemctl enable --now tailscaled.service
+tailscale set --ssh
 
 sudo -H -u aly mkdir -p /home/aly/src
 if [[ ! -d /home/aly/src/hoenn ]]; then
@@ -54,5 +55,5 @@ sudo -H -u aly env PATH=/nix/var/nix/profiles/default/bin:/usr/bin:/bin \
   HOME_MANAGER_BACKUP_EXT=before-home-manager "$activation/activate"
 
 printf '%s\n' \
-  'Home Manager is active. Join Tailscale with: sudo tailscale up --hostname=dewford' \
+  'Home Manager is active. Join Tailscale with: sudo tailscale up --hostname=dewford --ssh' \
   'Then authenticate agent providers as aly and run: t3 pair'
