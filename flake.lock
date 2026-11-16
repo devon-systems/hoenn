@@ -35,11 +35,11 @@
         "usage-core": "usage-core"
       },
       "locked": {
-        "lastModified": 1794713615,
-        "narHash": "sha256-lsHXDr3Ur4RWZek9gc8vgAeQdPE3T+7y1gf6frFnZcU=",
+        "lastModified": 1794827463,
+        "narHash": "sha256-yF4G+BYasd9TfyEu2UTZJhdA9/K7dUyor1pYMWO1bhk=",
         "ref": "refs/heads/main",
-        "rev": "5016e9802369aa430c182a3cdcae1cb61062aef2",
-        "revCount": 2206,
+        "rev": "31aed0fa25c62a01e21a4a3437704ca908075e18",
+        "revCount": 2464,
         "type": "git",
         "url": "https://tangled.org/okami.mom/albedo"
       },
@@ -671,11 +671,11 @@
         "whichKeyNvim": "whichKeyNvim"
       },
       "locked": {
-        "lastModified": 1794642785,
-        "narHash": "sha256-qOoDzmyAcr5Seo5CdcuFr365Pi+0ZgtPkltOvnmc5UY=",
+        "lastModified": 1794810684,
+        "narHash": "sha256-teqlCsFwr3uUVl+38sV5yNn7+Njbs49ddN9vT+kcg08=",
         "owner": "alyraffauf",
         "repo": "eevee",
-        "rev": "b49c98e36462321fa10aaee0389e63524afc6ad7",
+        "rev": "d29d37d7ab291e2b8971209e8f26c38cf74b8531",
         "type": "github"
       },
       "original": {
@@ -1237,11 +1237,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794278858,
-        "narHash": "sha256-rkrJwLgLSHBnXfgoSKIDa+2LLGdTqynsV3GAxOTGhUU=",
+        "lastModified": 1794715309,
+        "narHash": "sha256-awkBBs5ctFKgEYjpNGpi3t/VqF589n5EWfdinRb2gNI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "82ce401aa350502897c3f2e85f384d61cd3b0b6d",
+        "rev": "a1293da7dd8e497e08d26173f97e2976b36a31ea",
         "type": "github"
       },
       "original": {
@@ -1401,11 +1401,11 @@
         "treefmt-nix": "treefmt-nix_6"
       },
       "locked": {
-        "lastModified": 1794674015,
-        "narHash": "sha256-7mufIALmKLzCvP5ZAGGvMa0OtMGk7DLa0EA6dNrKtU0=",
+        "lastModified": 1794808658,
+        "narHash": "sha256-RbvK/ghvMuWWx/riUqtCZCxjZFji2n3onTo2Kg60T3s=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "1b7ee581dc08b305b31313a5de609c7c50b0cdcc",
+        "rev": "733d5b0fa81d5aad7c623dca8d8170ce411fba1d",
         "type": "github"
       },
       "original": {
@@ -1614,11 +1614,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1794568072,
-        "narHash": "sha256-DE4fQ6eroS87xkhHljf3Jimbu0HDioqeOymcw4tKPi8=",
+        "lastModified": 1794814332,
+        "narHash": "sha256-DrUj2Tu/zmtW5zOBHyfa+GOltdx9YZQtCh7Ujl2sFus=",
         "owner": "noamsto",
         "repo": "nix-amd-ai",
-        "rev": "05b0666f36cb9446c6f6e905ffbcc988cd9fe0df",
+        "rev": "f72e5c85d7565a7ef387b9ec515b30e68f83ff8c",
         "type": "github"
       },
       "original": {
@@ -1713,11 +1713,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794558749,
-        "narHash": "sha256-o3qP4WjKWRyghN80cnpVsY0i0dU7oc0A+32lYudaBP0=",
+        "lastModified": 1794827395,
+        "narHash": "sha256-6z/bKyFdElqHjNZWo306rtyM4tIH6aNIjAmkKFsndVE=",
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "rev": "ec3ec32509e1bd97cd9886658b04702a2a7b7007",
+        "rev": "9491aa1daf680cde178eb0d2fc4bc36f6bdfe0e6",
         "type": "github"
       },
       "original": {
