@@ -8,7 +8,6 @@ _: {
     };
 
     networking.firewall = {
-      enable = true;
       allowedTCPPorts = [2049];
       allowedUDPPorts = [2049];
     };

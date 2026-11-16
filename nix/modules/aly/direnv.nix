@@ -11,7 +11,6 @@ _: {
       };
 
       mise.enable = config.programs.mise.enable;
-      nix-direnv.enable = true;
       silent = true;
 
       stdlib = ''

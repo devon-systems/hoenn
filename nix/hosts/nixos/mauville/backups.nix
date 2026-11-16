@@ -50,7 +50,6 @@ _: {
         initialize = true;
         extraBackupArgs = ["--cleanup-cache"];
         pruneOpts = ["--keep-daily 7" "--keep-weekly 4" "--keep-monthly 3"];
-        runCheck = true;
         timerConfig = {
           OnCalendar = schedule;
           Persistent = true;

@@ -5,7 +5,6 @@
     fixedRandomDelay = true;
     flake = flakeReference;
     flags = ["--accept-flake-config"];
-    persistent = true;
     randomizedDelaySec = "45min";
   };
 
@@ -35,7 +34,6 @@ in {
       system.autoUpgrade =
         (autoUpgrade "github:devon-systems/hoenn#${config.networking.hostName}")
         // {
-          allowReboot = false;
           operation = "boot";
           upgrade = false;
         };

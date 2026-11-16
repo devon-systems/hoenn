@@ -5,9 +5,7 @@ _: {
 
       autoPrune = {
         enable = true;
-        dates = "weekly";
         randomizedDelaySec = "1h";
-        persistent = true;
         # Keep volumes, which may contain persistent application data.
         flags = ["--all" "--filter" "until=168h"];
       };

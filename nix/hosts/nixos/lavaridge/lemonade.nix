@@ -28,7 +28,6 @@
         # stays off the LAN while other Hoenn hosts can reach the API.
         host = "0.0.0.0";
         port = 13305;
-        autoStart = true;
 
         models = [
           "Muse-Glimmer-30B-GGUF"

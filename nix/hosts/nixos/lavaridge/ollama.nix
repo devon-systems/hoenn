@@ -2,8 +2,6 @@ _: {
   flake.nixosModules.lavaridge = {pkgs, ...}: {
     services.ollama = {
       enable = true;
-      host = "127.0.0.1";
-      openFirewall = false;
       package = pkgs.ollama-rocm;
 
       environmentVariables = {

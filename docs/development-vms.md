@@ -183,11 +183,23 @@ preserves the native account's password.
 
 ## Update system and user configuration
 
-Run inside the guest's Hoenn checkout while agent jobs are idle:
+While agent jobs are idle, deploy a configured guest from a tailnet machine's
+Hoenn checkout:
+
+```sh
+nix develop -c blzrd switch <guest>
+```
+
+The guest's `blzrd.nodes` entry selects its system-manager output and SSH user.
+The deployment builds locally, copies the closure and activates both system
+configuration and Home Manager. It does not need a Hoenn checkout in the guest.
+
+Alternatively, activate inside the guest's Hoenn checkout:
 
 ```sh
 git pull --ff-only
-sudo /run/system-manager/sw/bin/system-manager switch --flake '.#systemConfigs.<guest>'
+sudo /run/system-manager/sw/bin/system-manager --nix-option accept-flake-config true \
+  switch --flake '.#systemConfigs.<guest>'
 ```
 
 This activates both system configuration and Home Manager. Changes can restart
