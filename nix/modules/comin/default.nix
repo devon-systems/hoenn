@@ -1,10 +1,7 @@
 {inputs, ...}: let
   cominSettings = {
     enable = true;
-    exporter = {
-      listen_address = "127.0.0.1";
-      port = 4243;
-    };
+    exporter.listen_address = "127.0.0.1";
 
     remotes = [
       {

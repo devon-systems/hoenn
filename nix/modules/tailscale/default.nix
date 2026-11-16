@@ -17,12 +17,7 @@
         search = ["narwhal-snapper.ts.net"];
       };
 
-      services.tailscale = {
-        enable = true;
-        # Keep public DNS working before Tailscale login; nix-darwin manages
-        # a separate .ts.net resolver for MagicDNS.
-        overrideLocalDns = false;
-      };
+      services.tailscale.enable = true;
     };
 
     nixosModules.tailscale = {

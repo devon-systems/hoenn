@@ -23,7 +23,6 @@ in {
       services.prometheus.exporters.smartctl = {
         enable = true;
         listenAddress = "127.0.0.1";
-        port = 9633;
         maxInterval = "5m";
         extraFlags = ["--smartctl.powermode-check=standby"];
       };

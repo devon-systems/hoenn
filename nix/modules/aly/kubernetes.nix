@@ -37,7 +37,6 @@
 
     programs.kubeswitch = {
       enable = true;
-      enableFishIntegration = true;
 
       settings = {
         kind = "SwitchConfig";

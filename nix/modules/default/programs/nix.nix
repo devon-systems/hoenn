@@ -30,13 +30,11 @@ _: {
       nix.gc = {
         automatic = true;
         options = "--delete-older-than 3d";
-        persistent = true;
         randomizedDelaySec = "60min";
       };
 
       nix.optimise = {
         automatic = true;
-        persistent = true;
         randomizedDelaySec = "60min";
       };
     };

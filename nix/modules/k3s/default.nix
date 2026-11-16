@@ -19,7 +19,6 @@ _: {
       gracefulNodeShutdown = {
         enable = true;
         shutdownGracePeriod = "45s";
-        shutdownGracePeriodCriticalPods = "10s";
       };
     };
 
