@@ -1,11 +1,22 @@
-{inputs, ...}: {
+{
   flake = {
     nixosModules.desktop = {
-      imports = [inputs.openlogi.nixosModules.default];
+      config,
+      lib,
+      ...
+    }: {
+      programs.openlogi.enable = true;
 
-      programs.openlogi = {
-        enable = true;
-        launchAtLogin = true;
+      systemd.user.services.openlogi-agent = {
+        description = "OpenLogi background agent";
+        wantedBy = ["graphical-session.target"];
+        after = ["graphical-session.target"];
+        partOf = ["graphical-session.target"];
+        serviceConfig = {
+          ExecStart = lib.getExe' config.programs.openlogi.package "openlogi-agent";
+          Restart = "on-failure";
+          RestartSec = 5;
+        };
       };
     };
 
