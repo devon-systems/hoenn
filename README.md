@@ -9,16 +9,16 @@ See also [Johto](https://github.com/devon-systems/johto) for the homelab,
 
 ## Architecture
 
-| Host                                                  | Platform       | Flake output                      |
-| ----------------------------------------------------- | -------------- | --------------------------------- |
-| [`lilycove`](nix/hosts/nixos/lilycove/README.md)      | NixOS          | `nixosConfigurations.lilycove`    |
-| [`mauville`](nix/hosts/nixos/mauville/README.md)      | NixOS          | `nixosConfigurations.mauville`    |
-| [`petalburg`](nix/hosts/nixos/petalburg/README.md)    | NixOS          | `nixosConfigurations.petalburg`   |
-| [`rustboro`](nix/hosts/nixos/rustboro/README.md)      | NixOS          | `nixosConfigurations.rustboro`    |
-| [`sootopolis`](nix/hosts/nixos/sootopolis/README.md)  | NixOS          | `nixosConfigurations.sootopolis`  |
-| [`fallarbor`](nix/hosts/darwin/fallarbor/README.md)   | nix-darwin     | `darwinConfigurations.fallarbor`  |
-| [`verdanturf`](nix/hosts/darwin/verdanturf/README.md) | nix-darwin     | `darwinConfigurations.verdanturf` |
-| `sootopolis`                                          | system-manager | `systemConfigs.sootopolis`        |
+| Host                                                    | Platform   | Flake output                      |
+| ------------------------------------------------------- | ---------- | --------------------------------- |
+| [`lilycove`](nix/hosts/nixos/lilycove/README.md)        | NixOS      | `nixosConfigurations.lilycove`    |
+| [`mauville`](nix/hosts/nixos/mauville/README.md)        | NixOS      | `nixosConfigurations.mauville`    |
+| [`petalburg`](nix/hosts/nixos/petalburg/README.md)      | NixOS      | `nixosConfigurations.petalburg`   |
+| [`rustboro`](nix/hosts/nixos/rustboro/README.md)        | NixOS      | `nixosConfigurations.rustboro`    |
+| [`sootopolis`](nix/hosts/nixos/sootopolis/README.md)    | NixOS      | `nixosConfigurations.sootopolis`  |
+| [`fallarbor`](nix/hosts/darwin/fallarbor/README.md)     | nix-darwin | `darwinConfigurations.fallarbor`  |
+| [`verdanturf`](nix/hosts/darwin/verdanturf/README.md)   | nix-darwin | `darwinConfigurations.verdanturf` |
+| [`dewford`](nix/hosts/system-manager/dewford/README.md) | Linux VM   | `systemConfigs.dewford`           |
 
 Mauville is the k3s server and runs household services and backups. Internal
 cluster traffic uses the `hoenn` WireGuard interface. Homebridge uses Mauville's
@@ -44,7 +44,7 @@ nix/
 k8s/                  Flux and application manifests
 secrets/              SOPS-encrypted host secrets
 keys/                 Public SOPS recipients
-docs/                 Cluster setup and operations
+docs/                 Host and cluster runbooks
 scripts/              Maintenance tools
 ```
 
@@ -66,7 +66,7 @@ Build every output affected by your change. For example:
 ```sh
 nix build .#nixosConfigurations.<host>.config.system.build.toplevel
 nix build .#darwinConfigurations.verdanturf.config.system.build.toplevel
-nix build .#systemConfigs.sootopolis
+nix build .#systemConfigs.dewford
 ```
 
 Shared validation and metrics helpers come from the pinned dvnpkgs input.
@@ -81,7 +81,8 @@ Run `just flux-status` to inspect the cluster through the `hoenn` context.
 Renovate merges routine dependency updates after the required checks pass.
 
 See [cluster operations](docs/kubernetes.md) for bootstrap, backups, Homebridge,
-Tailscale access, and update procedures. The
+Tailscale access, and update procedures. The [development VM runbook](docs/development-vms.md)
+covers Incus guests managed with system-manager and Home Manager. The
 [observability runbook](https://github.com/devon-systems/infra/blob/master/docs/observability.md)
 covers metrics and logs. Desktop shortcuts are in the
 [Niri keyboard reference](nix/modules/niri/README.md).

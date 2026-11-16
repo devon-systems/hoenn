@@ -28,11 +28,6 @@ in {
       type = lib.types.deferredModule;
       default = {};
     };
-
-    systemModules.autoUpgrade = lib.mkOption {
-      type = lib.types.deferredModule;
-      default = {};
-    };
   };
 
   config.flake = {
@@ -88,11 +83,6 @@ in {
           };
         };
       };
-    };
-
-    systemModules.autoUpgrade = {
-      system.autoUpgrade = autoUpgrade "github:devon-systems/hoenn#systemConfigs.sootopolis";
-      systemd.services = upgradeService "system-manager-upgrade";
     };
   };
 }

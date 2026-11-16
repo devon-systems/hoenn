@@ -33,29 +33,6 @@ _: {
             config.source = "/var/lib/incus/storage-pools/dev";
           }
         ];
-        profiles = [
-          {
-            name = "dewford";
-            config = {
-              "boot.autostart" = "true";
-              "limits.cpu" = "4";
-              "limits.memory" = "8GiB";
-            };
-            devices = {
-              eth0 = {
-                type = "nic";
-                name = "eth0";
-                network = "incusbr0";
-              };
-              root = {
-                type = "disk";
-                path = "/";
-                pool = "dev";
-                size = "100GiB";
-              };
-            };
-          }
-        ];
       };
     };
   };

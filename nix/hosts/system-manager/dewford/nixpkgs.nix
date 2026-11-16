@@ -1,8 +1,6 @@
 {sharedPackageSets, ...}: {
-  flake.systemModules.sootopolis = {lib, ...}: {
-    # Replace system-manager's package-set import with the shared instance.
+  flake.systemModules.dewford = {lib, ...}: {
     _module.args.pkgs = lib.mkForce sharedPackageSets.x86_64-linux;
-
     nixpkgs.hostPlatform = "x86_64-linux";
   };
 }

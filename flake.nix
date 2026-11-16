@@ -35,11 +35,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-system-graphics = {
-      url = "github:soupglasses/nix-system-graphics";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     determinate.url = "github:DeterminateSystems/determinate";
     dvnpkgs.url = "github:devon-systems/dvnpkgs";
 

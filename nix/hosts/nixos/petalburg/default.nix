@@ -15,6 +15,7 @@
         self.nixosModules.autoUpgrade
         self.nixosModules.comin
         self.nixosModules.default
+        self.nixosModules.dewfordVm
         self.nixosModules.docker
         self.nixosModules.nfsClient
         self.nixosModules.nixos

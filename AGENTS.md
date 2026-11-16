@@ -18,7 +18,7 @@ Before committing, run `nix fmt` and `nix flake check`. Build every affected out
 ```sh
 nix build .#nixosConfigurations.<host>.config.system.build.toplevel
 nix build .#darwinConfigurations.verdanturf.config.system.build.toplevel
-nix build .#systemConfigs.sootopolis
+nix build .#systemConfigs.dewford
 ```
 
 After `facter.json` or `system-profiler.json` changes, run `nix run github:devon-systems/dvnpkgs#generate-host-readmes`. Capture Darwin hardware with `nix run github:devon-systems/dvnpkgs#generate-host-readmes -- --capture-darwin <host>`. Never edit text between generated-section markers.
