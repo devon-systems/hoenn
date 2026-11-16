@@ -5,7 +5,7 @@ concurrency:
 env:
   NIX_CONFIG: "access-tokens = github.com=${{ github.token }}"
 jobs:
-  build-sootopolis:
+  build-dewford:
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space
@@ -21,10 +21,10 @@ jobs:
         with:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           name: alyraffauf
-      - name: Build sootopolis
+      - name: Build dewford
         run: >-
           nix build --accept-flake-config --print-out-paths
-          .#systemConfigs.sootopolis
+          .#systemConfigs.dewford
 name: build-system-manager
 'on':
   pull_request:
