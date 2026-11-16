@@ -28,6 +28,9 @@ fi
 "$nix" run --accept-flake-config --inputs-from /home/aly/src/hoenn system-manager -- \
   switch --flake '/home/aly/src/hoenn#systemConfigs.dewford'
 
+/usr/bin/systemctl is-active --quiet system-manager.target home-manager-aly.service \
+  determinate-settings.service dewford-setup.service dewford-shell.service
+
 printf '%s\n' \
   'System Manager and Home Manager are active.' \
   'Connect over Tailscale with: ssh aly@dewford' \

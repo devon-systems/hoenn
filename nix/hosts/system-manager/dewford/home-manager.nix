@@ -10,6 +10,12 @@
       home = "/home/aly";
     };
 
+    # The activation login shell needs Ubuntu's profile tools and native Nix.
+    systemd.services.home-manager-aly.path = [
+      "/usr"
+      "/nix/var/nix/profiles/default"
+    ];
+
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = false;

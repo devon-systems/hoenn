@@ -14,8 +14,6 @@ _: {
     systemd.services.determinate-settings = {
       description = "Load managed Determinate Nix settings";
       wantedBy = ["system-manager.target"];
-      requires = ["nix-daemon.service"];
-      after = ["nix-daemon.service"];
       before = ["home-manager-aly.service"];
       restartTriggers = [config.environment.etc."nix/nix.custom.conf".source];
 
