@@ -16,4 +16,10 @@
       self.systemModules.dewford
     ];
   };
+
+  config.blzrd.nodes.dewford = {
+    output = self.systemConfigs.dewford;
+    type = "system-manager";
+    user = "aly";
+  };
 }

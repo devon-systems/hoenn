@@ -256,11 +256,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793387387,
-        "narHash": "sha256-X94oJ4QFbI+PzF2YOWCaYSc7q55WCr7tOJ4jzdnkLI4=",
+        "lastModified": 1794830369,
+        "narHash": "sha256-nPcDmU1i8Srh97DvrMwo3Ydl3F+F3ScjeIdw4JOZ/mM=",
         "owner": "alyraffauf",
         "repo": "blzrd",
-        "rev": "884533754ce2dc807364edc4f8d7bf7af4cfa239",
+        "rev": "6f80ca3a08d32b66335cba499d00a63edd309bc0",
         "type": "github"
       },
       "original": {
