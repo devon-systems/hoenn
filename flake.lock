@@ -587,11 +587,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1794810665,
-        "narHash": "sha256-8CieqI/LL7q9262JlXp4PaIHdyKG/iy1dwzBQTltlSo=",
+        "lastModified": 1794811270,
+        "narHash": "sha256-GVo3XHZCQi00pSBPqSRCPCXuBmGUOpTrxK6WsCS8bAk=",
         "owner": "devon-systems",
         "repo": "dvnpkgs",
-        "rev": "019af57086e5a2b4c36e8a6d5f630aabcd898408",
+        "rev": "764e7a35fce7d3c37457bc8abbd996038ea2999f",
         "type": "github"
       },
       "original": {
