@@ -9,6 +9,6 @@
     },
   },
   "packages": {
-    "@bgotink/kdl": ["@bgotink/kdl@0.4.1", "", {}, "sha512-zuCVbRXGaY09Y9uc0LQ+PpAe4YnE7o2nT1ZEsRzrG/vnMrQlkqaFgYuaItHiUxK1nc7bd3uAYaiBW75g5u1kbw=="],
+    "@bgotink/kdl": ["@bgotink/kdl@0.4.2", "", {}, "sha512-g0Atx31WrqePx0PMyBQ+GWTKRzrZpfj7K+wrcmGRpeNpsgz/U1iQIYIkGsZdCM9+zEQ7ADzOuQBcPiQKQoRCVw=="],
   }
 }
