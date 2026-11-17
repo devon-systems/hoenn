@@ -29,7 +29,7 @@ spec:
       - did:plc:bucg2dsfr66ecm7kc3bmepwv
     existingSecret: helix
     image:
-      tag: sha-af7cc226e1ca6844a5cf5bfb7b3f7a71694a0e5b@sha256:98573195abb74beb1dd7c9ddc75ab9d3d1129da9a17e4f053f8f9895d3950cbf
+      tag: sha-93af83db1d9a70736f4dbac0f0fb5676e3ee6d7d@sha256:78101b89a463ecbfff3f6df0f24bb5b0e357ecd02e3bb2e685f29dcb09cbe7b6
       pullPolicy: IfNotPresent
     persistence:
       size: 1Gi
