@@ -25,6 +25,7 @@
         "home-manager": [
           "home-manager"
         ],
+        "import-tree": "import-tree",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -35,11 +36,11 @@
         "usage-core": "usage-core"
       },
       "locked": {
-        "lastModified": 1794827463,
-        "narHash": "sha256-yF4G+BYasd9TfyEu2UTZJhdA9/K7dUyor1pYMWO1bhk=",
+        "lastModified": 1794934317,
+        "narHash": "sha256-jS+BuKCyjU9pa2u6d5GfeJG26EddVeG7LAmzsUYTFzE=",
         "ref": "refs/heads/main",
-        "rev": "31aed0fa25c62a01e21a4a3437704ca908075e18",
-        "revCount": 2464,
+        "rev": "370be58262822b79108f6782b5010e77fd884951",
+        "revCount": 2649,
         "type": "git",
         "url": "https://tangled.org/okami.mom/albedo"
       },
@@ -576,7 +577,7 @@
         "crush-fork": "crush-fork",
         "flake-parts": "flake-parts_2",
         "freepilot": "freepilot",
-        "import-tree": "import-tree",
+        "import-tree": "import-tree_2",
         "llm-agents": "llm-agents",
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixpkgs": "nixpkgs_5",
@@ -625,7 +626,7 @@
         "guessIndentNvim": "guessIndentNvim",
         "heirlineNvim": "heirlineNvim",
         "imageNvim": "imageNvim",
-        "import-tree": "import-tree_2",
+        "import-tree": "import-tree_3",
         "lazyNvim": "lazyNvim",
         "lazydevNvim": "lazydevNvim",
         "luasnip": "luasnip",
@@ -1272,13 +1273,13 @@
       "locked": {
         "lastModified": 1788467110,
         "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
-        "owner": "denful",
+        "owner": "vic",
         "repo": "import-tree",
         "rev": "eb1b52eaecc57f7c136d07ae8a93e724dfecac46",
         "type": "github"
       },
       "original": {
-        "owner": "denful",
+        "owner": "vic",
         "repo": "import-tree",
         "type": "github"
       }
@@ -1299,6 +1300,21 @@
       }
     },
     "import-tree_3": {
+      "locked": {
+        "lastModified": 1788467110,
+        "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
+        "owner": "denful",
+        "repo": "import-tree",
+        "rev": "eb1b52eaecc57f7c136d07ae8a93e724dfecac46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "denful",
+        "repo": "import-tree",
+        "type": "github"
+      }
+    },
+    "import-tree_4": {
       "locked": {
         "lastModified": 1788467110,
         "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
@@ -2484,7 +2500,7 @@
         "flake-parts": "flake-parts_6",
         "helium-browser": "helium-browser",
         "home-manager": "home-manager",
-        "import-tree": "import-tree_3",
+        "import-tree": "import-tree_4",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents_2",
         "mcp-servers-nix": "mcp-servers-nix",
