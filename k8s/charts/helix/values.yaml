@@ -1,0 +1,22 @@
+image:
+  repository: ghcr.io/alyraffauf/terrarium/helix
+  tag: latest
+  pullPolicy: Always
+identifier: ""
+accounts: []
+# Map each target account to an existing list AT URI, if needed.
+lists: {}
+existingSecret: ""
+passwordKey: app-password
+appview: https://public.api.bsky.app
+slingshot: https://slingshot.aly.town
+jetstream: https://jetstream.waow.tech
+loginPDS: ""
+rescanInterval: 6h
+persistence:
+  existingClaim: ""
+  size: 1Gi
+  # null uses the cluster's default storage class; "" disables dynamic provisioning.
+  storageClass: null
+resources: {}
+nodeSelector: {}

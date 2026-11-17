@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: helix
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: ./k8s/charts/helix
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  interval: 30m
+  releaseName: helix
+  targetNamespace: helix
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    identifier: aly.codes
+    accounts:
+      # bella.meangirls.online; the DID keeps tracking the same account after handle changes.
+      - did:plc:bucg2dsfr66ecm7kc3bmepwv
+    existingSecret: helix
+    image:
+      tag: sha-af7cc226e1ca6844a5cf5bfb7b3f7a71694a0e5b@sha256:98573195abb74beb1dd7c9ddc75ab9d3d1129da9a17e4f053f8f9895d3950cbf
+      pullPolicy: IfNotPresent
+    persistence:
+      size: 1Gi
+      storageClass: local-path
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 512Mi
+    jetstream: wss://jetstream.waow.tech
+    nodeSelector:
+      kubernetes.io/hostname: mauville

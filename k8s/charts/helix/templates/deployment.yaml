@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-helix
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: helix
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: helix
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: helix
+          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          args:
+            - --database=/data/helix.sqlite
+            - {{ printf "--identifier=%s" (required "identifier is required" .Values.identifier) | quote }}
+            - {{ printf "--appview=%s" .Values.appview | quote }}
+            - {{ printf "--slingshot=%s" .Values.slingshot | quote }}
+            - {{ printf "--jetstream=%s" .Values.jetstream | quote }}
+            - {{ printf "--rescan-interval=%s" .Values.rescanInterval | quote }}
+            {{- if .Values.loginPDS }}
+            - {{ printf "--login-pds=%s" .Values.loginPDS | quote }}
+            {{- end }}
+            {{- range $account := required "accounts must contain at least one target" .Values.accounts }}
+            - {{ printf "--account=%s" $account | quote }}
+            {{- end }}
+            {{- range $account, $uri := .Values.lists }}
+            - {{ printf "--list=%s=%s" $account $uri | quote }}
+            {{- end }}
+          env:
+            - name: HELIX_APP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "existingSecret is required" .Values.existingSecret | quote }}
+                  key: {{ .Values.passwordKey | quote }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: tmp
+              mountPath: /tmp
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ default (printf "%s-helix" .Release.Name) .Values.persistence.existingClaim }}
+        - name: tmp
+          emptyDir: {}

@@ -9,3 +9,5 @@ resources:
   - tailscale-private-ingress.yaml
   - homebridge.yaml
   - alloy.yaml
+  - capensis.yaml
+  - helix.yaml

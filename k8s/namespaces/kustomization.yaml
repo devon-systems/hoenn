@@ -4,3 +4,5 @@ resources:
   - homebridge.yaml
   - tailscale.yaml
   - alloy-system.yaml
+  - capensis.yaml
+  - helix.yaml

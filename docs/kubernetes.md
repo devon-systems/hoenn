@@ -141,6 +141,37 @@ with the IssueToken request URL and the full Cookie request header from a
 Google sign-in. Keep those credentials in the Homebridge UI configuration.
 Pair the plugin's child bridge in Apple Home as well as the main bridge.
 
+## Configure Capensis and Helix
+
+Capensis runs on Mauville and maintains the `Users on northsky.social`
+moderation list owned by `aly.codes`. It excludes the owner and accounts the
+owner follows. Subscribe to the list in Bluesky to enable its moderation
+actions.
+
+Helix runs on Mauville and maintains the followers list for
+`bella.meangirls.online`, also owned by `aly.codes`. Its target uses the
+account's DID so handle changes do not redirect the list to another account.
+Helix also excludes the owner and accounts the owner follows.
+
+Flux installs the Terrarium charts copied into `k8s/charts/`. Keep the chart
+revision recorded there and each container's `sha-<commit>` tag aligned when
+upgrading.
+
+Rotate the account's app password with
+`just sops-edit k8s/secrets/capensis.sops.yaml`, then validate, commit, and push.
+Helix uses `k8s/secrets/helix.sops.yaml` with the same account password.
+The password is the Secret's `stringData.app-password` field. The container
+reads it at startup, so request a workload restart after Flux applies a
+password rotation.
+
+The separate `capensis-capensis` and `helix-helix` local-path volumes store each
+application's SQLite database, list bindings, and stream cursor. Both charts
+retain their volume on uninstall and use one replica with `Recreate` rollouts.
+Before upgrading the database
+schema, take an application-consistent backup using SQLite's online backup
+command or stop Capensis before copying the database. Restore the matching
+backup when rolling back a schema upgrade.
+
 ## Add workloads and nodes
 
 ### Add a workload

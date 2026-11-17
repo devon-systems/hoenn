@@ -12,6 +12,7 @@ _: {
       };
 
       settings.excludes = [
+        "k8s/charts/*/templates/**"
         "secrets/**"
         "k8s/flux-system/gotk-components.yaml"
         "**/facter.json"
