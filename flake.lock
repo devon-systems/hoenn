@@ -29,18 +29,21 @@
         "nixpkgs": [
           "nixpkgs"
         ],
+        "pyproject-build-systems": "pyproject-build-systems",
+        "pyproject-nix": "pyproject-nix",
         "tg": "tg",
         "treefmt-nix": [
           "treefmt-nix"
         ],
-        "usage-core": "usage-core"
+        "usage-core": "usage-core",
+        "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1794972084,
-        "narHash": "sha256-j3ABXdY/lwCzUWqoAK5PcY1FwhXQNXGa8+EbRGLEkVs=",
+        "lastModified": 1795009856,
+        "narHash": "sha256-cg9kDIkv0ou3+qS5Hq3hj3iVVZrx1pGdKnN+VbQ1p0A=",
         "ref": "refs/heads/main",
-        "rev": "d1ed2a2b7d7e8e444a716a1f7003ba9c55d47067",
-        "revCount": 2814,
+        "rev": "bba9c3e0e1ca70f676806fd5a4dbf1895120b71c",
+        "revCount": 2838,
         "type": "git",
         "url": "https://tangled.org/okami.mom/albedo"
       },
@@ -563,11 +566,11 @@
         "llm-agents": "llm-agents",
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixpkgs": "nixpkgs_5",
-        "pyproject-build-systems": "pyproject-build-systems",
-        "pyproject-nix": "pyproject-nix",
+        "pyproject-build-systems": "pyproject-build-systems_2",
+        "pyproject-nix": "pyproject-nix_2",
         "tg": "tg_2",
         "treefmt-nix": "treefmt-nix_4",
-        "uv2nix": "uv2nix_2"
+        "uv2nix": "uv2nix_3"
       },
       "locked": {
         "lastModified": 1794938573,
@@ -2352,6 +2355,35 @@
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
+          "albedo",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "albedo",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "albedo",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794012432,
+        "narHash": "sha256-zBKFTg7tEGApNt+CEKI5+WNNomD5MZqYNBr+r6/Bmdg=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "bdbc5f8dd2ad6136bb2ccecb14f6ec343965b194",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-build-systems_2": {
+      "inputs": {
+        "nixpkgs": [
           "dvnpkgs",
           "nixpkgs"
         ],
@@ -2378,7 +2410,7 @@
         "type": "github"
       }
     },
-    "pyproject-build-systems_2": {
+    "pyproject-build-systems_3": {
       "inputs": {
         "nixpkgs": [
           "dvnpkgs",
@@ -2413,7 +2445,7 @@
     "pyproject-nix": {
       "inputs": {
         "nixpkgs": [
-          "dvnpkgs",
+          "albedo",
           "nixpkgs"
         ]
       },
@@ -2432,6 +2464,27 @@
       }
     },
     "pyproject-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "dvnpkgs",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793820880,
+        "narHash": "sha256-NUMabnvaL/0Ah9WM9pBMXEp+dQjMSYjezZ/fNjXouLQ=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "d43f0e74444c1f266c640fc49ce6ce6fb69d33c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
+    "pyproject-nix_3": {
       "inputs": {
         "nixpkgs": [
           "dvnpkgs",
@@ -2716,10 +2769,10 @@
           "dvnpkgs",
           "nixpkgs"
         ],
-        "pyproject-build-systems": "pyproject-build-systems_2",
-        "pyproject-nix": "pyproject-nix_2",
+        "pyproject-build-systems": "pyproject-build-systems_3",
+        "pyproject-nix": "pyproject-nix_3",
         "treefmt-nix": "treefmt-nix_3",
-        "uv2nix": "uv2nix"
+        "uv2nix": "uv2nix_2"
       },
       "locked": {
         "lastModified": 1794801508,
@@ -2995,6 +3048,31 @@
     "uv2nix": {
       "inputs": {
         "nixpkgs": [
+          "albedo",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "albedo",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793272761,
+        "narHash": "sha256-3CE1CEwprYlHRlRVkXDkhqec0jjF9Cti7tdk8vVDsCM=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "c361746c7d630d98b972378290547c8d35542a7a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "uv2nix_2": {
+      "inputs": {
+        "nixpkgs": [
           "dvnpkgs",
           "tg",
           "nixpkgs"
@@ -3019,7 +3097,7 @@
         "type": "github"
       }
     },
-    "uv2nix_2": {
+    "uv2nix_3": {
       "inputs": {
         "nixpkgs": [
           "dvnpkgs",
