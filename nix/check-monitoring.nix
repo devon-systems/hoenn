@@ -17,15 +17,6 @@
         path = file.source;
       }) (lib.filterAttrs (name: file: file.enable && lib.hasPrefix "alloy/" name && lib.hasSuffix ".alloy" name) config.environment.etc)))
     alloyHosts;
-    # Validate the system-manager configuration on the Linux CI runner.
-    alloyConfig = import ./modules/observability/_config.nix;
-    desktopConfigs = [
-      (pkgs.writeText "alloy-system-manager.alloy" (alloyConfig {
-        hostName = "sootopolis";
-        isLinux = true;
-        server = "mauville.narwhal-snapper.ts.net";
-      }))
-    ];
   in {
     checks = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
       prometheus-rules =
@@ -40,7 +31,7 @@
         pkgs.runCommand "alloy-config" {
           nativeBuildInputs = [pkgs.grafana-alloy];
         } ''
-          ${lib.concatMapStringsSep "\n" (config: "alloy validate ${lib.escapeShellArg (toString config)}") (alloyConfigs ++ desktopConfigs)}
+          ${lib.concatMapStringsSep "\n" (config: "alloy validate ${lib.escapeShellArg (toString config)}") alloyConfigs}
           alloy validate ${../k8s/alloy/config.alloy}
           touch "$out"
         '';

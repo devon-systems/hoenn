@@ -7,7 +7,7 @@ Connect as `aly` through Tailscale SSH to build on either desktop. Tailscale SSH
 | Lavaridge | `x86_64-linux`   | 4               |
 | Fallarbor | `aarch64-darwin` | 2               |
 
-Hoenn configures Rustboro, Sootopolis, and Lilycove to use both builders, and Lavaridge to use Fallarbor. Configure Verdanturf and Fallarbor manually as described below. Local builds remain enabled. Job limits apply separately to each client.
+Hoenn configures Rustboro and Lilycove to use both builders, and Lavaridge to use Fallarbor. Configure Verdanturf and Fallarbor manually as described below. Local builds remain enabled. Job limits apply separately to each client.
 
 `nix/modules/remote-builds/default.nix` owns the builder declarations. These are native builds on a remote machine, so request an output for the builder's platform.
 

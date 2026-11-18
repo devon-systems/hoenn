@@ -14,7 +14,6 @@ keys:
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
   - &user_aly_rustboro age1fczwtlqdqq7pjyzna2yl9nvmhpe68zk5k6nyn0dt4sp0lts04anskhcmu6
-  - &user_aly_sootopolis age16fm9jk3msta76lp7t0m5a5hn8l4gc752unl09azjkk33z3ghxg7sd52yrj
   - &user_aly_verdanturf age1zl4dad3jwhff9f8smv9l2g78g2fpa7huye9354y9vvhrw03vs47skqhue3
   # === host keys (root@<host>) ===
   - &host_fallarbor age169rsx5wfg3y06ww454nalqzk5y3mnun9xeympdps3tft2pmh5ekqvde8lp
@@ -23,7 +22,6 @@ keys:
   - &host_mauville age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
   - &host_petalburg age1g20str5ef8922ggeqxqj46x2zfws04w2529mzl5776kd8jl4y56s5yx83w
   - &host_rustboro age1c62ajygt7yx5k0f85h6w3tquu4ak0gg5c9drrhh34yyyea3xtpas8knau3
-  - &host_sootopolis age1gz3835qckr54gn44znlefa6m7yvjx83gptq8keslyq944nfxsfzqndenmt
   - &host_verdanturf age1stu2yfc2lvl7vep499lwehwlgm7328u64m7z5sddvekfre95xguqj267kr
   - &flux_k8s age1e835ka44gxxfj4zd6wgklnsxxxevny8269gaz5acgvkw3w407dqqyspdky
 
@@ -38,7 +36,6 @@ creation_rules:
           - *user_aly_mauville
           - *user_aly_petalburg
           - *user_aly_rustboro
-          - *user_aly_sootopolis
           - *user_aly_verdanturf
           - *host_fallarbor
           - *host_lavaridge
@@ -46,7 +43,6 @@ creation_rules:
           - *host_mauville
           - *host_petalburg
           - *host_rustboro
-          - *host_sootopolis
           - *host_verdanturf
   - path_regex: ^k8s/secrets/.*\.ya?ml$
     key_groups:
@@ -58,7 +54,6 @@ creation_rules:
           - *user_aly_mauville
           - *user_aly_petalburg
           - *user_aly_rustboro
-          - *user_aly_sootopolis
           - *user_aly_verdanturf
           - *host_fallarbor
           - *host_lavaridge
@@ -66,6 +61,5 @@ creation_rules:
           - *host_mauville
           - *host_petalburg
           - *host_rustboro
-          - *host_sootopolis
           - *host_verdanturf
           - *flux_k8s

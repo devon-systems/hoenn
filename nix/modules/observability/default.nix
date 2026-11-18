@@ -10,10 +10,6 @@ in {
       type = lib.types.deferredModule;
       default = {};
     };
-    systemModules.observability = lib.mkOption {
-      type = lib.types.deferredModule;
-      default = {};
-    };
   };
 
   config.flake = {
@@ -98,49 +94,6 @@ in {
           RunAtLoad = true;
           ProcessType = "Background";
           ThrottleInterval = 10;
-        };
-      };
-    };
-
-    systemModules.observability = {pkgs, ...}: let
-      configuration = pkgs.writeText "config.alloy" (alloyConfig {
-        hostName = "sootopolis";
-        isLinux = true;
-        # The system-manager output does not manage WireGuard or DNS.
-        server = "mauville.narwhal-snapper.ts.net";
-      });
-    in {
-      imports = [(import ./_filesystem-metrics.nix {inherit inputs;}) ./_canary.nix];
-
-      systemd.services.prometheus-smartctl-exporter = {
-        description = "Collect SMART and NVMe drive health";
-        wantedBy = ["multi-user.target"];
-        serviceConfig = {
-          ExecStart = "${lib.getExe pkgs.prometheus-smartctl-exporter} --web.listen-address=127.0.0.1:9633 --smartctl.interval=5m --smartctl.powermode-check=standby";
-          # NVMe controller nodes require root access on the unmanaged OS.
-          User = "root";
-          CapabilityBoundingSet = ["CAP_SYS_RAWIO" "CAP_SYS_ADMIN"];
-          NoNewPrivileges = true;
-          PrivateTmp = true;
-          ProtectHome = true;
-          ProtectSystem = "strict";
-          Restart = "on-failure";
-          RestartSec = 10;
-        };
-      };
-
-      systemd.services.alloy = {
-        description = "Collect Hoenn desktop metrics and journals";
-        after = ["network-online.target"];
-        wants = ["network-online.target"];
-        wantedBy = ["multi-user.target"];
-        serviceConfig = {
-          ExecStart = "${lib.getExe pkgs.grafana-alloy} run ${configuration} --storage.path=/var/lib/alloy --server.http.listen-addr=127.0.0.1:12345 --disable-reporting";
-          DynamicUser = true;
-          SupplementaryGroups = ["systemd-journal"];
-          StateDirectory = "alloy";
-          Restart = "always";
-          RestartSec = 10;
         };
       };
     };
