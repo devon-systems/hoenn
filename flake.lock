@@ -39,11 +39,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1795029775,
-        "narHash": "sha256-vrzHXY4AEruT9fjF/wQ8/uDXGQeVuXD6GQBFwcXrFDs=",
+        "lastModified": 1795038523,
+        "narHash": "sha256-+EDQmU+FCrFLO2FdduBpDuqyrB+7UOQScjO7mW1wfHg=",
         "ref": "refs/heads/main",
-        "rev": "82eb756838217732d8ed2258922ccbb96d9edb0d",
-        "revCount": 2845,
+        "rev": "f704254e53082806dd004a07823fe6acef98badd",
+        "revCount": 2848,
         "type": "git",
         "url": "https://tangled.org/okami.mom/albedo"
       },
