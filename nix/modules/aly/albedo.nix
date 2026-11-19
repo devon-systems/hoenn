@@ -7,6 +7,7 @@
     services.albedo = {
       enable = true;
       enableMcpIntegration = true;
+      web.enable = true;
     };
   };
 }
