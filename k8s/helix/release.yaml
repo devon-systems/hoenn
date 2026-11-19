@@ -23,6 +23,7 @@ spec:
     remediation:
       retries: 3
   values:
+    writeInterval: 10s
     identifier: aly.codes
     accounts:
       # bella.meangirls.online; the DID keeps tracking the same account after handle changes.
@@ -31,7 +32,7 @@ spec:
       - did:plc:fj7spazyhgkb3vuziubykii3
     existingSecret: helix
     image:
-      tag: sha-a4ba67cf8bc6a734ae247d209f8709ebd52afb4b@sha256:51e59b720281780cefae4de5c4ce8013944be21a6786cfab29e45baf3a7da2b0
+      tag: sha-03bf51fa58a73dafde7b8c738956c6260eee32ef@sha256:39accc57e566edd821c58542c5c090a113233ad8d74ef22a66d4902fbcf80314
       pullPolicy: IfNotPresent
     persistence:
       size: 1Gi

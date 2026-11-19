@@ -23,13 +23,14 @@ spec:
     remediation:
       retries: 3
   values:
+    writeInterval: 10s
     identifier: aly.codes
     pds:
       - northsky.social
       - pds.wsocial.network
     existingSecret: capensis
     image:
-      tag: sha-a4ba67cf8bc6a734ae247d209f8709ebd52afb4b@sha256:34f2c703d7196ae59783aa08bde2914d3ff01d3ed607452b229dce70a47b0ce9
+      tag: sha-03bf51fa58a73dafde7b8c738956c6260eee32ef@sha256:86d9c6158ee5ffbd1e100fdf222c5ad97bcba0b5ed99fb3fbc36ece096b50ee2
       pullPolicy: IfNotPresent
     persistence:
       size: 1Gi
