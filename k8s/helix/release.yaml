@@ -27,6 +27,8 @@ spec:
     accounts:
       # bella.meangirls.online; the DID keeps tracking the same account after handle changes.
       - did:plc:bucg2dsfr66ecm7kc3bmepwv
+      # regretagarbo.rip
+      - did:plc:fj7spazyhgkb3vuziubykii3
     existingSecret: helix
     image:
       tag: sha-93af83db1d9a70736f4dbac0f0fb5676e3ee6d7d@sha256:78101b89a463ecbfff3f6df0f24bb5b0e357ecd02e3bb2e685f29dcb09cbe7b6
