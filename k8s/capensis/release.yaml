@@ -26,7 +26,6 @@ spec:
     writeInterval: 10s
     identifier: aly.codes
     pds:
-      - northsky.social
       - pds.wsocial.network
     existingSecret: capensis
     image:

@@ -143,8 +143,8 @@ Pair the plugin's child bridge in Apple Home as well as the main bridge.
 
 ## Configure Capensis and Helix
 
-Capensis runs on Mauville and maintains the `Users on northsky.social`
-moderation list owned by `aly.codes`. It excludes the owner and accounts the
+Capensis runs on Mauville and maintains a moderation list for users on `pds.wsocial.network`.
+`aly.codes` owns the list. Capensis excludes the owner and accounts the
 owner follows. Subscribe to the list in Bluesky to enable its moderation
 actions.
 
