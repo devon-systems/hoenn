@@ -29,7 +29,7 @@ spec:
       - pds.wsocial.network
     existingSecret: capensis
     image:
-      tag: sha-03bf51fa58a73dafde7b8c738956c6260eee32ef@sha256:86d9c6158ee5ffbd1e100fdf222c5ad97bcba0b5ed99fb3fbc36ece096b50ee2
+      tag: sha-c0abed903b8cff0138709c7fb2db4b71d3d1466a@sha256:72e8deb9b820633e86110cb2a0c6d04ed55a515ba38b4b242473a837a8fbffd1
       pullPolicy: IfNotPresent
     persistence:
       size: 1Gi
