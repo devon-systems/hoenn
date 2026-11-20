@@ -11,3 +11,4 @@ resources:
   - alloy.yaml
   - capensis.yaml
   - helix.yaml
+  - cordata.yaml

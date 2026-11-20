@@ -10,3 +10,7 @@ GitRepository. Keep these copies aligned with the image tags in
 `k8s/capensis/release.yaml` and `k8s/helix/release.yaml` when upgrading.
 Local changes disable service links and expose `nodeSelector` as a chart
 value. Workload settings belong in the HelmRelease values.
+
+`cordata/` comes from the same repository at commit
+`90acb03db3f53a1850a33bac67bf1c1d9031d899`. Its image is pinned in
+`k8s/cordata/release.yaml`.

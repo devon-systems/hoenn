@@ -1,0 +1,15 @@
+image:
+  repository: ghcr.io/alyraffauf/terrarium/cordata
+  tag: latest
+  pullPolicy: Always
+identifier: ""
+post: ""
+existingSecret: ""
+passwordKey: app-password
+appview: https://public.api.bsky.app
+slingshot: https://slingshot.aly.town
+loginPDS: ""
+writeInterval: 10s
+rescanInterval: 5m
+resources: {}
+nodeSelector: {}

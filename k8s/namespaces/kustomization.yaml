@@ -6,3 +6,4 @@ resources:
   - alloy-system.yaml
   - capensis.yaml
   - helix.yaml
+  - cordata.yaml

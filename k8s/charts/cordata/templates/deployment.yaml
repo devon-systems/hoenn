@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-cordata
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cordata
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cordata
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: cordata
+          image: {{ printf "%v:%v" .Values.image.repository .Values.image.tag | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          args:
+            - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
+            - {{ printf "--appview=%v" .Values.appview | quote }}
+            - {{ printf "--slingshot=%v" .Values.slingshot | quote }}
+            - {{ printf "--write-interval=%v" .Values.writeInterval | quote }}
+            - {{ printf "--rescan-interval=%v" .Values.rescanInterval | quote }}
+            {{- if .Values.loginPDS }}
+            - {{ printf "--login-pds=%v" .Values.loginPDS | quote }}
+            {{- end }}
+            - {{ required "post is required" .Values.post | quote }}
+          env:
+            - name: CORDATA_APP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "existingSecret is required" .Values.existingSecret | quote }}
+                  key: {{ .Values.passwordKey | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
