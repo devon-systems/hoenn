@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/alyraffauf/terrarium/cordata
-  tag: latest
+  tag: latest@sha256:d3fcc4dcd003c827e13ebfe5aa83fa6eca49129b12e5f50601a6f1b45c332289
   pullPolicy: Always
 identifier: ""
 post: ""
