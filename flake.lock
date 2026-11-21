@@ -2286,6 +2286,35 @@
         "type": "github"
       }
     },
+    "petal": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "import-tree": [
+          "import-tree"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795221951,
+        "narHash": "sha256-m28xsGOVzFOdI3+TI7rebDucvbUFAj0YyAr5Z50t42E=",
+        "owner": "alyraffauf",
+        "repo": "petal",
+        "rev": "d7c488b66a1665cb0b4633daa677fd356097328f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alyraffauf",
+        "repo": "petal",
+        "type": "github"
+      }
+    },
     "plenaryNvim": {
       "flake": false,
       "locked": {
@@ -2544,6 +2573,7 @@
         "nix-flatpak": "nix-flatpak",
         "nix-wrapper-modules": "nix-wrapper-modules_2",
         "nixpkgs": "nixpkgs_8",
+        "petal": "petal",
         "sops-nix": "sops-nix",
         "switchyard": "switchyard",
         "system-manager": "system-manager",

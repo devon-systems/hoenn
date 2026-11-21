@@ -94,6 +94,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    petal = {
+      url = "github:alyraffauf/petal";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.home-manager.follows = "home-manager";
+      inputs.import-tree.follows = "import-tree";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     switchyard.url = "github:alyraffauf/switchyard";
 
     treefmt-nix = {
