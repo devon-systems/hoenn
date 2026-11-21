@@ -13,7 +13,7 @@ in {
         name = "mauville";
         inherit (peer) publicKey;
         allowedIPs = ["${peer.address}/32"];
-        endpoint = "192.168.1.243:${toString inputs.wg-hoenn.lib.network.listenPort}";
+        endpoint = "192.168.1.242:${toString inputs.wg-hoenn.lib.network.listenPort}";
         persistentKeepalive = 25;
       }
       {
