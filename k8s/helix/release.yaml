@@ -36,6 +36,8 @@ spec:
       - did:plc:6y7fuo55m6utvzlijcsfxow6
       # burnterra.eurosky.social
       - did:plc:itc7behos32kcnnocbkhcowb
+      # glamgothcollective.mu.social
+      - did:plc:hhomwoom4rlzbputb6b7zsem
     existingSecret: helix
     image:
       tag: sha-c0abed903b8cff0138709c7fb2db4b71d3d1466a@sha256:6f8f4d24c049b065312ace34a7f6fbecd6938ea625cca48b459d285f3653dbac
