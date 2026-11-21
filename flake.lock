@@ -2302,11 +2302,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795221951,
-        "narHash": "sha256-m28xsGOVzFOdI3+TI7rebDucvbUFAj0YyAr5Z50t42E=",
+        "lastModified": 1795224717,
+        "narHash": "sha256-KVEUQO1oAnqCj+RPHmJGUT7MsePWtMa5NecaRaTDHB4=",
         "owner": "alyraffauf",
         "repo": "petal",
-        "rev": "d7c488b66a1665cb0b4633daa677fd356097328f",
+        "rev": "e45bdc3f1a477bd3a79b9dac071e3aa17821b8bc",
         "type": "github"
       },
       "original": {
