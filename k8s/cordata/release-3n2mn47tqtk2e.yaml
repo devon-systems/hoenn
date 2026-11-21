@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cordata-3n2mn47tqtk2e
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: ./k8s/charts/cordata
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  install:
+    createNamespace: false
+    remediation:
+      retries: 3
+  interval: 30m
+  releaseName: cordata-3n2mn47tqtk2e
+  targetNamespace: cordata
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    identifier: aly.codes
+    # https://bsky.app/profile/transnews.network/post/3n2mn47tqtk2e
+    post: at://did:plc:gm2gj4v7isgrlsww3ya7hpy2/app.bsky.feed.post/3n2mn47tqtk2e
+    existingSecret: cordata
+    image:
+      tag: sha-c0abed903b8cff0138709c7fb2db4b71d3d1466a@sha256:d3fcc4dcd003c827e13ebfe5aa83fa6eca49129b12e5f50601a6f1b45c332289
+      pullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 512Mi
+    nodeSelector:
+      kubernetes.io/hostname: mauville
