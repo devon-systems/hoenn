@@ -39,11 +39,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1795298898,
-        "narHash": "sha256-NEO50YbVkombbEvHMZmG0LAQLlVTAX4mYFqx/OLfdWg=",
+        "lastModified": 1795303398,
+        "narHash": "sha256-fzCbjz1L4a0GfNs+4sgxMZt4FmIZIfGs2UroSinHP5E=",
         "ref": "refs/heads/main",
-        "rev": "236051605ac0f34e488e8d5d4da379e622f74c91",
-        "revCount": 3372,
+        "rev": "52028ec98bedfa9148faa0ec0c1b22314bba4ffd",
+        "revCount": 3374,
         "type": "git",
         "url": "https://tangled.org/okami.mom/albedo"
       },
@@ -2299,14 +2299,15 @@
         ],
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "treefmt-nix": "treefmt-nix_7"
       },
       "locked": {
-        "lastModified": 1795293331,
-        "narHash": "sha256-mHgUF3mqKBqvDclLZFiGPXl2Iyr5x8eGUQijW+wBT4c=",
+        "lastModified": 1795309306,
+        "narHash": "sha256-R3k4YeVGCNCiXZt0AKHkFOVpRdSBXR6MtFxx72e0XIY=",
         "owner": "alyraffauf",
         "repo": "petal",
-        "rev": "9d56eb14dcff396e393b5f1513fe0a550f96f32b",
+        "rev": "c64220543578890961b9a40d75fc88989c2df99c",
         "type": "github"
       },
       "original": {
@@ -2577,7 +2578,7 @@
         "sops-nix": "sops-nix",
         "switchyard": "switchyard",
         "system-manager": "system-manager",
-        "treefmt-nix": "treefmt-nix_8",
+        "treefmt-nix": "treefmt-nix_9",
         "wg-hoenn": "wg-hoenn"
       }
     },
@@ -2692,7 +2693,7 @@
         "flake-parts": "flake-parts_9",
         "git-hooks-nix": "git-hooks-nix_3",
         "nixpkgs": "nixpkgs_9",
-        "treefmt-nix": "treefmt-nix_7"
+        "treefmt-nix": "treefmt-nix_8"
       },
       "locked": {
         "lastModified": 1795229520,
@@ -2979,6 +2980,27 @@
     "treefmt-nix_7": {
       "inputs": {
         "nixpkgs": [
+          "petal",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795173499,
+        "narHash": "sha256-J8IYl3oEdctyvBgWr+/L01MY5Xm0TU4WXwZDccN5jjk=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "a0a97e31a897a3537eea5c49df4f8adaa83b3b37",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_8": {
+      "inputs": {
+        "nixpkgs": [
           "switchyard",
           "nixpkgs"
         ]
@@ -2997,7 +3019,7 @@
         "type": "github"
       }
     },
-    "treefmt-nix_8": {
+    "treefmt-nix_9": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
