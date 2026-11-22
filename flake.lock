@@ -2303,11 +2303,11 @@
         "treefmt-nix": "treefmt-nix_7"
       },
       "locked": {
-        "lastModified": 1795309306,
-        "narHash": "sha256-R3k4YeVGCNCiXZt0AKHkFOVpRdSBXR6MtFxx72e0XIY=",
+        "lastModified": 1795317598,
+        "narHash": "sha256-enbXO73aA/S4nZ/OHTKxkkltqm4Hzv69aF2RKU0CMrc=",
         "owner": "alyraffauf",
         "repo": "petal",
-        "rev": "c64220543578890961b9a40d75fc88989c2df99c",
+        "rev": "6942676266ce0df5c6f3ae0267efabb64da6f463",
         "type": "github"
       },
       "original": {
