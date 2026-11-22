@@ -40,6 +40,8 @@ spec:
       - did:plc:hhomwoom4rlzbputb6b7zsem
       # interdiction.bsky.social
       - did:plc:oebpsglaakip7afvovlzcrwa
+      # chironseye.bsky.social
+      - did:plc:myzrkp3s4ixagxtgupnvtaks
     existingSecret: helix
     image:
       tag: sha-c0abed903b8cff0138709c7fb2db4b71d3d1466a@sha256:6f8f4d24c049b065312ace34a7f6fbecd6938ea625cca48b459d285f3653dbac
