@@ -3,6 +3,7 @@ _: {
     services.ollama = {
       enable = true;
       package = pkgs.ollama-rocm;
+      host = "0.0.0.0";
       openFirewall = true;
       loadModels = ["embeddinggemma-2"];
 
