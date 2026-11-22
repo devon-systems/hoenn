@@ -3,6 +3,7 @@ _: {
     services.ollama = {
       enable = true;
       package = pkgs.ollama-rocm;
+      openFirewall = true;
       loadModels = ["embeddinggemma-2"];
 
       environmentVariables = {
@@ -13,32 +14,6 @@ _: {
         OLLAMA_NUM_PARALLEL = "2";
         OLLAMA_MAX_QUEUE = "8";
         OLLAMA_CONTEXT_LENGTH = "65536";
-      };
-    };
-
-    services.caddy = {
-      enable = true;
-      virtualHosts."http://:11435".extraConfig = ''
-        bind 127.0.0.1
-        @embeddings path /api/tags /api/embed
-        handle @embeddings {
-          reverse_proxy 127.0.0.1:11434
-        }
-        handle {
-          respond 404
-        }
-      '';
-    };
-
-    systemd.services.ollama-embeddings-tailnet = {
-      description = "Serve Ollama embeddings over tailnet HTTPS";
-      wantedBy = ["multi-user.target"];
-      after = ["tailscaled.service" "caddy.service"];
-      wants = ["tailscaled.service" "caddy.service"];
-      serviceConfig = {
-        ExecStart = "${pkgs.tailscale}/bin/tailscale serve --yes http://127.0.0.1:11435";
-        Restart = "always";
-        RestartSec = "5s";
       };
     };
   };

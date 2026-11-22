@@ -5,11 +5,13 @@
     programs.petal = {
       enable = true;
       enableMcpIntegration = true;
+
       settings = {
         transparent_background = true;
+
         history.embeddings = {
           provider = "ollama";
-          base_url = "https://lavaridge.narwhal-snapper.ts.net";
+          base_url = "http://lavaridge:11434";
           model = "embeddinggemma-2";
         };
       };
