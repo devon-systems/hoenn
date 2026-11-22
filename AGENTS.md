@@ -23,14 +23,15 @@ nix build .#systemConfigs.dewford
 
 After `facter.json` or `system-profiler.json` changes, run `nix run github:devon-systems/dvnpkgs#generate-host-readmes`. Capture Darwin hardware with `nix run github:devon-systems/dvnpkgs#generate-host-readmes -- --capture-darwin <host>`. Never edit text between generated-section markers.
 
-After compositor keybinding changes, edit the compositor config and regenerate both references:
+After compositor keybinding changes, edit the compositor config and regenerate the references:
 
 ```sh
 bun scripts/generate-niri-keybindings.ts
 bun scripts/generate-sway-keybindings.ts
+bun scripts/generate-hyprland-keybindings.ts
 ```
 
-Use `--check` on both commands to verify committed references. Never edit generated Markdown.
+Use `--check` on each command to verify committed references. Never edit generated Markdown.
 
 For Kubernetes changes, update resource lists and Flux resources together. Never reformat `k8s/flux-system/gotk-components.yaml`. Run `just check-k8s` to:
 
