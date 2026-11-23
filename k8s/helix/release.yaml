@@ -23,7 +23,7 @@ spec:
     remediation:
       retries: 3
   values:
-    writeInterval: 10s
+    writeInterval: 8s
     identifier: aly.codes
     accounts:
       # bella.meangirls.online; the DID keeps tracking the same account after handle changes.
