@@ -48,6 +48,10 @@ spec:
       - did:plc:dejfdqeshq7chti6f4avaxtb
       # franceslarina.bsky.social
       - did:plc:vkf2hgjur4yamytd2kt7qpet
+      # baphomet.female.manipulat.org
+      - did:plc:a2hushmwhh7dvwlqekxqzaay
+      # cjparker131.northsky.social
+      - did:plc:74txfbsdc43re33eu3mpq67m
     existingSecret: helix
     image:
       tag: sha-d68186968f1920335cc0ede85db7daf7facb5cc1@sha256:4ef0a6cac642f74994d1878a275fc9094953e06f731e651180c49023334f9277
