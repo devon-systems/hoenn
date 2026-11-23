@@ -44,6 +44,8 @@ spec:
       - did:plc:myzrkp3s4ixagxtgupnvtaks
       # mayoboy.myatproto.social
       - did:plc:og6fbmygrpmkwjhx6uj6rnpl
+      # paintedsky.ca
+      - did:plc:kc5rrqvj2ahkgu4igfnxbfdj
     existingSecret: helix
     image:
       tag: sha-c0abed903b8cff0138709c7fb2db4b71d3d1466a@sha256:6f8f4d24c049b065312ace34a7f6fbecd6938ea625cca48b459d285f3653dbac
