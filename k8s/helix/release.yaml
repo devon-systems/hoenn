@@ -52,6 +52,8 @@ spec:
       - did:plc:a2hushmwhh7dvwlqekxqzaay
       # cjparker131.northsky.social
       - did:plc:74txfbsdc43re33eu3mpq67m
+      # turk-e-butt.bsky.social
+      - did:plc:2qebluc7ldrcf3vtwl55a6bt
     existingSecret: helix
     image:
       tag: sha-d68186968f1920335cc0ede85db7daf7facb5cc1@sha256:4ef0a6cac642f74994d1878a275fc9094953e06f731e651180c49023334f9277
