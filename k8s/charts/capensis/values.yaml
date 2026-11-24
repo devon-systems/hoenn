@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/alyraffauf/terrarium/capensis
-  tag: latest@sha256:72e8deb9b820633e86110cb2a0c6d04ed55a515ba38b4b242473a837a8fbffd1
+  tag: latest@sha256:d9a649ce43c98e36526e80b629a5297ebec03e88ea2dac94261f8751fd8b5358
   pullPolicy: Always
 identifier: ""
 pds: []
