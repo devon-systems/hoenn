@@ -573,11 +573,11 @@
         "uv2nix": "uv2nix_3"
       },
       "locked": {
-        "lastModified": 1795091639,
-        "narHash": "sha256-B6PXnaGI67wC4SeRRF7Ic7oKQHPG6Jhl5YwFMuMrQdY=",
+        "lastModified": 1795502091,
+        "narHash": "sha256-fpLWeEdvbMqH2+uIZkKgR52y5TMHO3hHM/l8zWlQbEM=",
         "owner": "devon-systems",
         "repo": "dvnpkgs",
-        "rev": "683fd31c7e62e4d19bbb18353325ace29d99f7ac",
+        "rev": "335d2728a6558b38c45ba1830e51b91a408ed431",
         "type": "github"
       },
       "original": {
@@ -2807,11 +2807,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1794801508,
-        "narHash": "sha256-xIdHqEDGdiF1PBQs5V6qsrk89KN1UtWkL2KoZTadoUE=",
+        "lastModified": 1795498270,
+        "narHash": "sha256-OJNl/yrXLwp6JxvOpLFyACDUgJ6sSUbOSz1CCwaE+s4=",
         "ref": "refs/heads/master",
-        "rev": "0d7ba3e1578f9c7d6e1496f18f565dee048b203e",
-        "revCount": 212,
+        "rev": "c9468605c27b640fee4d30fd7df904160cc6be65",
+        "revCount": 222,
         "type": "git",
         "url": "https://tangled.org/aly.codes/tg"
       },
