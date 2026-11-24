@@ -1,5 +1,5 @@
 _: {
-  flake.homeModules.aly = {config, ...}: {
+  flake.homeModules.aly = {
     programs.direnv = {
       enable = true;
 
@@ -10,7 +10,6 @@ _: {
         };
       };
 
-      mise.enable = config.programs.mise.enable;
       silent = true;
 
       stdlib = ''
