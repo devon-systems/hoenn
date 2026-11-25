@@ -14,7 +14,7 @@ keys:
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
   - &user_aly_oldale age1ewu4rzfgcfqxpzxws5x8qfdx4nq5yeusrr8n4grm8vdkjrgwxckshcgmut
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
-  - &user_aly_rustboro age1fczwtlqdqq7pjyzna2yl9nvmhpe68zk5k6nyn0dt4sp0lts04anskhcmu6
+  - &user_aly_rustboro age1y8sd6dtzcyjt0jqftp0k09xhexa8889n30dwlgkg9zxc8zh9lyqshl8y40
   - &user_aly_verdanturf age1zl4dad3jwhff9f8smv9l2g78g2fpa7huye9354y9vvhrw03vs47skqhue3
   # === host keys (root@<host>) ===
   - &host_fallarbor age169rsx5wfg3y06ww454nalqzk5y3mnun9xeympdps3tft2pmh5ekqvde8lp
@@ -22,7 +22,7 @@ keys:
   - &host_lilycove age1l5t62uzsj05pzftv9wg6s346csxyq202vxmmyyx8gwy8zu2nrfrs7v2a4z
   - &host_mauville age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
   - &host_petalburg age1g20str5ef8922ggeqxqj46x2zfws04w2529mzl5776kd8jl4y56s5yx83w
-  - &host_rustboro age1c62ajygt7yx5k0f85h6w3tquu4ak0gg5c9drrhh34yyyea3xtpas8knau3
+  - &host_rustboro age1jw50thrh75zv6jencq5y9rqly0wvn4ck5q9zwyj8actg8h9kjq6qwvk7d8
   - &host_verdanturf age1stu2yfc2lvl7vep499lwehwlgm7328u64m7z5sddvekfre95xguqj267kr
   - &flux_k8s age1e835ka44gxxfj4zd6wgklnsxxxevny8269gaz5acgvkw3w407dqqyspdky
 
