@@ -39,11 +39,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1795620967,
-        "narHash": "sha256-vlpwX6jC24ThTDnha5ZaqDLdGpG2//8IF06i0sETHzE=",
+        "lastModified": 1795633082,
+        "narHash": "sha256-lhed+gpMG5gnjDZ3OXk7WHWLmz2MA5hg6EZeiVsiLU4=",
         "ref": "refs/heads/main",
-        "rev": "4ad0f412493f45e4a23dce4919ddd48c33ecca52",
-        "revCount": 3443,
+        "rev": "2c8590ed10ae5bef2aa4eee5c557391c1925c9af",
+        "revCount": 3459,
         "type": "git",
         "url": "https://tangled.org/okami.mom/albedo"
       },
@@ -2303,11 +2303,11 @@
         "treefmt-nix": "treefmt-nix_7"
       },
       "locked": {
-        "lastModified": 1795463337,
-        "narHash": "sha256-HPtwazs19UoB18wy/lwmJHs/3cMIOCC2ia300fK2lVQ=",
+        "lastModified": 1795634359,
+        "narHash": "sha256-PanCEwkJ2i5NExWKsbc4ChL3t0NsT/j6APHN3mmEm+g=",
         "owner": "alyraffauf",
         "repo": "petal",
-        "rev": "23498eeead7a2748040e3f0dde07f2e6afc2f992",
+        "rev": "43b1d41eb387ccb7361c8ae2621903a351beb062",
         "type": "github"
       },
       "original": {
