@@ -12,6 +12,7 @@ keys:
   - &user_aly_lavaridge age12kxzklacs2qf2x4daevwznj36ww6j6vwnm3y3plfhkww9ftfma7s08574m
   - &user_aly_lilycove age1tdgfvwl4qdptyvgxju3rwz9uh45hz422txzcgsrwm4f4f96x558skzxklr
   - &user_aly_mauville age1876lthmlfq2aq6nm6z2qyu0ed4aa5ss68xvnlw5cqxcdtzslaqrqzgcmlm
+  - &user_aly_oldale age1ewu4rzfgcfqxpzxws5x8qfdx4nq5yeusrr8n4grm8vdkjrgwxckshcgmut
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
   - &user_aly_rustboro age1fczwtlqdqq7pjyzna2yl9nvmhpe68zk5k6nyn0dt4sp0lts04anskhcmu6
   - &user_aly_verdanturf age1zl4dad3jwhff9f8smv9l2g78g2fpa7huye9354y9vvhrw03vs47skqhue3
@@ -34,6 +35,7 @@ creation_rules:
           - *user_aly_lavaridge
           - *user_aly_lilycove
           - *user_aly_mauville
+          - *user_aly_oldale
           - *user_aly_petalburg
           - *user_aly_rustboro
           - *user_aly_verdanturf
@@ -52,6 +54,7 @@ creation_rules:
           - *user_aly_lavaridge
           - *user_aly_lilycove
           - *user_aly_mauville
+          - *user_aly_oldale
           - *user_aly_petalburg
           - *user_aly_rustboro
           - *user_aly_verdanturf
