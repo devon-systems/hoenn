@@ -1,5 +1,6 @@
 _: {
-  flake.homeModules.rustboro = {
+  flake.homeModules.rustboro = {config, ...}: {
+    home.packages = [config.programs.home-manager.package];
     home.stateVersion = "26.05";
 
     targets.genericLinux.enable = true;
