@@ -18,6 +18,7 @@ See also [Johto](https://github.com/devon-systems/johto) for the homelab,
 | [`fallarbor`](nix/hosts/darwin/fallarbor/README.md)     | nix-darwin | `darwinConfigurations.fallarbor`  |
 | [`verdanturf`](nix/hosts/darwin/verdanturf/README.md)   | nix-darwin | `darwinConfigurations.verdanturf` |
 | [`dewford`](nix/hosts/system-manager/dewford/README.md) | Linux VM   | `systemConfigs.dewford`           |
+| [`oldale`](nix/hosts/system-manager/oldale/README.md)   | Linux VM   | `systemConfigs.oldale`            |
 
 Mauville is the k3s server and runs household services and backups. Internal
 cluster traffic uses the `hoenn` WireGuard interface. Homebridge uses Mauville's
