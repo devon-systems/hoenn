@@ -20,6 +20,6 @@
   config.blzrd.nodes.rustboro = {
     output = self.systemConfigs.rustboro;
     type = "system-manager";
-    user = "aly";
+    user = "root";
   };
 }
