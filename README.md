@@ -14,7 +14,7 @@ See also [Johto](https://github.com/devon-systems/johto) for the homelab,
 | [`lilycove`](nix/hosts/nixos/lilycove/README.md)        | NixOS      | `nixosConfigurations.lilycove`    |
 | [`mauville`](nix/hosts/nixos/mauville/README.md)        | NixOS      | `nixosConfigurations.mauville`    |
 | [`petalburg`](nix/hosts/nixos/petalburg/README.md)      | NixOS      | `nixosConfigurations.petalburg`   |
-| [`rustboro`](nix/hosts/nixos/rustboro/README.md)        | NixOS      | `nixosConfigurations.rustboro`    |
+| [`rustboro`](nix/hosts/system-manager/rustboro/)        | Ubuntu     | `systemConfigs.rustboro`          |
 | [`fallarbor`](nix/hosts/darwin/fallarbor/README.md)     | nix-darwin | `darwinConfigurations.fallarbor`  |
 | [`verdanturf`](nix/hosts/darwin/verdanturf/README.md)   | nix-darwin | `darwinConfigurations.verdanturf` |
 | [`dewford`](nix/hosts/system-manager/dewford/README.md) | Linux VM   | `systemConfigs.dewford`           |
