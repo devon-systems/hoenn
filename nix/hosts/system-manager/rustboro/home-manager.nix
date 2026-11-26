@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.systemModules.rustboro = {
     nix.enable = false;
 
@@ -26,6 +30,7 @@
       backupFileExtension = "before-home-manager";
       extraSpecialArgs = {inherit self;};
       users.aly.imports = [
+        inputs.appherder.homeModules.appherder
         self.homeModules.aly
         self.homeModules.rustboro
       ];

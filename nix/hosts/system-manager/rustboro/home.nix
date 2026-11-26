@@ -5,5 +5,12 @@ _: {
 
     targets.genericLinux.enable = true;
     systemd.user.startServices = "sd-switch";
+
+    programs.appherder.enable = true;
+
+    services.appherder = {
+      enable = true;
+      upgrade.enable = true;
+    };
   };
 }
