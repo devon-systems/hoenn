@@ -1,5 +1,15 @@
-_: {
-  flake.homeModules.desktop = {pkgs, ...}: {
-    home.packages = [pkgs.signal-desktop];
+{
+  flake = {
+    homeModules.desktop = {
+      lib,
+      pkgs,
+      ...
+    }: {
+      home.packages = lib.optional (!pkgs.stdenv.hostPlatform.isDarwin) pkgs.signal-desktop;
+    };
+
+    darwinModules.desktop = {
+      homebrew.casks = ["signal"];
+    };
   };
 }
