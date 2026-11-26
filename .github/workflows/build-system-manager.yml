@@ -5,7 +5,14 @@ concurrency:
 env:
   NIX_CONFIG: "access-tokens = github.com=${{ github.token }}"
 jobs:
-  build-dewford:
+  build:
+    name: Build ${{ matrix.host }}
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - dewford
+          - rustboro
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space
@@ -21,10 +28,10 @@ jobs:
         with:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           name: alyraffauf
-      - name: Build dewford
+      - name: Build system-manager host
         run: >-
           nix build --accept-flake-config --print-out-paths
-          .#systemConfigs.dewford
+          .#systemConfigs.${{ matrix.host }}
 name: build-system-manager
 'on':
   pull_request:
