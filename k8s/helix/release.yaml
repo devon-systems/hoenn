@@ -58,6 +58,8 @@ spec:
       - did:plc:lcnrh2plboj2yhzk6ndxc6dc
       # sleepymaoist.bsky.social
       - did:plc:dpdn7r7rbuow5cuxwta6kia2
+      # gothicwtf.eurosky.social
+      - did:plc:mxeixrodtfcdwakctgrgc7tk
     existingSecret: helix
     image:
       tag: sha-d68186968f1920335cc0ede85db7daf7facb5cc1@sha256:4ef0a6cac642f74994d1878a275fc9094953e06f731e651180c49023334f9277
