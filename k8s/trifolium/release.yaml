@@ -67,7 +67,7 @@ spec:
       - did:plc:2e5clfdjvfnnb6v4wookvubb
     existingSecret: helix
     image:
-      tag: sha-7022c3eb9433bd353a1721b354992659eeb91736@sha256:a6782b580cff4c1cc506f550b25516c04cce322e94c5232bec02e7b4ada32dfb
+      tag: sha-18c0bce7c67f290af52b30eb9ed400d9abac9d79@sha256:52036158bbd1119ee5c85f4e2d36163bdf81a0c4db62e480009cffea5d40c482
       pullPolicy: IfNotPresent
     persistence:
       size: 1Gi
