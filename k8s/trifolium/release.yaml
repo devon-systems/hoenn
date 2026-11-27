@@ -69,6 +69,8 @@ spec:
       - did:plc:ssmshbkk7nwczpgr6fkaqvnn
       # thembo.bsky.social
       - did:plc:z26yzeduq24ma5ym7uer3i5w
+      # ianthe.online
+      - did:plc:psnjo4sajhs3aojsmbmizuch
     existingSecret: helix
     image:
       tag: sha-90a8a15e58c6ccfc5863bc7225983aa79dbbd625@sha256:23c326ee913b200b1b5bfe31ca03065086fc2c09a717be61f160c87895d1791b
