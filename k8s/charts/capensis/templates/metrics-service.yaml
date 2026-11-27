@@ -1,10 +1,11 @@
 {{- if .Values.metrics.enabled }}
 {{- $suffix := "-capensis-metrics" }}
 {{- $name := printf "%s%s" .Release.Name $suffix }}
-{{- if gt (len $name) 63 }}
+{{- if or (gt (len $name) 63) (contains "." $name) }}
 {{- $hash := sha256sum .Release.Name | trunc 10 }}
 {{- $prefixLength := int (sub 63 (add (len $suffix) (len $hash) 1)) }}
-{{- $name = printf "%s-%s%s" (trunc $prefixLength .Release.Name) $hash $suffix }}
+{{- $prefix := replace "." "-" .Release.Name | trunc $prefixLength }}
+{{- $name = printf "%s-%s%s" $prefix $hash $suffix }}
 {{- end }}
 apiVersion: v1
 kind: Service
