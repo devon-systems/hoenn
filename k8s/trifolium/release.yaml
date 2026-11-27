@@ -71,7 +71,7 @@ spec:
       - did:plc:z26yzeduq24ma5ym7uer3i5w
     existingSecret: helix
     image:
-      tag: sha-b07e83586b252a4fd758d390228d5076ebcecfdf@sha256:4c924a615f350bf038de56726d9d6b43d4abb2c596250a5f43a4a3495ee4f091
+      tag: sha-90a8a15e58c6ccfc5863bc7225983aa79dbbd625@sha256:23c326ee913b200b1b5bfe31ca03065086fc2c09a717be61f160c87895d1791b
       pullPolicy: IfNotPresent
     persistence:
       size: 1Gi
