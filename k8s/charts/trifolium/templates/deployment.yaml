@@ -1,5 +1,5 @@
-{{- if empty .Values.accounts }}
-{{- fail "accounts must contain at least one target" }}
+{{- if and (empty .Values.accounts) (empty .Values.clusters) }}
+{{- fail "configure accounts or clusters" }}
 {{- end }}
 apiVersion: apps/v1
 kind: Deployment
@@ -48,6 +48,9 @@ spec:
             - {{ printf "--jetstream=%v" .Values.jetstream | quote }}
             - {{ printf "--write-interval=%v" .Values.writeInterval | quote }}
             - {{ printf "--rescan-interval=%v" .Values.rescanInterval | quote }}
+            {{- with .Values.clusters }}
+            - {{ printf "--clusters=%s" (mustToJson .) | quote }}
+            {{- end }}
             - {{ printf "--accounts=%s" (join "," .Values.accounts) | quote }}
             - {{ printf "--threshold=%v" .Values.threshold | quote }}
           env:

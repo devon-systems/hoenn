@@ -18,3 +18,4 @@ persistence:
   storageClass: null
 resources: {}
 nodeSelector: {}
+clusters: {}
