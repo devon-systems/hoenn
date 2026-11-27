@@ -65,6 +65,8 @@ spec:
       - did:plc:kkziavexmricrtyi7d6n73gq
       # zooey.northsky.social
       - did:plc:2e5clfdjvfnnb6v4wookvubb
+      # penelopiez.bsky.social
+      - did:plc:ssmshbkk7nwczpgr6fkaqvnn
     existingSecret: helix
     image:
       tag: sha-d3baf3a4b19ad7dd0c5a8027b4912c59771f2e96@sha256:0cacd36f4049a66541ae9ce01ff37151f5009e5c33f860f6ccd6ffed4caef948
