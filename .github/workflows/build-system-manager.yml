@@ -12,6 +12,7 @@ jobs:
       matrix:
         host:
           - dewford
+          - oldale
           - rustboro
     runs-on: ubuntu-latest
     steps:
