@@ -28,7 +28,7 @@ spec:
     post: at://did:plc:gm2gj4v7isgrlsww3ya7hpy2/app.bsky.feed.post/3n2ou3neu5c2h
     existingSecret: cordata
     image:
-      tag: sha-90a8a15e58c6ccfc5863bc7225983aa79dbbd625@sha256:bb0755ea5985c8b18289ad3777f6156c963f860da2025c9dfdbe50c8e209a205
+      tag: sha-a870596b2f598662b1016c518b3f3c4dda623ee3@sha256:71a7d30d743ee06b1b61c9fda5e15bc6e1273a12f5bfd688ab377bb70757344f
       pullPolicy: IfNotPresent
     resources:
       requests:

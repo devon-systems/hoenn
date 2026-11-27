@@ -1,12 +1,13 @@
 image:
   repository: ghcr.io/alyraffauf/terrarium/cordata
-  tag: latest@sha256:bb0755ea5985c8b18289ad3777f6156c963f860da2025c9dfdbe50c8e209a205
+  tag: sha-a870596b2f598662b1016c518b3f3c4dda623ee3@sha256:71a7d30d743ee06b1b61c9fda5e15bc6e1273a12f5bfd688ab377bb70757344f
   pullPolicy: Always
 identifier: ""
 post: ""
 existingSecret: ""
 passwordKey: app-password
 appview: https://public.api.bsky.app
+constellation: https://constellation.microcosm.blue
 slingshot: https://slingshot.aly.town
 loginPDS: ""
 writeInterval: 10s

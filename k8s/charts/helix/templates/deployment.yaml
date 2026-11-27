@@ -57,6 +57,7 @@ spec:
             - --database=/data/helix.sqlite
             - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
             - {{ printf "--appview=%v" .Values.appview | quote }}
+            - {{ printf "--constellation=%v" .Values.constellation | quote }}
             - {{ printf "--slingshot=%v" .Values.slingshot | quote }}
             - {{ printf "--jetstream=%v" .Values.jetstream | quote }}
             - {{ printf "--write-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.writeInterval) "${1}s") | quote }}

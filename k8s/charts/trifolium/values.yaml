@@ -1,12 +1,13 @@
 image:
   repository: ghcr.io/alyraffauf/terrarium/trifolium
-  tag: latest@sha256:23c326ee913b200b1b5bfe31ca03065086fc2c09a717be61f160c87895d1791b
+  tag: sha-a870596b2f598662b1016c518b3f3c4dda623ee3@sha256:b9bfdc475f6a5fc7c01ac9f8665a355a56aad27721c26edc6d1c67ef12fbf57f
   pullPolicy: Always
 identifier: ""
 accounts: []
 threshold: 2
 existingSecret: ""
 passwordKey: app-password
+constellation: https://constellation.microcosm.blue
 slingshot: https://slingshot.aly.town
 jetstream: https://jetstream.waow.tech
 writeInterval: 6s

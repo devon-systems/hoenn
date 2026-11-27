@@ -38,6 +38,7 @@ spec:
           args:
             - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
             - {{ printf "--appview=%v" .Values.appview | quote }}
+            - {{ printf "--constellation=%v" .Values.constellation | quote }}
             - {{ printf "--slingshot=%v" .Values.slingshot | quote }}
             - {{ printf "--write-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.writeInterval) "${1}s") | quote }}
             - {{ printf "--rescan-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.rescanInterval) "${1}s") | quote }}
