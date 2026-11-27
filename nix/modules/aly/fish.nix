@@ -58,6 +58,7 @@ in {
           end
 
           for path_dir in \
+            "/run/system-manager/sw/bin" \
             "$HOME/.nix-profile/bin" \
             "$HOME/go/bin" \
             "$HOME/.local/bin" \
