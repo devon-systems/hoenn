@@ -39,6 +39,31 @@ _: {
       };
     };
 
+    systemModules.systemManager = {
+      systemd.services.hoenn-nix-maintenance = {
+        description = "Collect Nix garbage and optimise the store";
+        serviceConfig = {
+          Type = "oneshot";
+          Nice = 10;
+          IOSchedulingClass = "idle";
+          ExecStart = [
+            "/nix/var/nix/profiles/default/bin/nix-collect-garbage --delete-older-than 3d"
+            "/nix/var/nix/profiles/default/bin/nix-store --optimise"
+          ];
+        };
+      };
+
+      systemd.timers.hoenn-nix-maintenance = {
+        description = "Daily Nix store maintenance";
+        wantedBy = ["system-manager.target"];
+        timerConfig = {
+          OnCalendar = "*-*-* 03:00:00";
+          RandomizedDelaySec = "60min";
+          Persistent = true;
+        };
+      };
+    };
+
     darwinModules.default = {
       nix.enable = false;
 
