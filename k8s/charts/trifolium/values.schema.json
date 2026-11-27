@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "definitions": {
+    "accounts": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "\\S" }
+    },
+    "threshold": { "type": "integer", "minimum": 1 }
+  },
+  "properties": {
+    "accounts": { "$ref": "#/definitions/accounts" },
+    "threshold": { "$ref": "#/definitions/threshold" },
+    "clusters": {
+      "type": "object",
+      "propertyNames": { "pattern": "^\\S(?:.*\\S)?$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["accounts", "threshold"],
+        "properties": {
+          "accounts": {
+            "allOf": [{ "$ref": "#/definitions/accounts" }, { "minItems": 1 }]
+          },
+          "threshold": { "$ref": "#/definitions/threshold" }
+        }
+      }
+    }
+  }
+}

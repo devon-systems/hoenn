@@ -12,6 +12,7 @@ appview: https://public.api.bsky.app
 slingshot: https://slingshot.aly.town
 jetstream: https://jetstream.waow.tech
 loginPDS: ""
+writeInterval: 6s
 rescanInterval: 6h
 persistence:
   existingClaim: ""
@@ -19,4 +20,8 @@ persistence:
   # null uses the cluster's default storage class; "" disables dynamic provisioning.
   storageClass: null
 resources: {}
+
+metrics:
+  enabled: false
+  port: 9090
 nodeSelector: {}

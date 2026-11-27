@@ -1,3 +1,6 @@
+{{- if empty .Values.pds }}
+{{- fail "pds must contain at least one PDS" }}
+{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,11 +18,17 @@ spec:
       labels:
         app.kubernetes.io/name: capensis
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.metrics.enabled }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: {{ .Values.metrics.port | quote }}
+      {{- end }}
     spec:
       automountServiceAccountToken: false
-      enableServiceLinks: false
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
+      enableServiceLinks: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 10001
@@ -29,30 +38,36 @@ spec:
           type: RuntimeDefault
       containers:
         - name: capensis
-          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          image: {{ printf "%v:%v" .Values.image.repository .Values.image.tag | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
               drop: [ALL]
+          {{- if .Values.metrics.enabled }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+          {{- end }}
           args:
-            - --database=/data/capensis.sqlite
-            - {{ printf "--identifier=%s" (required "identifier is required" .Values.identifier) | quote }}
-            - {{ printf "--slingshot=%s" .Values.slingshot | quote }}
-            - {{ printf "--jetstream=%s" .Values.jetstream | quote }}
-            {{- with .Values.writeInterval }}
-            - {{ printf "--write-interval=%s" . | quote }}
+            {{- if .Values.metrics.enabled }}
+            - {{ printf "--metrics-address=:%v" .Values.metrics.port | quote }}
             {{- end }}
-            - {{ printf "--rescan-interval=%s" .Values.rescanInterval | quote }}
+            - --database=/data/capensis.sqlite
+            - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
+            - {{ printf "--slingshot=%v" .Values.slingshot | quote }}
+            - {{ printf "--jetstream=%v" .Values.jetstream | quote }}
+            - {{ printf "--write-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.writeInterval) "${1}s") | quote }}
+            - {{ printf "--rescan-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.rescanInterval) "${1}s") | quote }}
             {{- if .Values.loginPDS }}
-            - {{ printf "--login-pds=%s" .Values.loginPDS | quote }}
+            - {{ printf "--login-pds=%v" .Values.loginPDS | quote }}
             {{- end }}
             {{- range $pds := required "pds must contain at least one PDS" .Values.pds }}
-            - {{ printf "--pds=%s" $pds | quote }}
+            - {{ printf "--pds=%v" $pds | quote }}
             {{- end }}
             {{- range $pds, $uri := .Values.lists }}
-            - {{ printf "--list=%s=%s" $pds $uri | quote }}
+            - {{ printf "--list=%v=%v" $pds $uri | quote }}
             {{- end }}
           env:
             - name: CAPENSIS_APP_PASSWORD
@@ -70,6 +85,6 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ default (printf "%s-capensis" .Release.Name) .Values.persistence.existingClaim }}
+            claimName: {{ default (printf "%v-capensis" .Release.Name) .Values.persistence.existingClaim }}
         - name: tmp
           emptyDir: {}

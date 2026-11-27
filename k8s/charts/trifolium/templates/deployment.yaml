@@ -1,6 +1,9 @@
 {{- if and (empty .Values.accounts) (empty .Values.clusters) }}
 {{- fail "configure accounts or clusters" }}
 {{- end }}
+{{- if and .Values.accounts (hasKey .Values.clusters "default") }}
+{{- fail "accounts and clusters.default both configure the default cluster" }}
+{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,8 +49,8 @@ spec:
             - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
             - {{ printf "--slingshot=%v" .Values.slingshot | quote }}
             - {{ printf "--jetstream=%v" .Values.jetstream | quote }}
-            - {{ printf "--write-interval=%v" .Values.writeInterval | quote }}
-            - {{ printf "--rescan-interval=%v" .Values.rescanInterval | quote }}
+            - {{ printf "--write-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.writeInterval) "${1}s") | quote }}
+            - {{ printf "--rescan-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.rescanInterval) "${1}s") | quote }}
             {{- with .Values.clusters }}
             - {{ printf "--clusters=%s" (mustToJson .) | quote }}
             {{- end }}

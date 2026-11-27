@@ -10,7 +10,7 @@ passwordKey: app-password
 slingshot: https://slingshot.aly.town
 jetstream: https://jetstream.waow.tech
 writeInterval: 6s
-rescanInterval: 6h
+rescanInterval: 24h
 persistence:
   existingClaim: ""
   size: 1Gi

@@ -17,9 +17,9 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       automountServiceAccountToken: false
-      enableServiceLinks: false
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
+      enableServiceLinks: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 10001
@@ -39,8 +39,8 @@ spec:
             - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
             - {{ printf "--appview=%v" .Values.appview | quote }}
             - {{ printf "--slingshot=%v" .Values.slingshot | quote }}
-            - {{ printf "--write-interval=%v" .Values.writeInterval | quote }}
-            - {{ printf "--rescan-interval=%v" .Values.rescanInterval | quote }}
+            - {{ printf "--write-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.writeInterval) "${1}s") | quote }}
+            - {{ printf "--rescan-interval=%s" (regexReplaceAll "^([0-9]+)$" (toString .Values.rescanInterval) "${1}s") | quote }}
             {{- if .Values.loginPDS }}
             - {{ printf "--login-pds=%v" .Values.loginPDS | quote }}
             {{- end }}
