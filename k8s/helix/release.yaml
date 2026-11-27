@@ -62,6 +62,8 @@ spec:
       - did:plc:mxeixrodtfcdwakctgrgc7tk
       # crobi.bsky.social
       - did:plc:kkziavexmricrtyi7d6n73gq
+      # zooey.northsky.social
+      - did:plc:2e5clfdjvfnnb6v4wookvubb
     existingSecret: helix
     image:
       tag: sha-d68186968f1920335cc0ede85db7daf7facb5cc1@sha256:4ef0a6cac642f74994d1878a275fc9094953e06f731e651180c49023334f9277
