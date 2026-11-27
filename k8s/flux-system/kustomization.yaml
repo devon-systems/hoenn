@@ -12,3 +12,4 @@ resources:
   - capensis.yaml
   - helix.yaml
   - cordata.yaml
+  - trifolium.yaml

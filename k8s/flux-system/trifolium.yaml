@@ -1,0 +1,18 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: trifolium
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: namespaces
+    - name: secrets
+  interval: 10m
+  retryInterval: 1m
+  path: ./k8s/trifolium
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  timeout: 10m
+  wait: true

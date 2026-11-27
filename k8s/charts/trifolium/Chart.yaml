@@ -1,0 +1,6 @@
+apiVersion: v2
+name: trifolium
+description: Maintain one moderation list based on follower overlap
+type: application
+version: 0.1.0
+appVersion: latest
