@@ -1,8 +1,15 @@
 {{- if .Values.metrics.enabled }}
+{{- $suffix := "-helix-metrics" }}
+{{- $name := printf "%s%s" .Release.Name $suffix }}
+{{- if gt (len $name) 63 }}
+{{- $hash := sha256sum .Release.Name | trunc 10 }}
+{{- $prefixLength := int (sub 63 (add (len $suffix) (len $hash) 1)) }}
+{{- $name = printf "%s-%s%s" (trunc $prefixLength .Release.Name) $hash $suffix }}
+{{- end }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-helix-metrics
+  name: {{ $name }}
 spec:
   selector:
     app.kubernetes.io/name: helix
