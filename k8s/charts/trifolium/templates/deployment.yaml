@@ -24,6 +24,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
+      enableServiceLinks: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 10001
