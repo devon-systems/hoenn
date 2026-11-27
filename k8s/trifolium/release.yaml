@@ -67,6 +67,8 @@ spec:
       - did:plc:2e5clfdjvfnnb6v4wookvubb
       # penelopiez.bsky.social
       - did:plc:ssmshbkk7nwczpgr6fkaqvnn
+      # thembo.bsky.social
+      - did:plc:z26yzeduq24ma5ym7uer3i5w
     existingSecret: helix
     image:
       tag: sha-d3baf3a4b19ad7dd0c5a8027b4912c59771f2e96@sha256:0cacd36f4049a66541ae9ce01ff37151f5009e5c33f860f6ccd6ffed4caef948
