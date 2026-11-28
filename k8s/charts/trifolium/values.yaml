@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/alyraffauf/terrarium/trifolium
-  tag: sha-f475080257db87e060fcc21487dec47bd6f381f6@sha256:e56c28abe9101fd31a46f627846b42e7d4ff291b7070afcfc0aed6175dce4b06
+  tag: sha-6bc882d46293b9fdfd9976c9ee2eb6a2690faec2@sha256:ebd047e1e510205d3670a9fa904eba2c2638bcb7c3418c3fa2a12bc159def2bd
   pullPolicy: Always
 identifier: ""
 accounts: []
