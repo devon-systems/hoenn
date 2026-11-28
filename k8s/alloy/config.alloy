@@ -66,6 +66,18 @@ prometheus.scrape "kube_state_metrics" {
   forward_to = [prometheus.remote_write.hoenn.receiver]
 }
 
+prometheus.scrape "terrarium" {
+  targets = [
+    {__address__ = "helix-helix-metrics.helix.svc:9090", daemon = "helix"},
+    {__address__ = "capensis-capensis-metrics.capensis.svc:9090", daemon = "capensis"},
+    {__address__ = "trifolium-trifolium-metrics.helix.svc:9090", daemon = "trifolium"},
+    {__address__ = "cordata-cordata-metrics.cordata.svc:9090", daemon = "cordata"},
+  ]
+  job_name = "terrarium"
+  scrape_interval = "30s"
+  forward_to = [prometheus.remote_write.hoenn.receiver]
+}
+
 discovery.kubernetes "flux" {
   role = "pod"
   namespaces {

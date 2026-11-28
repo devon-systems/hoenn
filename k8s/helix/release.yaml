@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 3
   values:
+    metrics:
+      enabled: true
     writeInterval: 6s
     identifier: aly.codes
     accounts:

@@ -15,6 +15,12 @@ spec:
       labels:
         app.kubernetes.io/name: cordata
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
+      {{- if .Values.metrics.enabled }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: {{ .Values.metrics.port | quote }}
+      {{- end }}
     spec:
       automountServiceAccountToken: false
       nodeSelector:
@@ -35,7 +41,15 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: [ALL]
+          {{- if .Values.metrics.enabled }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+          {{- end }}
           args:
+            {{- if .Values.metrics.enabled }}
+            - {{ printf "--metrics-address=:%v" .Values.metrics.port | quote }}
+            {{- end }}
             - {{ printf "--identifier=%v" (required "identifier is required" .Values.identifier) | quote }}
             - {{ printf "--appview=%v" .Values.appview | quote }}
             - {{ printf "--constellation=%v" .Values.constellation | quote }}

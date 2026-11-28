@@ -1,0 +1,22 @@
+{{- if .Values.metrics.enabled }}
+{{- $suffix := "-cordata-metrics" }}
+{{- $name := printf "%s%s" .Release.Name $suffix }}
+{{- if or (gt (len $name) 63) (contains "." $name) }}
+{{- $hash := sha256sum .Release.Name | trunc 10 }}
+{{- $prefixLength := int (sub 63 (add (len $suffix) (len $hash) 1)) }}
+{{- $prefix := replace "." "-" .Release.Name | trunc $prefixLength }}
+{{- $name = printf "%s-%s%s" $prefix $hash $suffix }}
+{{- end }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+spec:
+  selector:
+    app.kubernetes.io/name: cordata
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+  ports:
+    - name: metrics
+      port: {{ .Values.metrics.port }}
+      targetPort: metrics
+{{- end }}

@@ -20,3 +20,6 @@ persistence:
 resources: {}
 nodeSelector: {}
 clusters: {}
+metrics:
+  enabled: false
+  port: 9090

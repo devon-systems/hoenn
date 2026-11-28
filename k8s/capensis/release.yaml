@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 3
   values:
+    metrics:
+      enabled: true
     writeInterval: 10s
     identifier: aly.codes
     pds:

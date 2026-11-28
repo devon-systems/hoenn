@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 3
   values:
+    metrics:
+      enabled: true
     identifier: aly.codes
     posts:
       # https://bsky.app/profile/transnews.network/post/3n2ou3neu5c2h

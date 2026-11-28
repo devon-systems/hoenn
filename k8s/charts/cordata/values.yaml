@@ -15,3 +15,6 @@ writeInterval: 10s
 rescanInterval: 5m
 resources: {}
 nodeSelector: {}
+metrics:
+  enabled: false
+  port: 9090
