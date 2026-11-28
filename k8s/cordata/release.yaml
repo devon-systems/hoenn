@@ -24,8 +24,17 @@ spec:
       retries: 3
   values:
     identifier: aly.codes
-    # https://bsky.app/profile/transnews.network/post/3n2ou3neu5c2h
-    post: at://did:plc:gm2gj4v7isgrlsww3ya7hpy2/app.bsky.feed.post/3n2ou3neu5c2h
+    posts:
+      # https://bsky.app/profile/transnews.network/post/3n2ou3neu5c2h
+      - at://did:plc:gm2gj4v7isgrlsww3ya7hpy2/app.bsky.feed.post/3n2ou3neu5c2h
+      # https://bsky.app/profile/transnews.network/post/3n2mn47tqtk2e
+      - at://did:plc:gm2gj4v7isgrlsww3ya7hpy2/app.bsky.feed.post/3n2mn47tqtk2e
+      # https://bsky.app/profile/mady.cat/post/3n2z7oowtsc2w
+      - at://did:plc:3qydk2zg25crp4yalkdvbzc4/app.bsky.feed.post/3n2z7oowtsc2w
+      # https://bsky.app/profile/mady.cat/post/3n33ksyv5sk2x
+      - at://did:plc:3qydk2zg25crp4yalkdvbzc4/app.bsky.feed.post/3n33ksyv5sk2x
+      # https://parfait.social/did:plc:z26yzeduq24ma5ym7uer3i5w/post/3n3au24ia5k22
+      - at://did:plc:z26yzeduq24ma5ym7uer3i5w/app.bsky.feed.post/3n3au24ia5k22
     existingSecret: cordata
     image:
       tag: sha-65513dcaad0b1a76efbf443288e996d19ea08575@sha256:566dcc2c3da3efa0504703c2a9b513fb0ae4fb67fb97cb3050ea33698bbe1f36
