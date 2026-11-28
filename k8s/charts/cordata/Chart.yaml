@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cordata
-description: Maintain Bluesky moderation lists for accounts that liked a post
+description: Maintain Bluesky moderation lists for accounts that liked or reposted a post
 type: application
 version: 0.1.0
 appVersion: latest
