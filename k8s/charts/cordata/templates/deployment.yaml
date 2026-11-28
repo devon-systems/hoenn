@@ -45,7 +45,15 @@ spec:
             {{- if .Values.loginPDS }}
             - {{ printf "--login-pds=%v" .Values.loginPDS | quote }}
             {{- end }}
-            - {{ required "post is required" .Values.post | quote }}
+            {{- if not (or .Values.post .Values.posts) }}
+            {{- fail "post is required (or set posts)" }}
+            {{- end }}
+            {{- if .Values.post }}
+            - {{ .Values.post | quote }}
+            {{- end }}
+            {{- range .Values.posts }}
+            - {{ . | quote }}
+            {{- end }}
           env:
             - name: CORDATA_APP_PASSWORD
               valueFrom:
