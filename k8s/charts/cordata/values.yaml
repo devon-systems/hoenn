@@ -13,7 +13,15 @@ slingshot: https://slingshot.aly.town
 loginPDS: ""
 writeInterval: 10s
 rescanInterval: 5m
-resources: {}
+health:
+  port: 8081
+resources:
+  requests:
+    cpu: 25m
+    memory: 64Mi
+  limits:
+    cpu: "1"
+    memory: 512Mi
 nodeSelector: {}
 metrics:
   enabled: false

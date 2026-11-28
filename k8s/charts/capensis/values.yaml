@@ -18,7 +18,15 @@ persistence:
   size: 1Gi
   # null uses the cluster's default storage class; "" disables dynamic provisioning.
   storageClass: null
-resources: {}
+health:
+  port: 8081
+resources:
+  requests:
+    cpu: 25m
+    memory: 64Mi
+  limits:
+    cpu: "1"
+    memory: 512Mi
 
 metrics:
   enabled: false

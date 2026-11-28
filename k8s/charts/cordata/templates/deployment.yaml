@@ -1,3 +1,6 @@
+{{- if and .Values.metrics.enabled (eq (int .Values.metrics.port) (int .Values.health.port)) }}
+{{- fail "health.port and metrics.port must differ when metrics are enabled" }}
+{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -41,12 +44,36 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               drop: [ALL]
-          {{- if .Values.metrics.enabled }}
           ports:
+            - name: health
+              containerPort: {{ .Values.health.port }}
+          {{- if .Values.metrics.enabled }}
             - name: metrics
               containerPort: {{ .Values.metrics.port }}
           {{- end }}
+          startupProbe:
+            httpGet:
+              path: /livez
+              port: health
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: health
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: health
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
           args:
+            - {{ printf "--health-address=:%v" .Values.health.port | quote }}
             {{- if .Values.metrics.enabled }}
             - {{ printf "--metrics-address=:%v" .Values.metrics.port | quote }}
             {{- end }}
