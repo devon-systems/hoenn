@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/alyraffauf/terrarium/helix
-  tag: sha-a870596b2f598662b1016c518b3f3c4dda623ee3@sha256:fa145baa2ed6685b6832306e19413aea0ffaf3e081a96ae7498d447122283973
+  tag: sha-6115f76edbcbd2fd9c266950f0ac3e3c6c892c19@sha256:ac9754512da1c3261ae0241cf330a0f9f3f00a1e94c7c961064a4b93d7e24834
   pullPolicy: Always
 identifier: ""
 accounts: []
