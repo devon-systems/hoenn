@@ -71,6 +71,8 @@ spec:
       - did:plc:z26yzeduq24ma5ym7uer3i5w
       # ianthe.online
       - did:plc:psnjo4sajhs3aojsmbmizuch
+      # danirat.bsky.social
+      - did:plc:ycve62otz2u5fiyjtyl72lmy
     existingSecret: helix
     image:
       tag: sha-6115f76edbcbd2fd9c266950f0ac3e3c6c892c19@sha256:1946c7c5d115f430c37d77211a5ad1067d081632c16ad2a024175a5992eee359
